@@ -39,6 +39,12 @@ ruff.cmd = "ruff check --output-format=concise ."
 serve.cmd = "python manage.py tailwind runserver"
 serve.help = "Run the Dev server, including tailwind"
 
+# building for prod
+"tw:build".cmd = "python manage.py tailwind build"
+"tw:build".help = "Build an optimized production stylesheet"
+"static".cmd = "python manage.py collectstatic"
+"static".help = "Collect all the static files"
+
 # testing tasks
 test.help = "Run all tests using Pytest"
 test.cmd = "pytest"
