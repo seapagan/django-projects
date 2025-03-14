@@ -29,16 +29,16 @@ fixed very shortly.
 
 1. Clone the repository:
 
-```bash
+```console
 git clone https://github.com/seapagan/django-projects
 cd django-projects
 ```
 
 2. Install dependencies using uv:
 
-```bash
+```console
 uv venv
-uv sync
+uv sync --no-dev
 source .venv/bin/activate # On Windows: .venv\Scripts\activate
 ```
 
@@ -46,30 +46,22 @@ source .venv/bin/activate # On Windows: .venv\Scripts\activate
 
 1. Clone the repository:
 
-```bash
+```console
 git clone https://github.com/seapagan/django-projects
 cd django-projects
 ```
 
 2. Create and activate a virtual environment:
 
-```bash
+```console
 python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 ```
 
 3. Install Python dependencies:
 
-```bash
+```console
 pip install -r requirements.txt
-pip install -r requirements-dev.txt  # For development
-```
-
-4. Create a `.env` file in the project root with the following content:
-
-```env
-DJANGO_SECRET_KEY=your-secret-key
-DJANGO_DEBUG=1 # sets debug mode
 ```
 
 ## Configuration
@@ -79,23 +71,35 @@ The application uses environment variables for configuration. Key settings:
 - `DJANGO_SECRET_KEY`: Your Django secret key
 - `DJANGO_DEBUG`: Set to 1 for development, 0 for production
 
+Create an `.env` file in the project root with the following content, or set the
+environment variables directly:
+
+```env
+DJANGO_SECRET_KEY=your-secret-key
+DJANGO_DEBUG=1 # sets debug mode
+```
+
+> [!NOTE]
+>
+> For a Production or User-Facing project, **ALWAYS set `DJANGO_DEBUG=0`**
+
 ## Usage
 
 1. Apply database migrations:
 
-```bash
+```console
 python manage.py migrate
 ```
 
 2. Create a superuser:
 
-```bash
+```console
 python manage.py createsuperuser
 ```
 
 3. Run the development server:
 
-```bash
+```console
 python manage.py tailwind runserver
 ```
 
@@ -112,7 +116,7 @@ After logging in to the admin interface at <http://localhost:8000/admin>, you ca
 - **Website URL**: The URL to your project's live website or demo (optional)
 
 Projects will be displayed on your portfolio page in the order they were added,
-oldest to newest. Shortly we wil add a priority order too so some projects can
+oldest to newest. Shortly we will add a priority order too so some projects can
 be bumped to the top.
 
 ## Project Structure
@@ -150,14 +154,14 @@ Install development dependencies and set up pre-commit:
 
 Using uv (Recommended):
 
-```bash
+```console
 uv sync
 pre-commit install
 ```
 
 Using pip:
 
-```bash
+```console
 pip install -r requirements-dev.txt
 pre-commit install
 ```
