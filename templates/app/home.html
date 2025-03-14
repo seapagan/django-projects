@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects</title>
+  </head>
+
+  <body>
+    <h1>List of Projects</h1>
+    {% if projects%}
+    {% for project in projects%}
+    <div>
+      <h2>
+        {{project.title}}
+      </h2>
+      <p>{{project.details}}</p>
+    </div>
+    {% endfor %}
+    {% else %}
+    <p>No Projects are defined yet.</p>
+    {% endif %}
+
+  </body>
+
+</html>
