@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     "django_tailwind_cli",
     "django_browser_reload",
     "django_cotton",
+    "lucide",
 ]
 
 MIDDLEWARE = [

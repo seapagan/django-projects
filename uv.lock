@@ -205,6 +205,7 @@ dependencies = [
     { name = "django" },
     { name = "django-cotton" },
     { name = "django-stubs-ext" },
+    { name = "lucide", extra = ["django"] },
     { name = "python-dotenv" },
 ]
 
@@ -224,6 +225,7 @@ requires-dist = [
     { name = "django", specifier = ">=5.1.7" },
     { name = "django-cotton", specifier = ">=2.0.0" },
     { name = "django-stubs-ext", specifier = ">=5.1.3" },
+    { name = "lucide", extras = ["django"], specifier = ">=1.1.3" },
     { name = "python-dotenv", specifier = ">=1.0.1" },
 ]
 
@@ -339,6 +341,20 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/df/bf/f7da0350254c0ed7c72f3e33cef02e048281fec7ecec5f032d4aac52226b/jinja2-3.1.6.tar.gz", hash = "sha256:0137fb05990d35f1275a587e9aee6d56da821fc83491a0fb838183be43f66d6d", size = 245115 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/62/a1/3d680cbfd5f4b8f15abc1d571870c5fc3e594bb582bc3b64ea099db13e56/jinja2-3.1.6-py3-none-any.whl", hash = "sha256:85ece4451f492d0c13c5dd7c13a64681a86afae63a5f347908daf103ce6d2f67", size = 134899 },
+]
+
+[[package]]
+name = "lucide"
+version = "1.1.3"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/d3/18/466c33b2ebbb63f74496abad1038452bc46b6050decdb2110681c2de5a16/lucide-1.1.3.tar.gz", hash = "sha256:a931b627bc30a529c7f4e57d7b4c2d7379a86a75a4156eb4ced411aa66c1202f", size = 385756 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/a6/77/8ac5fda43469c96630dd81817df7362c72cff671f93950a780ad3b13e7e9/lucide-1.1.3-py3-none-any.whl", hash = "sha256:37c9cd5ac3914577b933896dcc4160631aa63a078b7b0a1cf19e984a93e78234", size = 383488 },
+]
+
+[package.optional-dependencies]
+django = [
+    { name = "django" },
 ]
 
 [[package]]
