@@ -547,6 +547,9 @@
   .collapse {
     visibility: collapse;
   }
+  .fixed {
+    position: fixed;
+  }
   .relative {
     position: relative;
   }
