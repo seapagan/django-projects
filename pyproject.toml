@@ -45,8 +45,6 @@ serve.help = "Run the Dev server, including tailwind"
 "static".cmd = "python manage.py collectstatic"
 "static".help = "Collect all the static files"
 
-
-
 # testing tasks
 test.help = "Run all tests using Pytest"
 test.cmd = "pytest"

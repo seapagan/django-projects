@@ -141,4 +141,4 @@ STATICFILES_DIRS = [BASE_DIR / "assets"]
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-TAILWIND_APP_NAME = "theme"
+TAILWIND_CLI_DIST_CSS = "css/site.css"
