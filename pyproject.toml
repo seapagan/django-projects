@@ -20,6 +20,7 @@ dev = [
     "django-tailwind[reload]>=3.8.0",
     "mypy>=1.15.0",
     "poethepoet>=0.33.0",
+    "pre-commit>=4.1.0",
     "ruff>=0.10.0",
 ]
 
@@ -33,6 +34,10 @@ format.help = "Format code with Ruff"
 format.cmd = "ruff format ."
 ruff.help = "Run Ruff checks"
 ruff.cmd = "ruff check --output-format=concise ."
+
+# serve the app
+serve.cmd = "python manage.py tailwind runserver"
+serve.help = "Run the Dev server, including tailwind"
 
 # testing tasks
 test.help = "Run all tests using Pytest"
