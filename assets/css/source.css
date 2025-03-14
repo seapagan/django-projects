@@ -2,7 +2,28 @@
 /* @plugin 'tailwindcss-animate'; */
 
 .link-default {
-  @apply text-blue-600 hover:underline hover:underline-offset-4;
+  @apply relative bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent;
+}
+
+.link-default::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 2px;
+  background-image: linear-gradient(
+    to right,
+    var(--color-blue-400),
+    var(--color-purple-600)
+  );
+  transition: transform 0.2s;
+  transform: scaleX(0);
+  transform-origin: center;
+}
+
+.link-default:hover::after {
+  transform: scaleX(1);
 }
 
 @custom-variant dark (&:is(.dark *));
