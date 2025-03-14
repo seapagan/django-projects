@@ -3,7 +3,7 @@ name = "django-projects"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = ">=3.10"
 dependencies = [
     "django>=5.1.7",
     "django-stubs-ext>=5.1.3",
@@ -12,7 +12,9 @@ dependencies = [
 
 [dependency-groups]
 dev = [
+    "cookiecutter>=2.6.0",
     "django-stubs[compatible-mypy]>=5.1.3",
+    "django-tailwind[reload]>=3.8.0",
     "mypy>=1.15.0",
     "poethepoet>=0.33.0",
     "ruff>=0.10.0",
