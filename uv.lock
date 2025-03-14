@@ -213,6 +213,7 @@ dev = [
     { name = "cookiecutter" },
     { name = "django-stubs", extra = ["compatible-mypy"] },
     { name = "django-tailwind", extra = ["reload"] },
+    { name = "django-tailwind-cli" },
     { name = "mypy" },
     { name = "poethepoet" },
     { name = "ruff" },
@@ -231,6 +232,7 @@ dev = [
     { name = "cookiecutter", specifier = ">=2.6.0" },
     { name = "django-stubs", extras = ["compatible-mypy"], specifier = ">=5.1.3" },
     { name = "django-tailwind", extras = ["reload"], specifier = ">=3.8.0" },
+    { name = "django-tailwind-cli", specifier = ">=4.1.0" },
     { name = "mypy", specifier = ">=1.15.0" },
     { name = "poethepoet", specifier = ">=0.33.0" },
     { name = "ruff", specifier = ">=0.10.0" },
@@ -286,6 +288,36 @@ wheels = [
 [package.optional-dependencies]
 reload = [
     { name = "django-browser-reload" },
+]
+
+[[package]]
+name = "django-tailwind-cli"
+version = "4.1.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "django" },
+    { name = "django-typer" },
+    { name = "requests" },
+    { name = "semver" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/1e/43/8acfc03ed841cd074ca899193e1a0cbe6609e6c6f660e88095a5c935bee3/django_tailwind_cli-4.1.0.tar.gz", hash = "sha256:3e25bdc5e5fba17a6f6f38c1054897f350575e16022066eb274a64dbe80cc039", size = 64676 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/35/24/09e49509b7575441adf9d1a3744e0685cfad0be4761a91037e5014df6258/django_tailwind_cli-4.1.0-py3-none-any.whl", hash = "sha256:4eb4c6bcc02661ee40b2a83dfa434aaa71867711cae5d2b6033d331f559a9408", size = 12191 },
+]
+
+[[package]]
+name = "django-typer"
+version = "3.0.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "click" },
+    { name = "django" },
+    { name = "shellingham" },
+    { name = "typer-slim" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/c4/6e/75a3d464ceb87121fda707746191bf27d0c442f7e88e7d80b9d01844cfdd/django_typer-3.0.0.tar.gz", hash = "sha256:38b9f8e2c2de9593511a0f969034bf64b6bd387549eecdf252832b3e606d5df7", size = 149897 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/9e/62/258a4f716611523aac059d2f40130eb906bdacf563f6e12ad4e6f65e6aa3/django_typer-3.0.0-py3-none-any.whl", hash = "sha256:b03b9cda603ece6555cf621e889669848074728963a2c894da7db3ce3e7f4e6e", size = 292824 },
 ]
 
 [[package]]
@@ -599,6 +631,24 @@ wheels = [
 ]
 
 [[package]]
+name = "semver"
+version = "3.0.4"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/72/d1/d3159231aec234a59dd7d601e9dd9fe96f3afff15efd33c1070019b26132/semver-3.0.4.tar.gz", hash = "sha256:afc7d8c584a5ed0a11033af086e8af226a9c0b206f313e0301f8dd7b6b589602", size = 269730 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/a6/24/4d91e05817e92e3a61c8a21e08fd0f390f5301f1c448b137c57c4bc6e543/semver-3.0.4-py3-none-any.whl", hash = "sha256:9c824d87ba7f7ab4a1890799cec8596f15c1241cb473404ea1cb0c55e4b04746", size = 17912 },
+]
+
+[[package]]
+name = "shellingham"
+version = "1.5.4"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/58/15/8b3609fd3830ef7b27b655beb4b4e9c62313a4e8da8c676e142cc210d58e/shellingham-1.5.4.tar.gz", hash = "sha256:8dbca0739d487e5bd35ab3ca4b36e11c4078f3a234bfce294b0a0291363404de", size = 10310 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/e0/f9/0595336914c5619e5f28a1fb793285925a8cd4b432c9da0a987836c7f822/shellingham-1.5.4-py2.py3-none-any.whl", hash = "sha256:7ecfff8f2fd72616f7481040475a65b2bf8af90a56c89140852d1120324e8686", size = 9755 },
+]
+
+[[package]]
 name = "six"
 version = "1.17.0"
 source = { registry = "https://pypi.org/simple" }
@@ -662,6 +712,19 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/5b/b9/1ed31d167be802da0fc95020d04cd27b7d7065cc6fbefdd2f9186f60d7bd/tomli-2.2.1-cp313-cp313-win32.whl", hash = "sha256:d3f5614314d758649ab2ab3a62d4f2004c825922f9e370b29416484086b264ec", size = 98724 },
     { url = "https://files.pythonhosted.org/packages/c7/32/b0963458706accd9afcfeb867c0f9175a741bf7b19cd424230714d722198/tomli-2.2.1-cp313-cp313-win_amd64.whl", hash = "sha256:a38aa0308e754b0e3c67e344754dff64999ff9b513e691d0e786265c93583c69", size = 109383 },
     { url = "https://files.pythonhosted.org/packages/6e/c2/61d3e0f47e2b74ef40a68b9e6ad5984f6241a942f7cd3bbfbdbd03861ea9/tomli-2.2.1-py3-none-any.whl", hash = "sha256:cb55c73c5f4408779d0cf3eef9f762b9c9f147a77de7b258bef0a5628adc85cc", size = 14257 },
+]
+
+[[package]]
+name = "typer-slim"
+version = "0.15.2"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "click" },
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/29/67/88189eb827c491646511dc6c806e2e6e543241cae5438383aa042b1dfa40/typer_slim-0.15.2.tar.gz", hash = "sha256:4a666bb7839a88f51dd25d078d36dbc1d0f37c8c2696e184fbc1f3eaa314a91b", size = 100755 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/9e/84/9b68e98bf7417d25e38b27a0296bfcbc6719b15d7000f4c09d9716fa9d11/typer_slim-0.15.2-py3-none-any.whl", hash = "sha256:4273014a3378b24367bffed45c2ce8dd3d85bd201a6f02e51ba6b19f336009be", size = 45117 },
 ]
 
 [[package]]

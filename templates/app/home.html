@@ -2,19 +2,25 @@
 
 {% block content%}
 
-{% if projects%}
+{% if projects %}
 <section class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
   {% for project in projects%}
   <c-card
-    class="h-full flex flex-col transition-all duration-200 hover:scale-[1.02] hover:shadow-lg">
+    class="h-full flex flex-col transition-all duration-200 hover:shadow-lg hover:bg-gray-100">
     <c-card.header>
       <c-card.title>{{ project.title}}</c-card.title>
       <c-card.description>{{project.details}}</c-card.description>
     </c-card.header>
-    <c-card.content>Content</c-card.content>
-    <c-card.footer>
-      Footer
-    </c-card.footer>
+    <c-card.content>
+      Content<br>
+      {% if project.repo %}
+      <c-button variant="outline">Code</c-button>
+      {% endif %}
+      {% if project.website %}
+      <c-button>Website</c-button>
+
+      {% endif %}
+    </c-card.content>
   </c-card>
   {% endfor %}
   {% else %}
