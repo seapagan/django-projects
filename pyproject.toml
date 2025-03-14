@@ -45,6 +45,8 @@ serve.help = "Run the Dev server, including tailwind"
 "static".cmd = "python manage.py collectstatic"
 "static".help = "Collect all the static files"
 
+
+
 # testing tasks
 test.help = "Run all tests using Pytest"
 test.cmd = "pytest"
@@ -59,6 +61,13 @@ test.cmd = "pytest"
 lint.ignore_fail = "return_non_zero"
 lint.sequence = ["format", "ruff", "mypy"]
 lint.help = "Run all linting checks"
+
+# populate data
+"fixture:load".cmd = "python manage.py loaddata apps"
+
+[tool.poe.tasks."fixture:dump"]
+cmd = "python manage.py dumpdata app.project"
+capture_stdout = "app/fixtures/apps.json"
 
 [tool.mypy]
 plugins = ["mypy_django_plugin.main"]
