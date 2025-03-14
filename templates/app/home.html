@@ -3,16 +3,23 @@
 {% block content%}
 
 {% if projects%}
-{% for project in projects%}
-<div>
-  <h2 class="text-3xl font-semibold mb-4">
-    {{project.title}}
-  </h2>
-  <p class="mb-2">{{project.details}}</p>
-</div>
-{% endfor %}
-{% else %}
-<p>No Projects are defined yet.</p>
+<section class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+  {% for project in projects%}
+  <c-card
+    class="h-full flex flex-col transition-all duration-200 hover:scale-[1.02] hover:shadow-lg">
+    <c-card.header>
+      <c-card.title>{{ project.title}}</c-card.title>
+      <c-card.description>{{project.details}}</c-card.description>
+    </c-card.header>
+    <c-card.content>Content</c-card.content>
+    <c-card.footer>
+      Footer
+    </c-card.footer>
+  </c-card>
+  {% endfor %}
+  {% else %}
+  <p>No Projects are defined yet.</p>
+</section>
 {% endif %}
 
 {% endblock content %}

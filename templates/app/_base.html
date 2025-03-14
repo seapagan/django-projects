@@ -7,13 +7,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% tailwind_preload_css %}
     {% tailwind_css %}
+    <script defer
+      src="https://cdn.jsdelivr.net/npm/[email protected]/dist/cdn.min.js"></script>
     <title>Projects</title>
   </head>
 
   <body>
     <h1 class="text-4xl font-bold mb-4">List of Projects</h1>
-    {% block content%}
-    {% endblock content%}
+    <main class="m-2 md:m-4 lg:m-6">
+      {% block content%}
+      {% endblock content%}
+    </main>
 
   </body>
 
