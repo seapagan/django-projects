@@ -1,40 +1,30 @@
-{% extends "app/_base.html" %}
-{% load lucide %}
+{% load tailwind_cli %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
 
-{% block content%}
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
+    {% tailwind_css %}
+    <script defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <title>Grant Ramsay</title>
+  </head>
 
-{% if projects %}
-<section class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-  {% for project in projects%}
-  <c-card
-    class="h-full flex flex-col transition-all duration-200 hover:shadow-lg hover:bg-gray-100">
-    <c-card.header>
-      <c-card.title>{{ project.title}}</c-card.title>
-      <c-card.description>{{project.details}}</c-card.description>
-    </c-card.header>
-    <c-card.content class="flex-1 flex flex-col">
-      Content
-      <div class="mt-auto pt-4 flex gap-2">
-        {% if project.repo %}
-        <c-button variant="outline">
-          <a href="{{ project.repo}}" target="_blank" rel="noopener noreferrer"
-            class="flex items-center gap-x-2">{% lucide "github" %}Code</a>
-        </c-button>
-        {% endif %}
-        {% if project.website %}
-        <c-button>
-          <a href="{{ project.website}}" target="_blank"
-            rel="noopener noreferrer"
-            class="flex items-center gap-x-2">{% lucide "external-link" %}Website</a>
-        </c-button>
-        {% endif %}
-      </div>
-    </c-card.content>
-  </c-card>
-  {% endfor %}
-  {% else %}
-  <p>No Projects are defined yet.</p>
-</section>
-{% endif %}
+  <body class="min-h-screen bg-background">
+    <main class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-8">
+      <h1 class="text-4xl font-bold mb-4">My Projects</h1>
+      <p class="mb-4 text-muted-foreground">Below you can find just a few of my
+        open source projects. Check out my <a href="https://github.com/seapagan"
+          class="link-default">GitHub
+          profile</a> for more.</p>
 
-{% endblock content %}
+      {% include "./_projects.html"%}
+
+    </main>
+
+  </body>
+
+</html>
