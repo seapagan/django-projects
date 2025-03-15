@@ -1,6 +1,11 @@
 <section class="flex flex-col justify-center w-full py-8">
   <h2 class="text-3xl font-bold mb-4">Contact Me</h2>
 
+  <p class="text-lg text-muted-foreground mb-4">I am currently open to work for
+    both
+    full-time contracts or once-off
+    projects. Drop me a message below and lets go!</p>
+
   <form method="post" class="w-full max-w-lg">
     {% csrf_token %}
 
@@ -33,10 +38,7 @@
     </div>
 
     <div class="flex items-center">
-      <button type="submit"
-        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-        Send Message
-      </button>
+      <c-button type="submit" class="cursor-pointer">Send Message</c-button>
     </div>
   </form>
 </section>

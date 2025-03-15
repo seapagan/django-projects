@@ -4,6 +4,7 @@ from typing import Any
 
 from django.contrib import messages
 from django.http import HttpRequest, HttpResponse
+from django.shortcuts import redirect
 from django.views.generic import ListView
 
 from app.forms import ContactForm
@@ -68,7 +69,7 @@ class ProjectsListView(ListView[Project]):
                 request,
                 "Thank you for your message! I'll get back to you soon.",
             )
-            return self.get(request, *args, **kwargs)
+            return redirect("projects")
 
         # If form is invalid, re-render the page with the form errors
         return self.get(request, form=form)
