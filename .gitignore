@@ -13,3 +13,4 @@ db.sqlite3
 .envrc
 .env
 app/fixtures
+github_stats_cache

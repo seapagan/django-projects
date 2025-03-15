@@ -142,3 +142,15 @@ STATICFILES_DIRS = [BASE_DIR / "assets"]
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 TAILWIND_CLI_DIST_CSS = "css/site.css"
+
+# Cache configuration for GitHub stats
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.filebased.FileBasedCache",
+        "LOCATION": BASE_DIR / "github_stats_cache",
+        "TIMEOUT": 600,  # 10 minutes in seconds
+        "OPTIONS": {
+            "MAX_ENTRIES": 1000,
+        },
+    }
+}
