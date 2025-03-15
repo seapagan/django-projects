@@ -19,7 +19,6 @@ class GitHubStats(TypedDict):
 
     stars: int
     forks: int
-    watchers: int
     open_issues: int
     open_prs: int
     last_updated: str
@@ -163,7 +162,6 @@ class GitHubAPIService:
             return {
                 "stars": repo_data.get("stargazers_count", 0),
                 "forks": repo_data.get("forks_count", 0),
-                "watchers": repo_data.get("subscribers_count", 0),
                 "open_issues": open_issues,
                 "open_prs": open_prs,
                 "last_updated": timezone.now().isoformat(),
