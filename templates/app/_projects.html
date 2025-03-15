@@ -18,49 +18,51 @@
         <c-card.description>{{project.details}}</c-card.description>
       </c-card.header>
       <c-card.content class="flex-1 flex flex-col">
-        {% if project.repo and github_stats|get_item:project.id %}
-        {% with stats=github_stats|get_item:project.id %}
-        <div class="github-stats mb-4">
-          <div class="flex gap-4 text-sm">
-            <a href="{{ project.repo}}/stargazers" target="_blank"
-              rel="noopener noreferrer" class="flex items-center gap-1">
-              {% lucide "star" class="w-4 h-4" %}
-              <span>{{ stats.stars }}</span>
-            </a>
-            <a href="{{ project.repo}}/network/members" target="_blank"
-              rel="noopener noreferrer" class="flex items-center gap-1">
-              {% lucide "git-fork" class="w-4 h-4" %}
-              <span>{{ stats.forks }}</span>
-            </a>
-            <a href="{{ project.repo}}/issues" target="_blank"
-              rel="noopener noreferrer" class="flex items-center gap-1">
-              {% lucide "circle-alert" class="w-4 h-4" %}
-              <span>{{ stats.open_issues }}</span>
-            </a>
-            <a href="{{ project.repo}}/pulls" target="_blank"
-              rel="noopener noreferrer" class="flex items-center gap-1">
-              {% lucide "git-pull-request" class="w-4 h-4" %}
-              <span>{{ stats.open_prs }}</span>
-            </a>
+        <div class="mt-auto">
+          {% if project.repo and github_stats|get_item:project.id %}
+          {% with stats=github_stats|get_item:project.id %}
+          <div class="github-stats mb-4">
+            <div class="flex gap-4 text-sm">
+              <a href="{{ project.repo}}/stargazers" target="_blank"
+                rel="noopener noreferrer" class="flex items-center gap-1">
+                {% lucide "star" class="w-4 h-4" %}
+                <span>{{ stats.stars }}</span>
+              </a>
+              <a href="{{ project.repo}}/network/members" target="_blank"
+                rel="noopener noreferrer" class="flex items-center gap-1">
+                {% lucide "git-fork" class="w-4 h-4" %}
+                <span>{{ stats.forks }}</span>
+              </a>
+              <a href="{{ project.repo}}/issues" target="_blank"
+                rel="noopener noreferrer" class="flex items-center gap-1">
+                {% lucide "circle-alert" class="w-4 h-4" %}
+                <span>{{ stats.open_issues }}</span>
+              </a>
+              <a href="{{ project.repo}}/pulls" target="_blank"
+                rel="noopener noreferrer" class="flex items-center gap-1">
+                {% lucide "git-pull-request" class="w-4 h-4" %}
+                <span>{{ stats.open_prs }}</span>
+              </a>
+            </div>
           </div>
-        </div>
-        {% endwith %}
-        {% endif %}
-        <div class="mt-auto pt-4 flex gap-2">
-          {% if project.repo %}
-          <c-button variant="outline">
-            <a href="{{ project.repo}}" target="_blank"
-              rel="noopener noreferrer"
-              class="flex items-center gap-x-2">{% lucide "github" %}Code</a>
-          </c-button>
+          {% endwith %}
           {% endif %}
-          {% if project.website %}
-          <c-button>
-            <a href="{{ project.website}}" target="_blank"
-              rel="noopener noreferrer"
-              class="flex items-center gap-x-2">{% lucide "external-link" %}Website</a>
-          </c-button>
-          {% endif %}
+          <div class="flex gap-2">
+            {% if project.repo %}
+            <c-button variant="outline">
+              <a href="{{ project.repo}}" target="_blank"
+                rel="noopener noreferrer"
+                class="flex items-center gap-x-2">{% lucide "github" %}Code</a>
+            </c-button>
+            {% endif %}
+            {% if project.website %}
+            <c-button>
+              <a href="{{ project.website}}" target="_blank"
+                rel="noopener noreferrer"
+                class="flex items-center gap-x-2">{% lucide "external-link" %}Website</a>
+            </c-button>
+            {% endif %}
+          </div>
         </div>
       </c-card.content>
     </c-card>
