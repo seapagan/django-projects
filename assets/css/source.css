@@ -60,6 +60,29 @@
   @apply px-2.5 py-0.5 rounded-full text-xs font-medium;
   background-color: var(--tag-bg);
   color: var(--tag-text);
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.tag:hover {
+  filter: brightness(0.9);
+}
+
+.tag-filter {
+  @apply px-2.5 py-0.5 rounded-full text-xs font-medium;
+  background-color: var(--tag-bg);
+  color: var(--tag-text);
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.tag-filter:hover {
+  filter: brightness(0.9);
+}
+
+.tag-filter.selected {
+  background-color: oklch(0.75 0.15 280);
+  color: oklch(0.98 0 0);
 }
 
 @custom-variant dark (&:is(.dark *));
