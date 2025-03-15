@@ -26,6 +26,36 @@
   transform: scaleX(1);
 }
 
+.has-tooltip {
+  position: relative;
+}
+
+.has-tooltip::before {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 4px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: linear-gradient(
+    to right,
+    var(--color-blue-400),
+    var(--color-purple-600)
+  );
+  color: white;
+  font-size: 12px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.has-tooltip:hover::before {
+  opacity: 1;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 :root {
