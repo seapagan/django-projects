@@ -654,9 +654,6 @@
   .gap-y-1\.5 {
     row-gap: calc(var(--spacing) * 1.5);
   }
-  .rounded-full {
-    border-radius: calc(infinity * 1px);
-  }
   .rounded-md {
     border-radius: calc(var(--radius) - 2px);
   }
@@ -675,9 +672,6 @@
   }
   .bg-background {
     background-color: var(--background);
-  }
-  .bg-blue-100 {
-    background-color: var(--color-blue-100);
   }
   .bg-card {
     background-color: var(--card);
@@ -712,9 +706,6 @@
   .px-2 {
     padding-inline: calc(var(--spacing) * 2);
   }
-  .px-2\.5 {
-    padding-inline: calc(var(--spacing) * 2.5);
-  }
   .px-3 {
     padding-inline: calc(var(--spacing) * 3);
   }
@@ -723,9 +714,6 @@
   }
   .px-8 {
     padding-inline: calc(var(--spacing) * 8);
-  }
-  .py-0\.5 {
-    padding-block: calc(var(--spacing) * 0.5);
   }
   .py-2 {
     padding-block: calc(var(--spacing) * 2);
@@ -782,9 +770,6 @@
   }
   .whitespace-nowrap {
     white-space: nowrap;
-  }
-  .text-blue-800 {
-    color: var(--color-blue-800);
   }
   .text-card-foreground {
     color: var(--card-foreground);
@@ -1018,7 +1003,20 @@
 .has-tooltip:hover::before {
   opacity: 1;
 }
+.tag {
+  border-radius: calc(infinity * 1px);
+  padding-inline: calc(var(--spacing) * 2.5);
+  padding-block: calc(var(--spacing) * 0.5);
+  font-size: var(--text-xs);
+  line-height: var(--tw-leading, var(--text-xs--line-height));
+  --tw-font-weight: var(--font-weight-medium);
+  font-weight: var(--font-weight-medium);
+  background-color: var(--tag-bg);
+  color: var(--tag-text);
+}
 :root {
+  --tag-bg: oklch(0.932 0.025 255.585);
+  --tag-text: oklch(0.424 0 265.638);
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
@@ -1054,6 +1052,8 @@
   --sidebar-ring: oklch(0.708 0 0);
 }
 .dark {
+  --tag-bg: oklch(0.269 0.02 255.585);
+  --tag-text: oklch(0.785 0 265.638);
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.145 0 0);

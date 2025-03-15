@@ -56,9 +56,17 @@
   opacity: 1;
 }
 
+.tag {
+  @apply px-2.5 py-0.5 rounded-full text-xs font-medium;
+  background-color: var(--tag-bg);
+  color: var(--tag-text);
+}
+
 @custom-variant dark (&:is(.dark *));
 
 :root {
+  --tag-bg: oklch(0.932 0.025 255.585);
+  --tag-text: oklch(0.424 0 265.638);
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
@@ -95,6 +103,8 @@
 }
 
 .dark {
+  --tag-bg: oklch(0.269 0.02 255.585);
+  --tag-text: oklch(0.785 0 265.638);
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.145 0 0);
