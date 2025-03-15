@@ -12,6 +12,7 @@ fixed very shortly.
   integration easier
 - 🧩 Component-based templates using `django-cotton` and `django-shadcn`
 - 👤 Custom user authentication system
+- 📝 Contact form with Google reCAPTCHA v2 integration for spam protection
 - 🔒 Environment-based configuration
 - 🛠️ Modern development tools integration (`pre-commit`, `ruff`, `mypy`)
 - 📱 Fully responsive design
