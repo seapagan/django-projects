@@ -6,6 +6,25 @@ from typing import Any
 
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.utils import timezone
+
+
+class ContactSubmission(models.Model):
+    """Store contact form submissions."""
+
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    message = models.TextField()
+    created_at = models.DateTimeField(default=timezone.now)
+
+    class Meta:
+        """Meta class for ContactSubmission model."""
+
+        ordering = ("-created_at",)
+
+    def __str__(self) -> str:
+        """Return the string representation of the ContactSubmission."""
+        return f"Message from {self.name} ({self.email})"
 
 
 class UserProfile(AbstractUser):

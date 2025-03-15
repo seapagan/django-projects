@@ -1,0 +1,51 @@
+<section class="flex flex-col justify-center w-full py-8">
+  <h2 class="text-3xl font-bold mb-4">Contact Me</h2>
+
+  {% if messages %}
+  {% for message in messages %}
+  <div
+    class="mb-4 p-4 {% if message.tags == 'success' %}bg-green-100 text-green-700 border-green-400{% else %}bg-red-100 text-red-700 border-red-400{% endif %} border rounded">
+    {{ message }}
+  </div>
+  {% endfor %}
+  {% endif %}
+
+  <form method="post" class="w-full max-w-lg">
+    {% csrf_token %}
+
+    <div class="mb-4">
+      <label for="{{ form.name.id_for_label }}"
+        class="block text-gray-700 text-sm font-bold mb-2">{{ form.name.label }}</label>
+      {{ form.name }}
+      {% if form.name.errors %}
+      <p class="text-red-500 text-xs italic mt-1">{{ form.name.errors.0 }}</p>
+      {% endif %}
+    </div>
+
+    <div class="mb-4">
+      <label for="{{ form.email.id_for_label }}"
+        class="block text-gray-700 text-sm font-bold mb-2">{{ form.email.label }}</label>
+      {{ form.email }}
+      {% if form.email.errors %}
+      <p class="text-red-500 text-xs italic mt-1">{{ form.email.errors.0 }}</p>
+      {% endif %}
+    </div>
+
+    <div class="mb-6">
+      <label for="{{ form.message.id_for_label }}"
+        class="block text-gray-700 text-sm font-bold mb-2">Message</label>
+      {{ form.message }}
+      {% if form.message.errors %}
+      <p class="text-red-500 text-xs italic mt-1">{{ form.message.errors.0 }}
+      </p>
+      {% endif %}
+    </div>
+
+    <div class="flex items-center">
+      <button type="submit"
+        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+        Send Message
+      </button>
+    </div>
+  </form>
+</section>
