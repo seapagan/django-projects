@@ -2,20 +2,58 @@
 {% load app_extras %}
 
 {% if projects %}
-<section>
+<section x-data="initializeProjects()">
   <h2 class="text-3xl font-bold mb-4">My Projects</h2>
   <p class="mb-4 text-muted-foreground">Below you can find just a few of my
     open source projects. Check out my <a href="https://github.com/seapagan"
       class="link-default" target="_blank" rel="noopener noreferrer">GitHub
       profile</a> for more.</p>
-  <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6"></div>
+
+  <!-- Tag filter UI -->
+  <div class="mb-6">
+    <h3 class="text-lg font-semibold mb-2">Filter by tags:</h3>
+    <div class="flex flex-wrap gap-2">
+      <template x-for="tag in allTags" :key="tag">
+        <button @click="toggleTag(tag)"
+          :class="{'selected': isTagSelected(tag)}" class="tag-filter">
+          <span x-text="tag"></span>
+        </button>
+      </template>
+    </div>
+    <div class="mt-2">
+      <button @click="selectedTags = []; filterProjects()"
+        :disabled="selectedTags.length === 0"
+        :class="{'opacity-30 cursor-not-allowed': selectedTags.length === 0, 'hover:underline': selectedTags.length > 0}"
+        class="text-sm text-primary transition-opacity duration-200">
+        Clear filters
+      </button>
+    </div>
+  </div>
+
   <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+    <template x-if="filteredProjects.length === 0">
+      <div class="col-span-full p-8 text-center bg-secondary/50">
+        <p class="text-lg text-muted-foreground">No projects match your selected
+          filters</p>
+      </div>
+    </template>
+
     {% for project in projects%}
     <c-card
-      class="h-full flex flex-col transition-all duration-200 hover:shadow-lg hover:bg-gray-100">
+      class="project-card h-full flex flex-col transition-all duration-200 hover:shadow-lg hover:bg-gray-100">
       <c-card.header>
         <c-card.title>{{ project.title}}</c-card.title>
         <c-card.description>{{project.details}}</c-card.description>
+        {% if project.tags.all %}
+        <div class="flex flex-wrap gap-2 mt-2">
+          {% for tag in project.tags.all %}
+          <span class="inline-flex items-center tag"
+            @click.prevent="toggleTag('{{ tag.name }}')" role="button">
+            {{ tag.name }}
+          </span>
+          {% endfor %}
+        </div>
+        {% endif %}
       </c-card.header>
       <c-card.content class="flex-1 flex flex-col">
         <div class="mt-auto">
@@ -76,5 +114,6 @@
     </c-card>
     {% endfor %}
   </div>
+
 </section>
 {% endif %}

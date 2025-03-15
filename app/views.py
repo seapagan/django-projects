@@ -15,7 +15,7 @@ class ProjectsListView(ListView[Project]):
     model = Project
     context_object_name = "projects"
 
-    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:  # noqa: ANN401
         """Get context data for the template.
 
         This method fetches GitHub stats for all projects that have a repo URL.
