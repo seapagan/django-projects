@@ -148,11 +148,23 @@ class GitHubAPIService:
                     # If no Link header with last page, count from response
                     open_prs = len(pr_response.json())
 
+            # Fetch actual open issues count (excluding PRs)
+            issues_response = client.get(
+                f"https://api.github.com/search/issues?q=repo:{owner}/{repo}+is:issue+is:open&per_page=1",
+                headers=self.headers,
+                timeout=10.0,
+            )
+
+            open_issues = 0
+            if issues_response.status_code == HTTP_200_OK:
+                issues_data = issues_response.json()
+                open_issues = issues_data.get("total_count", 0)
+
             return {
                 "stars": repo_data.get("stargazers_count", 0),
                 "forks": repo_data.get("forks_count", 0),
                 "watchers": repo_data.get("subscribers_count", 0),
-                "open_issues": repo_data.get("open_issues_count", 0),
+                "open_issues": open_issues,
                 "open_prs": open_prs,
                 "last_updated": timezone.now().isoformat(),
             }
