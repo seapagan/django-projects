@@ -1,13 +1,13 @@
 """Configure the Admin pages."""
 
-from typing import Any
+from typing import Any, Optional
 
 from django.apps import apps
 from django.contrib import admin
 from django.contrib.admin import AdminSite
 from django.http import HttpRequest
 
-from app.models import Project, Tag, UserProfile
+from app.models import ContactSubmission, Project, Tag, UserProfile
 
 
 class CustomAdminSite(AdminSite):
@@ -57,4 +57,26 @@ class ProjectAdmin(admin.ModelAdmin[Project]):
 
 admin_site.register(Project, ProjectAdmin)
 admin_site.register(Tag, TagAdmin)
+
+
+class ContactSubmissionAdmin(admin.ModelAdmin[ContactSubmission]):
+    """Define the admin interface for Contact Submissions."""
+
+    list_display = ("name", "email", "created_at")
+    search_fields = ("name", "email", "message")
+    date_hierarchy = "created_at"
+    readonly_fields = ("name", "email", "message", "created_at")
+
+    def has_add_permission(self, _request: HttpRequest) -> bool:
+        """Disable add permission."""
+        return False
+
+    def has_change_permission(
+        self, _request: HttpRequest, _obj: Optional[ContactSubmission] = None
+    ) -> bool:
+        """Disable change permission."""
+        return False
+
+
+admin_site.register(ContactSubmission, ContactSubmissionAdmin)
 admin_site.register(UserProfile)

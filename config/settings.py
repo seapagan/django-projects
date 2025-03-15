@@ -31,6 +31,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 
+RECAPTCHA_PUBLIC_KEY = os.getenv("RECAPTCHA_SITE_KEY")
+RECAPTCHA_PRIVATE_KEY = os.getenv("RECAPTCHA_SECRET_KEY")
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(int(os.getenv("DJANGO_DEBUG", "0")))
 
@@ -51,6 +54,7 @@ INSTALLED_APPS = [
     "django_browser_reload",
     "django_cotton",
     "lucide",
+    "django_recaptcha",
 ]
 
 MIDDLEWARE = [
