@@ -1030,6 +1030,7 @@
 }
 @layer base {
   * {
+    font-family: Lato, ui-sans-serif, sans-serif;
     border-color: var(--border);
     outline-color: color-mix(in oklab, var(--ring) 50%, transparent);
   }
