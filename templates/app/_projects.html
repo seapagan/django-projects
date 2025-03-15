@@ -22,22 +22,26 @@
         {% with stats=github_stats|get_item:project.id %}
         <div class="github-stats mb-4">
           <div class="flex gap-4 text-sm">
-            <div class="flex items-center gap-1">
+            <a href="{{ project.repo}}/stargazers" target="_blank"
+              rel="noopener noreferrer" class="flex items-center gap-1">
               {% lucide "star" class="w-4 h-4" %}
               <span>{{ stats.stars }}</span>
-            </div>
-            <div class="flex items-center gap-1">
+            </a>
+            <a href="{{ project.repo}}/network/members" target="_blank"
+              rel="noopener noreferrer" class="flex items-center gap-1">
               {% lucide "git-fork" class="w-4 h-4" %}
               <span>{{ stats.forks }}</span>
-            </div>
-            <div class="flex items-center gap-1">
+            </a>
+            <a href="{{ project.repo}}/issues" target="_blank"
+              rel="noopener noreferrer" class="flex items-center gap-1">
               {% lucide "circle-alert" class="w-4 h-4" %}
               <span>{{ stats.open_issues }}</span>
-            </div>
-            <div class="flex items-center gap-1">
+            </a>
+            <a href="{{ project.repo}}/pulls" target="_blank"
+              rel="noopener noreferrer" class="flex items-center gap-1">
               {% lucide "git-pull-request" class="w-4 h-4" %}
               <span>{{ stats.open_prs }}</span>
-            </div>
+            </a>
           </div>
         </div>
         {% endwith %}
