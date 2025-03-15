@@ -27,7 +27,7 @@
       {% endif %}
     </div>
 
-    <div class="mb-6">
+    <div class="mb-4">
       <label for="{{ form.message.id_for_label }}"
         class="block text-gray-700 text-sm font-bold mb-2">Message</label>
       {{ form.message }}
@@ -36,6 +36,15 @@
       </p>
       {% endif %}
     </div>
+
+    <div class="mb-6">
+      {{ form.captcha }}
+      {% if form.captcha.errors %}
+      <p class="text-red-500 text-xs italic mt-1">{{ form.captcha.errors.0 }}
+      </p>
+      {% endif %}
+    </div>
+
 
     <div class="flex items-center">
       <c-button type="submit" class="cursor-pointer">Send Message</c-button>

@@ -2,12 +2,21 @@
 
 # ruff: noqa:  RUF012,E501
 from django import forms
+from django_recaptcha.fields import ReCaptchaField  # type: ignore
+from django_recaptcha.widgets import ReCaptchaV2Checkbox  # type: ignore
 
 from app.models import ContactSubmission
 
 
 class ContactForm(forms.ModelForm[ContactSubmission]):
     """Define the Contact Form using ModelForm."""
+
+    captcha = ReCaptchaField(
+        widget=ReCaptchaV2Checkbox(),
+        error_messages={
+            "required": "Please tick the box to prove you are not a robot.",
+        },
+    )
 
     class Meta:
         """Meta class for ContactForm."""
@@ -37,4 +46,5 @@ class ContactForm(forms.ModelForm[ContactSubmission]):
                     "placeholder": "Type your Message",
                 }
             ),
+            "captcha": ReCaptchaField(),
         }

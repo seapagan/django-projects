@@ -72,6 +72,10 @@ class ProjectsListView(ListView[Project]):
             )
             return redirect("projects")
 
+        # Check for captcha errors and add them to messages
+        if "captcha" in form.errors:
+            messages.error(request, str(form.errors["captcha"][0]))
+
         # If form is invalid, re-render the page with the form errors
         return self.get(request, form=form)
 
