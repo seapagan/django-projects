@@ -35,7 +35,7 @@ class TagAdmin(admin.ModelAdmin[Tag]):
 
     list_display = ("name", "slug", "created_at")
     search_fields = ("name",)
-    prepopulated_fields = {"slug": ("name",)}
+    prepopulated_fields = {"slug": ("name",)}  # noqa: RUF012
 
 
 class ProjectAdmin(admin.ModelAdmin[Project]):
