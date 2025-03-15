@@ -1,6 +1,6 @@
 """Define any forms used in the project."""
 
-# ruff: noqa: RUF012, E501
+# ruff: noqa:  RUF012,E501
 from django import forms
 
 from app.models import ContactSubmission
@@ -13,7 +13,7 @@ class ContactForm(forms.ModelForm[ContactSubmission]):
         """Meta class for ContactForm."""
 
         model = ContactSubmission
-        fields = ["name", "email", "message"]
+        fields = ("name", "email", "message")
         widgets = {
             "name": forms.TextInput(
                 attrs={

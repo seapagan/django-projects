@@ -1,5 +1,6 @@
 """Setup views for the app application."""
 
+# ruff: noqa: ANN401
 from typing import Any
 
 from django.contrib import messages
@@ -19,11 +20,11 @@ class ProjectsListView(ListView[Project]):
     model = Project
     context_object_name = "projects"
 
-    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:  # noqa: ANN401
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         """Get context data for the template.
 
-        This method fetches GitHub stats for all projects that have a repo URL and adds
-        the contact form.
+        This method fetches GitHub stats for all projects that have a repo URL
+        and adds the contact form.
 
         Args:
             **kwargs: Additional context data.
@@ -49,7 +50,7 @@ class ProjectsListView(ListView[Project]):
         return context
 
     def post(
-        self, request: HttpRequest, *args: Any, **kwargs: Any
+        self, request: HttpRequest, *_args: Any, **_kwargs: Any
     ) -> HttpResponse:
         """Handle POST requests for contact form submission.
 

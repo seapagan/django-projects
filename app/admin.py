@@ -67,12 +67,12 @@ class ContactSubmissionAdmin(admin.ModelAdmin[ContactSubmission]):
     date_hierarchy = "created_at"
     readonly_fields = ("name", "email", "message", "created_at")
 
-    def has_add_permission(self, request: HttpRequest) -> bool:
+    def has_add_permission(self, _request: HttpRequest) -> bool:
         """Disable add permission."""
         return False
 
     def has_change_permission(
-        self, request: HttpRequest, obj: Optional[ContactSubmission] = None
+        self, _request: HttpRequest, _obj: Optional[ContactSubmission] = None
     ) -> bool:
         """Disable change permission."""
         return False
