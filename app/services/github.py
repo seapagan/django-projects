@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import os
 import re
-from typing import Any, TypedDict
+from typing import Any, TypedDict, cast
 from urllib.parse import urlparse
 
 import httpx
@@ -87,7 +87,7 @@ class GitHubAPIService:
         if not force_refresh:
             cached_stats = cache.get(cache_key)
             if isinstance(cached_stats, dict):
-                return cached_stats  # type: ignore
+                return cast("GitHubStats", cached_stats)
 
         # Cache miss or force refresh, fetch from API
         owner, repo = self.parse_repo_url(repo_url)
