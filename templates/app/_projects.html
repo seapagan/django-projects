@@ -1,4 +1,5 @@
 {% load lucide %}
+{% load app_extras %}
 
 {% if projects %}
 <section>
@@ -17,7 +18,35 @@
         <c-card.description>{{project.details}}</c-card.description>
       </c-card.header>
       <c-card.content class="flex-1 flex flex-col">
-        GitHub stats
+        {% if project.repo and github_stats|get_item:project.id %}
+        {% with stats=github_stats|get_item:project.id %}
+        <div class="github-stats mb-4">
+          <h4 class="text-sm font-semibold mb-2">GitHub Stats</h4>
+          <div class="grid grid-cols-2 gap-2 text-sm">
+            <div class="flex items-center gap-1">
+              {% lucide "star" class="w-4 h-4" %}
+              <span>{{ stats.stars }}</span>
+            </div>
+            <div class="flex items-center gap-1">
+              {% lucide "git-fork" class="w-4 h-4" %}
+              <span>{{ stats.forks }}</span>
+            </div>
+            <div class="flex items-center gap-1">
+              {% lucide "eye" class="w-4 h-4" %}
+              <span>{{ stats.watchers }}</span>
+            </div>
+            <div class="flex items-center gap-1">
+              {% lucide "circle-alert" class="w-4 h-4" %}
+              <span>{{ stats.open_issues }}</span>
+            </div>
+            <div class="flex items-center gap-1">
+              {% lucide "git-pull-request" class="w-4 h-4" %}
+              <span>{{ stats.open_prs }}</span>
+            </div>
+          </div>
+        </div>
+        {% endwith %}
+        {% endif %}
         <div class="mt-auto pt-4 flex gap-2">
           {% if project.repo %}
           <c-button variant="outline">
