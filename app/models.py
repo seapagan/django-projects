@@ -19,6 +19,7 @@ class Project(models.Model):
     details = models.TextField(blank=True, default="")
     repo = models.URLField(blank=True)
     website = models.URLField(blank=True)
+    tags = models.ManyToManyField("Tag", blank=True, related_name="projects")
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -26,3 +27,31 @@ class Project(models.Model):
     def __str__(self) -> str:
         """Return the string representation of the Project."""
         return self.title
+
+
+class Tag(models.Model):
+    """Define the Tags model.
+
+    This will contain a list of tags that can be associated with projects.
+    """
+
+    name = models.CharField(max_length=50, unique=True)
+    slug = models.SlugField(max_length=50, unique=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        """Meta class for Tag model."""
+
+        ordering = ["name"]
+
+    def __str__(self) -> str:
+        """Return the string representation of the Tag."""
+        return self.name
+
+    def save(self, *args, **kwargs):
+        """Override save to automatically generate slug."""
+        from django.utils.text import slugify
+
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
