@@ -2,57 +2,7 @@
 {% load app_extras %}
 
 {% if projects %}
-<section x-data="{
-  allProjects: [],
-  filteredProjects: [],
-  selectedTags: [],
-  allTags: [],
-
-  init() {
-    // Initialize with all projects
-    this.allProjects = Array.from(document.querySelectorAll('.project-card')).map(card => ({
-      element: card,
-      tags: Array.from(card.querySelectorAll('.tag')).map(tag => tag.textContent.trim())
-    }));
-    this.filteredProjects = [...this.allProjects];
-
-    // Extract all unique tags
-    const tagSet = new Set();
-    this.allProjects.forEach(project => {
-      project.tags.forEach(tag => tagSet.add(tag));
-    });
-    this.allTags = Array.from(tagSet).sort();
-  },
-
-  toggleTag(tag) {
-    if (this.selectedTags.includes(tag)) {
-      this.selectedTags = this.selectedTags.filter(t => t !== tag);
-    } else {
-      this.selectedTags.push(tag);
-    }
-    this.filterProjects();
-  },
-
-  filterProjects() {
-    // Filter projects based on selected tags
-    this.filteredProjects = this.allProjects.filter(project => {
-      const hasAllSelectedTags = this.selectedTags.length === 0 ||
-        this.selectedTags.every(tag => project.tags.includes(tag));
-
-      if (hasAllSelectedTags) {
-        project.element.classList.remove('hidden');
-      } else {
-        project.element.classList.add('hidden');
-      }
-
-      return hasAllSelectedTags;
-    });
-  },
-
-  isTagSelected(tag) {
-    return this.selectedTags.includes(tag);
-  }
-}">
+<section x-data="initializeProjects()">
   <h2 class="text-3xl font-bold mb-4">My Projects</h2>
   <p class="mb-4 text-muted-foreground">Below you can find just a few of my
     open source projects. Check out my <a href="https://github.com/seapagan"
@@ -98,7 +48,7 @@
         <div class="flex flex-wrap gap-2 mt-2">
           {% for tag in project.tags.all %}
           <span class="inline-flex items-center tag"
-            @click="toggleTag('{{ tag.name }}')">
+            @click.prevent="toggleTag('{{ tag.name }}')" role="button">
             {{ tag.name }}
           </span>
           {% endfor %}
