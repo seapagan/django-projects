@@ -7,7 +7,7 @@ from django.http import HttpRequest, HttpResponse
 from django.views.generic import ListView
 
 from app.forms import ContactForm
-from app.models import ContactSubmission, Project
+from app.models import Project
 from app.services.github import GitHubAPIService, GitHubStats
 
 
@@ -62,12 +62,8 @@ class ProjectsListView(ListView[Project]):
         """
         form = ContactForm(request.POST)
         if form.is_valid():
-            # Save the form data to the database
-            ContactSubmission.objects.create(
-                name=form.cleaned_data["name"],
-                email=form.cleaned_data["email"],
-                message=form.cleaned_data["message"],
-            )
+            # Save the form data directly to create a new ContactSubmission
+            form.save()
             messages.success(
                 request,
                 "Thank you for your message! I'll get back to you soon.",
