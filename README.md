@@ -71,6 +71,8 @@ The application uses environment variables for configuration. Key settings:
 
 - `DJANGO_SECRET_KEY`: Your Django secret key
 - `DJANGO_DEBUG`: Set to 1 for development, 0 for production
+- `RECAPTCHA_SITE_KEY`: Your Google reCAPTCHA v2 site key
+- `RECAPTCHA_SECRET_KEY`: Your Google reCAPTCHA v2 secret key
 
 Create an `.env` file in the project root with the following content, or set the
 environment variables directly:
@@ -78,7 +80,19 @@ environment variables directly:
 ```env
 DJANGO_SECRET_KEY=your-secret-key
 DJANGO_DEBUG=1 # sets debug mode
+RECAPTCHA_SITE_KEY=your-recaptcha-site-key
+RECAPTCHA_SECRET_KEY=your-recaptcha-secret-key
 ```
+
+To get your reCAPTCHA keys (required for the contact form functionality):
+
+1. Visit the [Google reCAPTCHA Admin Console](https://www.google.com/recaptcha/admin)
+2. Sign in with your Google account
+3. Click the "+" button to create a new site
+4. Choose "reCAPTCHA v2" and "I'm not a robot" Checkbox
+5. Add your domain(s) to the list (you can use '127.0.0.1' for local testing, be
+   sure to add the correct domain when you deploy)
+6. Copy the "Site Key" to `RECAPTCHA_SITE_KEY` and "Secret Key" to `RECAPTCHA_SECRET_KEY`
 
 > [!NOTE]
 >
