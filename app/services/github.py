@@ -65,38 +65,68 @@ class GitHubAPIService:
             return None
         return f"github_stats:{owner}/{repo}"
 
-    def get_repo_stats(
-        self, repo_url: str, *, force_refresh: bool = False
-    ) -> GitHubStats | None:
-        """Fetch repository statistics from GitHub API with caching.
+    def get_stats_for_projects(
+        self, projects: list[Any], *, force_refresh: bool = False
+    ) -> dict[int, GitHubStats]:
+        """Fetch GitHub stats for multiple projects.
 
         Args:
-            repo_url: The GitHub repository URL.
+            projects: List of Project instances.
             force_refresh: Whether to bypass the cache and fetch fresh data.
 
         Returns:
-            A dictionary containing repository statistics, or None if fetching
-            fails.
+            A dictionary mapping project IDs to their GitHub statistics.
         """
-        cache_key = self.get_cache_key(repo_url)
-        if not cache_key:
-            return None
+        # Build a list of cache keys for all projects
+        cache_keys = {}  # Map project ID to cache key
+        for project in projects:
+            if project.repo:
+                cache_key = self.get_cache_key(project.repo)
+                if cache_key:
+                    cache_keys[project.id] = cache_key
 
-        # Check cache first if not forcing refresh
-        if not force_refresh:
-            cached_stats = cache.get(cache_key)
-            if isinstance(cached_stats, dict):
-                return cast("GitHubStats", cached_stats)
+        # Get all cached stats at once
+        cached_stats = cache.get_many(cache_keys.values())
+        print(f"Found {len(cached_stats)} cached stats")
 
-        # Cache miss or force refresh, fetch from API
-        owner, repo = self.parse_repo_url(repo_url)
-        stats = self._fetch_repo_stats(owner, repo)
+        # Initialize result map
+        stats_map: dict[int, GitHubStats] = {}
 
-        if stats:
-            # Store in cache
-            cache.set(cache_key, stats, self.CACHE_TIMEOUT)
+        # Process each project
+        for project in projects:
+            if not project.repo:
+                continue
 
-        return stats
+            cache_key = cache_keys.get(project.id)
+            if not cache_key:
+                continue
+
+            # Check if we have cached data
+            cached_data = cached_stats.get(cache_key)
+            has_cache = isinstance(cached_data, dict)
+
+            if has_cache and not force_refresh:
+                # Use cached data
+                print(f"Using cached data for {project.repo}")
+                stats_map[project.id] = cast("GitHubStats", cached_data)
+                continue
+
+            # Need to fetch fresh data
+            print(f"Fetching fresh data for {project.repo}")
+            owner, repo = self.parse_repo_url(project.repo)
+            stats = self._fetch_repo_stats(owner, repo)
+
+            if stats:
+                # Store in cache and result map
+                print(f"Updating cache for {project.repo}")
+                cache.set(cache_key, stats, self.CACHE_TIMEOUT)
+                stats_map[project.id] = stats
+            elif has_cache:
+                # If fetch failed but we have cached data, use that
+                print(f"Fetch failed, using cached data for {project.repo}")
+                stats_map[project.id] = cast("GitHubStats", cached_data)
+
+        return stats_map
 
     def _fetch_repo_stats(
         self, owner: str | None, repo: str | None
@@ -165,24 +195,3 @@ class GitHubAPIService:
                 "open_prs": open_prs,
                 "last_updated": timezone.now().isoformat(),
             }
-
-    def get_stats_for_projects(
-        self, projects: list[Any]
-    ) -> dict[int, GitHubStats]:
-        """Fetch GitHub stats for multiple projects.
-
-        Args:
-            projects: List of Project instances.
-
-        Returns:
-            A dictionary mapping project IDs to their GitHub statistics.
-        """
-        stats_map: dict[int, GitHubStats] = {}
-
-        for project in projects:
-            if project.repo:
-                stats = self.get_repo_stats(project.repo)
-                if stats:
-                    stats_map[project.id] = stats
-
-        return stats_map
