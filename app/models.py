@@ -59,7 +59,7 @@ class GitHubStats(models.Model):
         if not self.last_updated:
             return True
         age = timezone.now() - self.last_updated
-        return age > timedelta(minutes=10)
+        return age > timedelta(minutes=30)
 
 
 class Project(models.Model):

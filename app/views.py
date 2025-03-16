@@ -38,7 +38,7 @@ class ProjectsListView(ListView[Project]):
         if "form" not in context:
             context["form"] = ContactForm()
 
-        # Get GitHub stats from database and trigger async updates if needed
+        # Get GitHub stats from database and trigger updates if needed
         github_service = GitHubAPIService()
         github_stats = github_service.get_stats_for_projects(
             list(self.get_queryset())
