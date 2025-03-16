@@ -239,6 +239,7 @@ dependencies = [
     { name = "django-cotton" },
     { name = "django-recaptcha" },
     { name = "django-stubs-ext" },
+    { name = "http-response-codes" },
     { name = "httpx" },
     { name = "lucide", extra = ["django"] },
     { name = "python-dotenv" },
@@ -262,6 +263,7 @@ requires-dist = [
     { name = "django-cotton", specifier = ">=2.0.0" },
     { name = "django-recaptcha", specifier = ">=4.0.0" },
     { name = "django-stubs-ext", specifier = ">=5.1.3" },
+    { name = "http-response-codes", specifier = ">=0.2.0" },
     { name = "httpx", specifier = ">=0.27.0" },
     { name = "lucide", extras = ["django"], specifier = ">=1.1.3" },
     { name = "python-dotenv", specifier = ">=1.0.1" },
@@ -398,6 +400,15 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/f5/38/3af3d3633a34a3316095b39c8e8fb4853a28a536e55d347bd8d8e9a14b03/h11-0.14.0.tar.gz", hash = "sha256:8f19fbbe99e72420ff35c00b27a34cb9937e902a8b810e2c88300c6f0a3b699d", size = 100418 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/95/04/ff642e65ad6b90db43e668d70ffb6736436c7ce41fcc549f4e9472234127/h11-0.14.0-py3-none-any.whl", hash = "sha256:e3fe4ac4b851c468cc8363d500db52c2ead036020723024a109d37346efaa761", size = 58259 },
+]
+
+[[package]]
+name = "http-response-codes"
+version = "0.2.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/95/e0/10c19d3ce537c7248bbef23ee5cc8aedb0ebea56b4ebbb9f86dc822413b1/http_response_codes-0.2.0.tar.gz", hash = "sha256:efa8b153300e00b75735e1a4b4fadb76cca147dc7447b917ba0f8f0c993c4281", size = 54852 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/5e/9e/c759f87104813c6a2b46437e046fdbde587e6bb51eb7af77d84ef67908ae/http_response_codes-0.2.0-py3-none-any.whl", hash = "sha256:9d7b329990ffcc072b8f0019e8879b03786e708f422b6bf68b1395f4599a29f0", size = 10682 },
 ]
 
 [[package]]

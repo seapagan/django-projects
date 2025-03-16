@@ -10,8 +10,7 @@ from urllib.parse import urlparse
 import httpx
 from django.core.cache import cache
 from django.utils import timezone
-
-HTTP_200_OK = 200
+from response_codes import HTTP_200_OK
 
 
 class GitHubStats(TypedDict):
