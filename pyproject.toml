@@ -72,7 +72,7 @@ capture_stdout = "app/fixtures/apps.json"
 
 [tool.mypy]
 plugins = ["mypy_django_plugin.main"]
-python_version = "3.9"
+python_version = "3.10"
 exclude = "manage.py"
 
 [[tool.mypy.overrides]]
@@ -86,7 +86,7 @@ django_settings_module = "config.settings"
 extend-exclude = ["app/apps.py", "app/migrations", "manage.py"]
 line-length = 80
 src = ["app"]
-target-version = "py39"
+target-version = "py310"
 
 [tool.ruff.format]
 indent-style = "space"

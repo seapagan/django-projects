@@ -1,6 +1,6 @@
 """Configure the Admin pages."""
 
-from typing import Any, Optional
+from typing import Any
 
 from django.apps import apps
 from django.contrib import admin
@@ -13,9 +13,11 @@ from app.models import ContactSubmission, GitHubStats, Project, Tag, UserProfile
 class CustomAdminSite(AdminSite):
     """Customize the Admin Site."""
 
-    def get_app_list(self, request: HttpRequest) -> list[dict[str, Any]]:  # type: ignore
+    def get_app_list(
+        self, request: HttpRequest, app_label: str | None = None
+    ) -> list[dict[str, Any]]:
         """Customize the app list to add a count."""
-        app_list = super().get_app_list(request)
+        app_list = super().get_app_list(request, app_label)
         for app in app_list:
             for model in app["models"]:
                 model_class = apps.get_model(
@@ -72,7 +74,7 @@ class ContactSubmissionAdmin(admin.ModelAdmin[ContactSubmission]):
         return False
 
     def has_change_permission(
-        self, _request: HttpRequest, _obj: Optional[ContactSubmission] = None
+        self, _request: HttpRequest, _obj: ContactSubmission | None = None
     ) -> bool:
         """Disable change permission."""
         return False
@@ -108,7 +110,7 @@ class GitHubStatsAdmin(admin.ModelAdmin[GitHubStats]):
         return False
 
     def has_change_permission(
-        self, _request: HttpRequest, _obj: Optional[GitHubStats] = None
+        self, _request: HttpRequest, _obj: GitHubStats | None = None
     ) -> bool:
         """Disable change permission."""
         return False
