@@ -4,29 +4,13 @@
 from typing import Any
 
 from django.contrib import messages
-from django.http import HttpRequest, HttpResponse, JsonResponse
+from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect
 from django.views.generic import ListView
 
 from app.forms import ContactForm
 from app.models import Project
-from app.services.github import GitHubAPIService, GitHubStats
-
-
-def refresh_github_stats(_request: HttpRequest) -> JsonResponse:
-    """API endpoint to refresh GitHub stats for all projects."""
-    print("\n=== Refreshing GitHub Stats ===")
-    github_service = GitHubAPIService()
-    projects = Project.objects.filter(repo__isnull=False).exclude(repo="")
-    print(f"Found {len(projects)} projects with GitHub repos")
-
-    # Force refresh stats for all projects
-    github_stats = github_service.get_stats_for_projects(
-        list(projects), force_refresh=True
-    )
-
-    print(f"\nReturning stats for {len(github_stats)} projects")
-    return JsonResponse({"github_stats": github_stats})
+from app.services.github import GitHubAPIService
 
 
 class ProjectsListView(ListView[Project]):
@@ -54,12 +38,10 @@ class ProjectsListView(ListView[Project]):
         if "form" not in context:
             context["form"] = ContactForm()
 
-        # Fetch GitHub stats for projects from cache (never force refresh on page load)
+        # Get GitHub stats from database and trigger async updates if needed
         github_service = GitHubAPIService()
-        github_stats: dict[int, GitHubStats] = (
-            github_service.get_stats_for_projects(
-                list(self.get_queryset()), force_refresh=False
-            )
+        github_stats = github_service.get_stats_for_projects(
+            list(self.get_queryset())
         )
 
         # Add GitHub stats to context

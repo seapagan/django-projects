@@ -65,28 +65,28 @@
               <a href="{{ project.repo}}/stargazers" target="_blank"
                 rel="noopener noreferrer" tabindex="0"
                 class="relative flex items-center gap-1 has-tooltip"
-                data-tooltip="Repository Stars" data-stat="stars">
+                data-tooltip="Repository Stars">
                 {% lucide "star" class="w-4 h-4" %}
                 <span>{{ stats.stars }}</span>
               </a>
               <a href="{{ project.repo}}/network/members" target="_blank"
                 rel="noopener noreferrer" tabindex="0"
                 class="relative flex items-center gap-1 has-tooltip"
-                data-tooltip="Repository Forks" data-stat="forks">
+                data-tooltip="Repository Forks">
                 {% lucide "git-fork" class="w-4 h-4" %}
                 <span>{{ stats.forks }}</span>
               </a>
               <a href="{{ project.repo}}/issues" target="_blank"
                 rel="noopener noreferrer" tabindex="0"
                 class="relative flex items-center gap-1 has-tooltip"
-                data-tooltip="Open Issues" data-stat="issues">
+                data-tooltip="Open Issues">
                 {% lucide "circle-alert" class="w-4 h-4" %}
                 <span>{{ stats.open_issues }}</span>
               </a>
               <a href="{{ project.repo}}/pulls" target="_blank"
                 rel="noopener noreferrer" tabindex="0"
                 class="relative flex items-center gap-1 has-tooltip"
-                data-tooltip="Open Pull Requests" data-stat="prs">
+                data-tooltip="Open Pull Requests">
                 {% lucide "git-pull-request" class="w-4 h-4" %}
                 <span>{{ stats.open_prs }}</span>
               </a>

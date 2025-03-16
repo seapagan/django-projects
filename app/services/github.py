@@ -4,29 +4,19 @@ from __future__ import annotations
 
 import os
 import re
-from typing import Any, TypedDict, cast
+from typing import TYPE_CHECKING
 from urllib.parse import urlparse
 
 import httpx
-from django.core.cache import cache
 from django.utils import timezone
 from response_codes import HTTP_200_OK
 
-
-class GitHubStats(TypedDict):
-    """Type definition for GitHub repository statistics."""
-
-    stars: int
-    forks: int
-    open_issues: int
-    open_prs: int
-    last_updated: str
+if TYPE_CHECKING:
+    from app.models import GitHubStats, Project
 
 
 class GitHubAPIService:
-    """Service for interacting with GitHub API with caching."""
-
-    CACHE_TIMEOUT = 600  # 10 minutes in seconds
+    """Service for interacting with GitHub API."""
 
     def __init__(self) -> None:
         """Initialize the GitHub API service."""
@@ -51,86 +41,65 @@ class GitHubAPIService:
             return parts[0], parts[1]
         return None, None
 
-    def get_cache_key(self, repo_url: str) -> str | None:
-        """Generate a cache key for a repository URL.
-
-        Args:
-            repo_url: The GitHub repository URL.
-
-        Returns:
-            A cache key string, or None if the URL is invalid.
-        """
-        owner, repo = self.parse_repo_url(repo_url)
-        if not owner or not repo:
-            return None
-        return f"github_stats:{owner}/{repo}"
-
     def get_stats_for_projects(
-        self, projects: list[Any], *, force_refresh: bool = False
+        self, projects: list[Project]
     ) -> dict[int, GitHubStats]:
-        """Fetch GitHub stats for multiple projects.
+        """Get GitHub stats for multiple projects.
 
         Args:
             projects: List of Project instances.
-            force_refresh: Whether to bypass the cache and fetch fresh data.
 
         Returns:
             A dictionary mapping project IDs to their GitHub statistics.
         """
-        # Build a list of cache keys for all projects
-        cache_keys = {}  # Map project ID to cache key
-        for project in projects:
-            if project.repo:
-                cache_key = self.get_cache_key(project.repo)
-                if cache_key:
-                    cache_keys[project.id] = cache_key
-
-        # Get all cached stats at once
-        cached_stats = cache.get_many(cache_keys.values())
-        print(f"Found {len(cached_stats)} cached stats")
-
-        # Initialize result map
         stats_map: dict[int, GitHubStats] = {}
 
-        # Process each project
         for project in projects:
-            if not project.repo:
-                continue
-
-            cache_key = cache_keys.get(project.id)
-            if not cache_key:
-                continue
-
-            # Check if we have cached data
-            cached_data = cached_stats.get(cache_key)
-            has_cache = isinstance(cached_data, dict)
-
-            if has_cache and not force_refresh:
-                # Use cached data
-                print(f"Using cached data for {project.repo}")
-                stats_map[project.id] = cast("GitHubStats", cached_data)
-                continue
-
-            # Need to fetch fresh data
-            print(f"Fetching fresh data for {project.repo}")
-            owner, repo = self.parse_repo_url(project.repo)
-            stats = self._fetch_repo_stats(owner, repo)
-
-            if stats:
-                # Store in cache and result map
-                print(f"Updating cache for {project.repo}")
-                cache.set(cache_key, stats, self.CACHE_TIMEOUT)
+            if project.repo:
+                # Get or create stats for this project
+                stats = project.get_or_create_stats()
                 stats_map[project.id] = stats
-            elif has_cache:
-                # If fetch failed but we have cached data, use that
-                print(f"Fetch failed, using cached data for {project.repo}")
-                stats_map[project.id] = cast("GitHubStats", cached_data)
+
+                # If stats need updating, do it in a thread
+                if stats.needs_update():
+                    print(f"Triggering update for {project.repo}")
+                    from threading import Thread
+
+                    Thread(
+                        target=self._update_stats_sync,
+                        args=(project,),
+                        daemon=True,
+                    ).start()
+                else:
+                    print(f"Using current stats for {project.repo}")
 
         return stats_map
 
-    def _fetch_repo_stats(
-        self, owner: str | None, repo: str | None
-    ) -> GitHubStats | None:
+    def _update_stats_sync(self, project: Project) -> None:
+        """Update GitHub stats synchronously.
+
+        Args:
+            project: The project to update stats for.
+        """
+        owner, repo = self.parse_repo_url(project.repo)
+        if not owner or not repo:
+            return
+
+        stats = self._fetch_repo_stats(owner, repo)
+        if not stats:
+            return
+
+        # Update stats in database
+        github_stats = project.get_or_create_stats()
+        github_stats.stars = stats["stars"]
+        github_stats.forks = stats["forks"]
+        github_stats.open_issues = stats["open_issues"]
+        github_stats.open_prs = stats["open_prs"]
+        github_stats.last_updated = timezone.now()
+        github_stats.save()
+        print(f"Updated stats for {project.repo}")
+
+    def _fetch_repo_stats(self, owner: str, repo: str) -> dict[str, int] | None:
         """Fetch repository and PR statistics from GitHub API.
 
         Args:
@@ -141,9 +110,6 @@ class GitHubAPIService:
             A dictionary containing repository statistics, or None if fetching
             fails.
         """
-        if not owner or not repo:
-            return None
-
         with httpx.Client() as client:
             # Fetch basic repo stats
             repo_response = client.get(
@@ -193,5 +159,4 @@ class GitHubAPIService:
                 "forks": repo_data.get("forks_count", 0),
                 "open_issues": open_issues,
                 "open_prs": open_prs,
-                "last_updated": timezone.now().isoformat(),
             }

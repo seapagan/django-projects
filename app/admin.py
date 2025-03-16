@@ -7,7 +7,7 @@ from django.contrib import admin
 from django.contrib.admin import AdminSite
 from django.http import HttpRequest
 
-from app.models import ContactSubmission, Project, Tag, UserProfile
+from app.models import ContactSubmission, GitHubStats, Project, Tag, UserProfile
 
 
 class CustomAdminSite(AdminSite):
@@ -79,4 +79,40 @@ class ContactSubmissionAdmin(admin.ModelAdmin[ContactSubmission]):
 
 
 admin_site.register(ContactSubmission, ContactSubmissionAdmin)
+
+
+class GitHubStatsAdmin(admin.ModelAdmin[GitHubStats]):
+    """Define the admin interface for GitHub Stats."""
+
+    list_display = (
+        "project",
+        "stars",
+        "forks",
+        "open_issues",
+        "open_prs",
+        "last_updated",
+    )
+    list_filter = ("last_updated",)
+    date_hierarchy = "last_updated"
+    readonly_fields = (
+        "project",
+        "stars",
+        "forks",
+        "open_issues",
+        "open_prs",
+        "last_updated",
+    )
+
+    def has_add_permission(self, _request: HttpRequest) -> bool:
+        """Disable add permission."""
+        return False
+
+    def has_change_permission(
+        self, _request: HttpRequest, _obj: Optional[GitHubStats] = None
+    ) -> bool:
+        """Disable change permission."""
+        return False
+
+
+admin_site.register(GitHubStats, GitHubStatsAdmin)
 admin_site.register(UserProfile)
