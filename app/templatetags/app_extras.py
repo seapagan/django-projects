@@ -1,6 +1,6 @@
 """Custom template tags and filters for the app."""
 
-from typing import Optional, TypeVar
+from typing import TypeVar
 
 from django import template
 
@@ -12,7 +12,7 @@ V = TypeVar("V")  # Value type
 
 
 @register.filter
-def get_item(dictionary: dict[K, V], key: K) -> Optional[V]:
+def get_item(dictionary: dict[K, V], key: K) -> V | None:
     """Get an item from a dictionary using its key.
 
     Args:

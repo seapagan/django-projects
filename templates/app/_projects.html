@@ -40,7 +40,8 @@
 
     {% for project in projects%}
     <c-card
-      class="project-card h-full flex flex-col transition-all duration-200 hover:shadow-lg hover:bg-gray-100">
+      class="project-card h-full flex flex-col transition-all duration-200 hover:shadow-lg hover:bg-gray-100"
+      data-project-id="{{ project.id }}">
       <c-card.header>
         <c-card.title>{{ project.title}}</c-card.title>
         <c-card.description>{{project.details}}</c-card.description>

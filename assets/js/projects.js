@@ -7,6 +7,8 @@ window.initializeProjects = function () {
     allTags: [],
 
     init() {
+      console.log("Initializing projects component");
+
       // Initialize with all projects
       this.allProjects = Array.from(
         document.querySelectorAll(".project-card")
@@ -24,6 +26,8 @@ window.initializeProjects = function () {
         project.tags.forEach((tag) => tagSet.add(tag));
       });
       this.allTags = Array.from(tagSet).sort();
+
+      console.log(`Found ${this.allProjects.length} projects`);
     },
 
     toggleTag(tag) {

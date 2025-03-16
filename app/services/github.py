@@ -4,29 +4,19 @@ from __future__ import annotations
 
 import os
 import re
-from typing import Any, TypedDict, cast
+from typing import TYPE_CHECKING
 from urllib.parse import urlparse
 
 import httpx
-from django.core.cache import cache
 from django.utils import timezone
 from response_codes import HTTP_200_OK
 
-
-class GitHubStats(TypedDict):
-    """Type definition for GitHub repository statistics."""
-
-    stars: int
-    forks: int
-    open_issues: int
-    open_prs: int
-    last_updated: str
+if TYPE_CHECKING:
+    from app.models import GitHubStats, Project
 
 
 class GitHubAPIService:
-    """Service for interacting with GitHub API with caching."""
-
-    CACHE_TIMEOUT = 600  # 10 minutes in seconds
+    """Service for interacting with GitHub API."""
 
     def __init__(self) -> None:
         """Initialize the GitHub API service."""
@@ -51,56 +41,65 @@ class GitHubAPIService:
             return parts[0], parts[1]
         return None, None
 
-    def get_cache_key(self, repo_url: str) -> str | None:
-        """Generate a cache key for a repository URL.
+    def get_stats_for_projects(
+        self, projects: list[Project]
+    ) -> dict[int, GitHubStats]:
+        """Get GitHub stats for multiple projects.
 
         Args:
-            repo_url: The GitHub repository URL.
+            projects: List of Project instances.
 
         Returns:
-            A cache key string, or None if the URL is invalid.
+            A dictionary mapping project IDs to their GitHub statistics.
         """
-        owner, repo = self.parse_repo_url(repo_url)
+        stats_map: dict[int, GitHubStats] = {}
+
+        for project in projects:
+            if project.repo:
+                # Get or create stats for this project
+                stats = project.get_or_create_stats()
+                stats_map[project.id] = stats
+
+                # If stats need updating, do it in a thread
+                if stats.needs_update():
+                    print(f"Triggering update for {project.repo}")
+                    from threading import Thread
+
+                    Thread(
+                        target=self._update_stats_sync,
+                        args=(project,),
+                        daemon=True,
+                    ).start()
+                else:
+                    print(f"Using current stats for {project.repo}")
+
+        return stats_map
+
+    def _update_stats_sync(self, project: Project) -> None:
+        """Update GitHub stats synchronously.
+
+        Args:
+            project: The project to update stats for.
+        """
+        owner, repo = self.parse_repo_url(project.repo)
         if not owner or not repo:
-            return None
-        return f"github_stats:{owner}/{repo}"
+            return
 
-    def get_repo_stats(
-        self, repo_url: str, *, force_refresh: bool = False
-    ) -> GitHubStats | None:
-        """Fetch repository statistics from GitHub API with caching.
-
-        Args:
-            repo_url: The GitHub repository URL.
-            force_refresh: Whether to bypass the cache and fetch fresh data.
-
-        Returns:
-            A dictionary containing repository statistics, or None if fetching
-            fails.
-        """
-        cache_key = self.get_cache_key(repo_url)
-        if not cache_key:
-            return None
-
-        # Check cache first if not forcing refresh
-        if not force_refresh:
-            cached_stats = cache.get(cache_key)
-            if isinstance(cached_stats, dict):
-                return cast("GitHubStats", cached_stats)
-
-        # Cache miss or force refresh, fetch from API
-        owner, repo = self.parse_repo_url(repo_url)
         stats = self._fetch_repo_stats(owner, repo)
+        if not stats:
+            return
 
-        if stats:
-            # Store in cache
-            cache.set(cache_key, stats, self.CACHE_TIMEOUT)
+        # Update stats in database
+        github_stats = project.get_or_create_stats()
+        github_stats.stars = stats["stars"]
+        github_stats.forks = stats["forks"]
+        github_stats.open_issues = stats["open_issues"]
+        github_stats.open_prs = stats["open_prs"]
+        github_stats.last_updated = timezone.now()
+        github_stats.save()
+        print(f"Updated stats for {project.repo}")
 
-        return stats
-
-    def _fetch_repo_stats(
-        self, owner: str | None, repo: str | None
-    ) -> GitHubStats | None:
+    def _fetch_repo_stats(self, owner: str, repo: str) -> dict[str, int] | None:
         """Fetch repository and PR statistics from GitHub API.
 
         Args:
@@ -111,9 +110,6 @@ class GitHubAPIService:
             A dictionary containing repository statistics, or None if fetching
             fails.
         """
-        if not owner or not repo:
-            return None
-
         with httpx.Client() as client:
             # Fetch basic repo stats
             repo_response = client.get(
@@ -163,26 +159,4 @@ class GitHubAPIService:
                 "forks": repo_data.get("forks_count", 0),
                 "open_issues": open_issues,
                 "open_prs": open_prs,
-                "last_updated": timezone.now().isoformat(),
             }
-
-    def get_stats_for_projects(
-        self, projects: list[Any]
-    ) -> dict[int, GitHubStats]:
-        """Fetch GitHub stats for multiple projects.
-
-        Args:
-            projects: List of Project instances.
-
-        Returns:
-            A dictionary mapping project IDs to their GitHub statistics.
-        """
-        stats_map: dict[int, GitHubStats] = {}
-
-        for project in projects:
-            if project.repo:
-                stats = self.get_repo_stats(project.repo)
-                if stats:
-                    stats_map[project.id] = stats
-
-        return stats_map

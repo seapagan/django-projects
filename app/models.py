@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from datetime import timedelta
 from typing import Any
 
 from django.contrib.auth.models import AbstractUser
@@ -32,6 +33,35 @@ class UserProfile(AbstractUser):
 
 
 # Create your models here.
+class GitHubStats(models.Model):
+    """Store GitHub repository statistics."""
+
+    project = models.OneToOneField(
+        "Project", on_delete=models.CASCADE, related_name="github_stats"
+    )
+    stars = models.IntegerField(default=0)
+    forks = models.IntegerField(default=0)
+    open_issues = models.IntegerField(default=0)
+    open_prs = models.IntegerField(default=0)
+    last_updated = models.DateTimeField(default=timezone.now)
+
+    class Meta:
+        """Meta class for GitHubStats model."""
+
+        verbose_name_plural = "GitHub Stats"
+
+    def __str__(self) -> str:
+        """Return the string representation of the GitHubStats."""
+        return f"Stats for {self.project.title}"
+
+    def needs_update(self) -> bool:
+        """Check if stats need updating (older than 10 minutes)."""
+        if not self.last_updated:
+            return True
+        age = timezone.now() - self.last_updated
+        return age > timedelta(minutes=30)
+
+
 class Project(models.Model):
     """Define the Projects model.
 
@@ -52,6 +82,11 @@ class Project(models.Model):
     def __str__(self) -> str:
         """Return the string representation of the Project."""
         return self.title
+
+    def get_or_create_stats(self) -> GitHubStats:
+        """Get or create GitHub stats for this project."""
+        stats, _ = GitHubStats.objects.get_or_create(project=self)
+        return stats
 
 
 class Tag(models.Model):

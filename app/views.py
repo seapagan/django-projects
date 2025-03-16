@@ -10,7 +10,7 @@ from django.views.generic import ListView
 
 from app.forms import ContactForm
 from app.models import Project
-from app.services.github import GitHubAPIService, GitHubStats
+from app.services.github import GitHubAPIService
 
 
 class ProjectsListView(ListView[Project]):
@@ -38,10 +38,10 @@ class ProjectsListView(ListView[Project]):
         if "form" not in context:
             context["form"] = ContactForm()
 
-        # Fetch GitHub stats for projects
+        # Get GitHub stats from database and trigger updates if needed
         github_service = GitHubAPIService()
-        github_stats: dict[int, GitHubStats] = (
-            github_service.get_stats_for_projects(list(self.get_queryset()))
+        github_stats = github_service.get_stats_for_projects(
+            list(self.get_queryset())
         )
 
         # Add GitHub stats to context
