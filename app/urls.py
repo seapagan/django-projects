@@ -2,8 +2,11 @@
 
 from django.urls import path
 
-from app.views import ProjectsListView
+from app.views import ContactSuccessView, ProjectsListView
 
 urlpatterns = [
     path("", ProjectsListView.as_view(), name="projects"),
+    path(
+        "contact/success/", ContactSuccessView.as_view(), name="contact_success"
+    ),
 ]

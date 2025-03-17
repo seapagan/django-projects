@@ -6,7 +6,7 @@ from typing import Any
 from django.contrib import messages
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect
-from django.views.generic import ListView
+from django.views.generic import ListView, TemplateView
 
 from app.forms import ContactForm
 from app.models import Project
@@ -71,17 +71,12 @@ class ProjectsListView(ListView[Project]):
             # Send email
             email_sent = EmailService.send_contact_email(submission)
 
-            if email_sent:
-                messages.success(
-                    request,
-                    "Thank you for your message! I'll get back to you soon.",
-                )
-            else:
+            if not email_sent:
                 messages.warning(
                     request,
-                    "Your message was received but there was an issue sending the notification email. We'll still process your request.",
+                    "There was an issue sending the notification email, but your message was saved.",
                 )
-            return redirect("projects")
+            return redirect("contact_success")
 
         # Check for captcha errors and add them to messages
         if "captcha" in form.errors:
@@ -108,3 +103,9 @@ class ProjectsListView(ListView[Project]):
             context = self.get_context_data(form=kwargs["form"])
             return self.render_to_response(context)
         return super().get(request, *args, **kwargs)
+
+
+class ContactSuccessView(TemplateView):
+    """Display success page after contact form submission."""
+
+    template_name = "app/contact_success.html"
