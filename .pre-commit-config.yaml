@@ -39,6 +39,9 @@ repos:
           - django-cotton
           - lucide
           - django-recaptcha
+          - django-solo
+          - httpx
+          - http_response_codes
 
   - repo: https://github.com/astral-sh/uv-pre-commit
     # uv version.
