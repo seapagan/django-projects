@@ -19,11 +19,15 @@
   </div>
 
   <div class="flex gap-2 mt-6">
-    <c-button>
-      <a href="#projects" class="flex items-center gap-x-2">View My Projects</a>
+    <c-button
+      @click="document.getElementById('projects').scrollIntoView({ behavior: 'smooth', block: 'start' })"
+      x-data class="cursor-pointer">
+      View My Projects
     </c-button>
-    <c-button variant="outline">
-      <a href="#contact" class="flex items-center gap-x-2">Contact Me</a>
+    <c-button variant="outline"
+      @click="document.getElementById('contact').scrollIntoView({ behavior: 'smooth', block: 'start' })"
+      x-data class="cursor-pointer">
+      Contact Me
     </c-button>
   </div>
 </section>
