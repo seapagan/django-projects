@@ -77,6 +77,8 @@ class ProjectsListView(ListView[Project]):
                     "There was an issue sending the notification email, "
                     "but your message was saved.",
                 )
+                return redirect("/")
+
             return redirect("contact_success")
 
         # Check for captcha errors and add them to messages
