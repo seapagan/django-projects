@@ -208,6 +208,7 @@
   }
   html {
     overflow-y: scroll;
+    scroll-behavior: smooth;
   }
   body {
     @apply bg-background text-foreground;
