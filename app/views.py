@@ -74,7 +74,8 @@ class ProjectsListView(ListView[Project]):
             if not email_sent:
                 messages.warning(
                     request,
-                    "There was an issue sending the notification email, but your message was saved.",
+                    "There was an issue sending the notification email, "
+                    "but your message was saved.",
                 )
             return redirect("contact_success")
 

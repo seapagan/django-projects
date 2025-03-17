@@ -1,5 +1,7 @@
 """Email service for the application."""
 
+from smtplib import SMTPException
+
 from django.conf import settings
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
@@ -39,6 +41,7 @@ class EmailService:
                 recipient_list=[settings.CONTACT_FORM_RECIPIENT],
                 fail_silently=False,
             )
-            return True
-        except Exception:
+        except SMTPException:
             return False
+        else:
+            return True
