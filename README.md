@@ -67,6 +67,8 @@ pip install -r requirements.txt
 
 ## Configuration
 
+### Environment Variables
+
 The application uses environment variables for configuration. Key settings:
 
 - `DJANGO_SECRET_KEY`: Your Django secret key
@@ -115,6 +117,28 @@ To get your reCAPTCHA keys (required for the contact form functionality):
 > [!NOTE]
 >
 > For a Production or User-Facing project, **ALWAYS set `DJANGO_DEBUG=0`**
+
+### In-App Settings
+
+The application provides additional configuration options through the Django admin interface at `/admin/app/siteconfiguration/`. These settings allow you to customize various aspects of your portfolio:
+
+- **Social Media Links**
+  - `github_username`: Your GitHub username
+  - `twitter_username`: Your Twitter/X username
+  - `linkedin_username`: Your LinkedIn username
+  - `youtube_username`: Your YouTube channel username
+  - `medium_username`: Your Medium username
+
+  Any social media usernames left blank will not be displayed on your portfolio.
+
+- **Site Content**
+  - `site_title`: The main title displayed on your portfolio (default: "Full Stack Developer")
+  - `hero_info`: Primary text content for the hero section (up to 500
+    characters, no default)
+  - `hero_secondary`: Secondary text content for the hero section (up to 500
+    characters, no default)
+
+These settings can be modified at any time through the admin interface and changes will be reflected immediately on your portfolio.
 
 ## Usage
 

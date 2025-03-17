@@ -6,8 +6,16 @@ from django.apps import apps
 from django.contrib import admin
 from django.contrib.admin import AdminSite
 from django.http import HttpRequest
+from solo.admin import SingletonModelAdmin
 
-from app.models import ContactSubmission, GitHubStats, Project, Tag, UserProfile
+from app.models import (
+    ContactSubmission,
+    GitHubStats,
+    Project,
+    SiteConfiguration,
+    Tag,
+    UserProfile,
+)
 
 
 class CustomAdminSite(AdminSite):
@@ -26,10 +34,8 @@ class CustomAdminSite(AdminSite):
                 model["name"] = (
                     f"{model['name']} ({model_class.objects.count()})"
                 )
+
         return app_list
-
-
-admin_site = CustomAdminSite(name="custom_admin")
 
 
 class TagAdmin(admin.ModelAdmin[Tag]):
@@ -57,10 +63,6 @@ class ProjectAdmin(admin.ModelAdmin[Project]):
     tag_list.short_description = "Tags"  # type: ignore
 
 
-admin_site.register(Project, ProjectAdmin)
-admin_site.register(Tag, TagAdmin)
-
-
 class ContactSubmissionAdmin(admin.ModelAdmin[ContactSubmission]):
     """Define the admin interface for Contact Submissions."""
 
@@ -78,9 +80,6 @@ class ContactSubmissionAdmin(admin.ModelAdmin[ContactSubmission]):
     ) -> bool:
         """Disable change permission."""
         return False
-
-
-admin_site.register(ContactSubmission, ContactSubmissionAdmin)
 
 
 class GitHubStatsAdmin(admin.ModelAdmin[GitHubStats]):
@@ -116,5 +115,11 @@ class GitHubStatsAdmin(admin.ModelAdmin[GitHubStats]):
         return False
 
 
-admin_site.register(GitHubStats, GitHubStatsAdmin)
+admin_site = CustomAdminSite(name="custom_admin")
+
 admin_site.register(UserProfile)
+admin_site.register(Project, ProjectAdmin)
+admin_site.register(Tag, TagAdmin)
+admin_site.register(GitHubStats, GitHubStatsAdmin)
+admin_site.register(SiteConfiguration, SingletonModelAdmin)
+admin_site.register(ContactSubmission, ContactSubmissionAdmin)
