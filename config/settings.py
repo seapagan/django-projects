@@ -176,4 +176,4 @@ CACHES = {
     }
 }
 
-# SOLO_CACHE = "default"
+# SOLO_CACHE = "default"  # noqa: ERA001
