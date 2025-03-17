@@ -73,6 +73,14 @@ The application uses environment variables for configuration. Key settings:
 - `DJANGO_DEBUG`: Set to 1 for development, 0 for production
 - `RECAPTCHA_SITE_KEY`: Your Google reCAPTCHA v2 site key
 - `RECAPTCHA_SECRET_KEY`: Your Google reCAPTCHA v2 secret key
+- `USE_LIVE_EMAIL`: Set to 1 to send actual emails, 0 or unset to output to console
+- `EMAIL_HOST`: SMTP server host (required if USE_LIVE_EMAIL=1)
+- `EMAIL_PORT`: SMTP server port (required if USE_LIVE_EMAIL=1)
+- `EMAIL_HOST_USER`: SMTP username (required if USE_LIVE_EMAIL=1)
+- `EMAIL_HOST_PASSWORD`: SMTP password (required if USE_LIVE_EMAIL=1)
+- `EMAIL_USE_TLS`: Set to 1 to use TLS for SMTP (optional, defaults to 1)
+- `DEFAULT_FROM_EMAIL`: Default sender email address (required if USE_LIVE_EMAIL=1)
+- `CONTACT_FORM_RECIPIENT`: Email address where contact form submissions will be sent (required if USE_LIVE_EMAIL=1)
 
 Create an `.env` file in the project root with the following content, or set the
 environment variables directly:
@@ -82,6 +90,16 @@ DJANGO_SECRET_KEY=your-secret-key
 DJANGO_DEBUG=1 # sets debug mode
 RECAPTCHA_SITE_KEY=your-recaptcha-site-key
 RECAPTCHA_SECRET_KEY=your-recaptcha-secret-key
+
+# Email settings (optional - if not set or USE_LIVE_EMAIL=0, emails will output to console)
+USE_LIVE_EMAIL=1
+EMAIL_HOST=smtp.example.com
+EMAIL_PORT=587
+EMAIL_HOST_USER=your-email@example.com
+EMAIL_HOST_PASSWORD=your-smtp-password
+EMAIL_USE_TLS=1
+DEFAULT_FROM_EMAIL=your-email@example.com
+CONTACT_FORM_RECIPIENT=recipient@example.com
 ```
 
 To get your reCAPTCHA keys (required for the contact form functionality):
