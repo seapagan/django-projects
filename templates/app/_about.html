@@ -68,35 +68,40 @@
               {% if config.github_username %}
               <a href="https://github.com/{{ config.github_username}}"
                 target="_blank" rel="noopener noreferrer"
-                class="text-muted-foreground hover:text-foreground transition-colors">
+                class="text-muted-foreground hover:text-foreground transition-colors has-tooltip"
+                data-tooltip="My GitHub Profile">
                 {% lucide "github" %}
               </a>
               {% endif %}
               {% if config.twitter_username %}
               <a href="https://x.com/{{ config.twitter_username }}"
                 target="_blank" rel="noopener noreferrer"
-                class="text-muted-foreground hover:text-foreground transition-colors">
+                class="text-muted-foreground hover:text-foreground transition-colors has-tooltip"
+                data-tooltip="My Twitter Profile">
                 {% lucide "twitter" %}
               </a>
               {% endif %}
               {% if config.linkedin_username %}
               <a href="https://linkedin.com/in/{{ config.linkedin_username }}"
                 target="_blank" rel="noopener noreferrer"
-                class="text-muted-foreground hover:text-foreground transition-colors">
+                class="text-muted-foreground hover:text-foreground transition-colors has-tooltip"
+                data-tooltip="My LinkedIn">
                 {% lucide "linkedin" %}
               </a>
               {% endif %}
               {% if config.medium_username %}
               <a href="https://medium.com/@{{ config.medium_username }}"
                 target="_blank" rel="noopener noreferrer"
-                class="text-muted-foreground hover:text-foreground transition-colors">
+                class="text-muted-foreground hover:text-foreground transition-colors has-tooltip"
+                data-tooltip="My Medium">
                 {% lucide "book-open" %}
               </a>
               {% endif %}
               {% if config.youtube_username %}
               <a href="https://youtube.com/@{{ config.youtube_username }}"
                 target="_blank" rel="noopener noreferrer"
-                class="text-muted-foreground hover:text-foreground transition-colors">
+                class="text-muted-foreground hover:text-foreground transition-colors has-tooltip"
+                data-tooltip="My YouTube">
                 {% lucide "youtube" %}
               </a>
               {% endif %}
