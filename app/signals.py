@@ -1,5 +1,6 @@
 """Configure Django signals."""
 
+# ruff: noqa: ARG001, ANN401
 from typing import Any
 
 from django.db.models.signals import post_save
@@ -11,11 +12,11 @@ from app.services.github import GitHubAPIService
 
 @receiver(post_save, sender=Project)
 def update_github_stats(
-    _sender: type[Project],
+    sender: type[Project],
     instance: Project,
     *,
-    _created: bool,
-    **_kwargs: Any,  # noqa: ANN401
+    created: bool,
+    **_kwargs: Any,
 ) -> None:
     """Update GitHub stats when a project is created or updated."""
     if instance.repo:  # Only proceed if the project has a GitHub repo URL
