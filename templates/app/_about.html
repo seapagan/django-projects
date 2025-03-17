@@ -1,4 +1,7 @@
 {% load lucide %}
+{% load solo_tags %}
+
+{% get_solo 'app.SiteConfiguration' as config %}
 
 <section class="flex flex-col justify-center w-full pb-8">
   <div class="space-y-6">
@@ -64,31 +67,41 @@
           <div class="col-span-2 mt-6">
             <h4 class="font-medium mb-2">Connect With Me</h4>
             <div class="flex gap-4">
-              <a href="https://github.com/seapagan" target="_blank"
-                rel="noopener noreferrer"
+              {% if config.github_username %}
+              <a href="https://github.com/{{ config.github_username}}"
+                target="_blank" rel="noopener noreferrer"
                 class="text-muted-foreground hover:text-foreground transition-colors">
                 {% lucide "github" %}
               </a>
-              <a href="https://x.com/gnramsay_dev" target="_blank"
-                rel="noopener noreferrer"
+              {% endif %}
+              {% if config.twitter_username %}
+              <a href="https://x.com/{{ config.twitter_username }}"
+                target="_blank" rel="noopener noreferrer"
                 class="text-muted-foreground hover:text-foreground transition-colors">
                 {% lucide "twitter" %}
               </a>
-              <a href="https://linkedin.com/in/gnramsay" target="_blank"
-                rel="noopener noreferrer"
+              {% endif %}
+              {% if config.linkedin_username %}
+              <a href="https://linkedin.com/in/{{ config.linkedin_username }}"
+                target="_blank" rel="noopener noreferrer"
                 class="text-muted-foreground hover:text-foreground transition-colors">
                 {% lucide "linkedin" %}
               </a>
-              {# <a href="https://medium.com/@seapagan" target="_blank"
-                rel="noopener noreferrer"
+              {% endif %}
+              {% if config.medium_username %}
+              <a href="https://medium.com/@{{ config.medium_username }}"
+                target="_blank" rel="noopener noreferrer"
                 class="text-muted-foreground hover:text-foreground transition-colors">
                 {% lucide "book-open" %}
               </a>
-              <a href="https://youtube.com/@seapagan" target="_blank"
-                rel="noopener noreferrer"
+              {% endif %}
+              {% if config.youtube_username %}
+              <a href="https://youtube.com/@{{ config.youtube_username }}"
+                target="_blank" rel="noopener noreferrer"
                 class="text-muted-foreground hover:text-foreground transition-colors">
                 {% lucide "youtube" %}
-              </a> #}
+              </a>
+              {% endif %}
             </div>
           </div>
         </div>
