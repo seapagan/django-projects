@@ -6,8 +6,16 @@ from django.apps import apps
 from django.contrib import admin
 from django.contrib.admin import AdminSite
 from django.http import HttpRequest
+from solo.admin import SingletonModelAdmin
 
-from app.models import ContactSubmission, GitHubStats, Project, Tag, UserProfile
+from app.models import (
+    ContactSubmission,
+    GitHubStats,
+    Project,
+    SiteConfiguration,
+    Tag,
+    UserProfile,
+)
 
 
 class CustomAdminSite(AdminSite):
@@ -118,3 +126,4 @@ class GitHubStatsAdmin(admin.ModelAdmin[GitHubStats]):
 
 admin_site.register(GitHubStats, GitHubStatsAdmin)
 admin_site.register(UserProfile)
+admin_site.register(SiteConfiguration, SingletonModelAdmin)

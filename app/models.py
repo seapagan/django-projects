@@ -8,6 +8,7 @@ from typing import Any
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils import timezone
+from solo.models import SingletonModel
 
 
 class ContactSubmission(models.Model):
@@ -115,3 +116,22 @@ class Tag(models.Model):
         if not self.slug:
             self.slug = slugify(self.name)
         super().save(*args, **kwargs)
+
+
+class SiteConfiguration(SingletonModel):
+    """Define the model to hold site configration."""
+
+    github_username = models.CharField(max_length=30, blank=True)
+    twitter_username = models.CharField(max_length=30, blank=True)
+    linkedin_username = models.CharField(max_length=30, blank=True)
+    youtube_username = models.CharField(max_length=30, blank=True)
+    medium_username = models.CharField(max_length=30, blank=True)
+
+    def __str__(self) -> str:
+        """String representastion of this model."""
+        return "Site Configuration"
+
+    class Meta:
+        """Configure the SiteConfiguration model."""
+
+        verbose_name = "Site Configuration"

@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     "django_cotton",
     "lucide",
     "django_recaptcha",
+    "solo",
 ]
 
 MIDDLEWARE = [
@@ -170,11 +171,9 @@ CONTACT_FORM_RECIPIENT = os.getenv(
 # Cache configuration for GitHub stats
 CACHES = {
     "default": {
-        "BACKEND": "django.core.cache.backends.filebased.FileBasedCache",
-        "LOCATION": BASE_DIR / "github_stats_cache",
-        "TIMEOUT": 600,  # 10 minutes in seconds
-        "OPTIONS": {
-            "MAX_ENTRIES": 1000,
-        },
+        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+        "LOCATION": "unique-snowflake",
     }
 }
+
+SOLO_CACHE = "default"
