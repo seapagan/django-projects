@@ -127,6 +127,12 @@ class SiteConfiguration(SingletonModel):
     youtube_username = models.CharField(max_length=30, blank=True)
     medium_username = models.CharField(max_length=30, blank=True)
 
+    site_title = models.CharField(
+        max_length=120, default="Full Stack Developer"
+    )
+    hero_info = models.TextField(max_length=500, blank=True)
+    hero_secondary = models.TextField(max_length=500, blank=True)
+
     def __str__(self) -> str:
         """String representastion of this model."""
         return "Site Configuration"

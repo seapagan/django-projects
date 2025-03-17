@@ -1,5 +1,10 @@
 {% load tailwind_cli %}
 {% load static %}
+
+{% load solo_tags %}
+
+{% get_solo 'app.SiteConfiguration' as config %}
+
 <!DOCTYPE html>
 <html lang="en">
 
