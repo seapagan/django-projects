@@ -147,6 +147,13 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 TAILWIND_CLI_DIST_CSS = "css/site.css"
 
+# Email Configuration
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"  # Console backend for development
+DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", "webmaster@localhost")
+CONTACT_FORM_RECIPIENT = os.getenv(
+    "CONTACT_FORM_RECIPIENT", "admin@example.com"
+)
+
 # Cache configuration for GitHub stats
 CACHES = {
     "default": {

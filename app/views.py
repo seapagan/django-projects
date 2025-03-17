@@ -10,6 +10,7 @@ from django.views.generic import ListView
 
 from app.forms import ContactForm
 from app.models import Project
+from app.services.email import EmailService
 from app.services.github import GitHubAPIService
 
 
@@ -64,12 +65,22 @@ class ProjectsListView(ListView[Project]):
         """
         form = ContactForm(request.POST)
         if form.is_valid():
-            # Save the form data directly to create a new ContactSubmission
-            form.save()
-            messages.success(
-                request,
-                "Thank you for your message! I'll get back to you soon.",
-            )
+            # Save to database
+            submission = form.save()
+
+            # Send email
+            email_sent = EmailService.send_contact_email(submission)
+
+            if email_sent:
+                messages.success(
+                    request,
+                    "Thank you for your message! I'll get back to you soon.",
+                )
+            else:
+                messages.warning(
+                    request,
+                    "Your message was received but there was an issue sending the notification email. We'll still process your request.",
+                )
             return redirect("projects")
 
         # Check for captcha errors and add them to messages
