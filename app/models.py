@@ -127,7 +127,8 @@ class SiteConfiguration(SingletonModel):
     youtube_username = models.CharField(max_length=30, blank=True)
     medium_username = models.CharField(max_length=30, blank=True)
 
-    site_title = models.CharField(
+    owner_name = models.CharField(max_length=30, default="The Developer")
+    hero_title = models.CharField(
         max_length=120, default="Full Stack Developer"
     )
     hero_info = models.TextField(max_length=500, blank=True)
