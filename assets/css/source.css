@@ -56,6 +56,36 @@
   opacity: 1;
 }
 
+.has-left-tooltip {
+  position: relative;
+}
+
+.has-left-tooltip::before {
+  content: attr(data-tooltip);
+  position: absolute;
+  right: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-right: 4px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: linear-gradient(
+    to right,
+    var(--color-blue-400),
+    var(--color-purple-600)
+  );
+  color: white;
+  font-size: 12px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.has-left-tooltip:hover::before {
+  opacity: 1;
+}
+
 .tag {
   @apply px-2.5 py-0.5 rounded-full text-xs font-medium;
   background-color: var(--tag-bg);
