@@ -21,26 +21,28 @@ class ContactForm(forms.ModelForm[ContactSubmission]):
     class Meta:
         """Meta class for ContactForm."""
 
+        common_input_classes = "appearance-none bg-card border border-border text-foreground placeholder-muted-foreground rounded w-full py-2 px-3 leading-tight focus:outline-none focus:ring focus:ring-ring/50 transition-colors"
+
         model = ContactSubmission
         fields = ("name", "email", "message")
         widgets = {
             "name": forms.TextInput(
                 attrs={
-                    "class": "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline",
+                    "class": common_input_classes,
                     "required": True,
                     "placeholder": "Enter your Name",
                 }
             ),
             "email": forms.EmailInput(
                 attrs={
-                    "class": "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline",
+                    "class": common_input_classes,
                     "required": True,
                     "placeholder": "Enter your Email",
                 }
             ),
             "message": forms.Textarea(
                 attrs={
-                    "class": "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline",
+                    "class": common_input_classes,
                     "rows": 6,
                     "required": True,
                     "placeholder": "Type your Message",
