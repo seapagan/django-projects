@@ -6,7 +6,7 @@
 {% get_solo 'app.SiteConfiguration' as config %}
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark:bg-gray-900">
 
   <head>
     <meta charset="UTF-8">
@@ -19,12 +19,13 @@
       href="https://fonts.googleapis.com/css2?family=Birthstone:wght@300;400;500;600;700&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
       rel="stylesheet">
     <script defer src="{% static 'js/projects.js' %}"></script>
+    <script defer src="{% static 'js/theme.js' %}"></script>
     <script defer
       src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <title>{{ config.owner_name }}</title>
   </head>
 
-  <body class="bg-background">
+  <body class="bg-background text-gray-900 dark:bg-gray-900 dark:text-gray-100">
     {% include "app/_header.html" %}
     <main class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 pb-4" id="main-content">
       {% if messages %}
