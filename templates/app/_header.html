@@ -17,11 +17,26 @@
             <c-dropdown-menu.label>Select Theme</c-dropdown-menu.label>
             <c-dropdown-menu.separator />
             <c-dropdown-menu.item
-              @click="theme = 'light'; updateTheme(theme); $dispatch('close-dropdown'); open = false">Light</c-dropdown-menu.item>
+              @click="theme = 'light'; updateTheme(theme); $dispatch('close-dropdown'); open = false"
+              class="flex justify-between items-center">
+              <span>Light</span>
+              <span
+                x-show="theme === 'light'">{% lucide "check" class="w-4 h-4 ml-2" %}</span>
+            </c-dropdown-menu.item>
             <c-dropdown-menu.item
-              @click="theme = 'dark'; updateTheme(theme); $dispatch('close-dropdown'); open = false ">Dark</c-dropdown-menu.item>
+              @click="theme = 'dark'; updateTheme(theme); $dispatch('close-dropdown'); open = false"
+              class="flex justify-between items-center">
+              <span>Dark</span>
+              <span
+                x-show="theme === 'dark'">{% lucide "check" class="w-4 h-4 ml-2" %}</span>
+            </c-dropdown-menu.item>
             <c-dropdown-menu.item
-              @click="theme = 'system'; updateTheme(theme); $dispatch('close-dropdown'); open = false">System</c-dropdown-menu.item>
+              @click="theme = 'system'; updateTheme(theme); $dispatch('close-dropdown'); open = false"
+              class="flex justify-between items-center">
+              <span>System</span>
+              <span
+                x-show="theme === 'system'">{% lucide "check" class="w-4 h-4 ml-2" %}</span>
+            </c-dropdown-menu.item>
           </c-dropdown-menu.content>
         </c-dropdown-menu>
       </div>
