@@ -5,6 +5,10 @@
   @apply relative bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent;
 }
 
+.dropdown {
+  @apply bg-background hover:border border-border hover:shadow-xs hover:bg-accent hover:text-accent-foreground p-1 rounded-2xl;
+}
+
 .link-default::after {
   content: "";
   position: absolute;
