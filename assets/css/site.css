@@ -750,6 +750,9 @@
   .justify-center {
     justify-content: center;
   }
+  .gap-0 {
+    gap: calc(var(--spacing) * 0);
+  }
   .gap-1 {
     gap: calc(var(--spacing) * 1);
   }
@@ -1010,6 +1013,9 @@
   .whitespace-nowrap {
     white-space: nowrap;
   }
+  .text-card {
+    color: var(--card);
+  }
   .text-card-foreground {
     color: var(--card-foreground);
   }
@@ -1033,6 +1039,9 @@
   }
   .text-green-700 {
     color: var(--color-green-700);
+  }
+  .text-muted {
+    color: var(--muted);
   }
   .text-muted-foreground {
     color: var(--muted-foreground);
@@ -1285,6 +1294,21 @@
   .sm\:right-6 {
     @media (width >= 40rem) {
       right: calc(var(--spacing) * 6);
+    }
+  }
+  .sm\:flex-col {
+    @media (width >= 40rem) {
+      flex-direction: column;
+    }
+  }
+  .sm\:flex-row {
+    @media (width >= 40rem) {
+      flex-direction: row;
+    }
+  }
+  .sm\:gap-0 {
+    @media (width >= 40rem) {
+      gap: calc(var(--spacing) * 0);
     }
   }
   .sm\:px-6 {
