@@ -5,6 +5,10 @@
   @apply relative bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent;
 }
 
+.dropdown {
+  @apply bg-background hover:border border-border hover:shadow-xs hover:bg-accent hover:text-accent-foreground p-1 rounded-2xl;
+}
+
 .link-default::after {
   content: "";
   position: absolute;
@@ -56,6 +60,36 @@
   opacity: 1;
 }
 
+.has-left-tooltip {
+  position: relative;
+}
+
+.has-left-tooltip::before {
+  content: attr(data-tooltip);
+  position: absolute;
+  right: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-right: 4px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: linear-gradient(
+    to right,
+    var(--color-blue-400),
+    var(--color-purple-600)
+  );
+  color: white;
+  font-size: 12px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.has-left-tooltip:hover::before {
+  opacity: 1;
+}
+
 .tag {
   @apply px-2.5 py-0.5 rounded-full text-xs font-medium;
   background-color: var(--tag-bg);
@@ -85,6 +119,14 @@
   color: oklch(0.98 0 0);
 }
 
+input:-webkit-autofill,
+textarea:-webkit-autofill {
+  background-color: var(--card) !important;
+  -webkit-box-shadow: 0 0 0px 1000px var(--card) inset !important;
+  -webkit-text-fill-color: var(--foreground) !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 :root {
@@ -94,6 +136,7 @@
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
+  --card-hover: oklch(0.985 0.002 247.839);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
   --primary: oklch(0.205 0 0);
@@ -132,6 +175,7 @@
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.145 0 0);
   --card-foreground: oklch(0.985 0 0);
+  --card-hover: oklch(0.2 0 0);
   --popover: oklch(0.145 0 0);
   --popover-foreground: oklch(0.985 0 0);
   --primary: oklch(0.985 0 0);
@@ -167,6 +211,7 @@
   --color-foreground: var(--foreground);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
+  --color-card-hover: var(--card-hover);
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
   --color-primary: var(--primary);

@@ -10,28 +10,31 @@
 
     <div class="mb-4">
       <label for="{{ form.name.id_for_label }}"
-        class="block text-gray-700 text-sm font-bold mb-2">{{ form.name.label }}</label>
+        class="block text-foreground text-sm font-bold mb-2">{{ form.name.label }}</label>
       {{ form.name }}
       {% if form.name.errors %}
-      <p class="text-red-500 text-xs italic mt-1">{{ form.name.errors.0 }}</p>
+      <p class="text-destructive text-xs italic mt-1">{{ form.name.errors.0 }}
+      </p>
       {% endif %}
     </div>
 
     <div class="mb-4">
       <label for="{{ form.email.id_for_label }}"
-        class="block text-gray-700 text-sm font-bold mb-2">{{ form.email.label }}</label>
+        class="block text-foreground text-sm font-bold mb-2">{{ form.email.label }}</label>
       {{ form.email }}
       {% if form.email.errors %}
-      <p class="text-red-500 text-xs italic mt-1">{{ form.email.errors.0 }}</p>
+      <p class="text-destructive text-xs italic mt-1">{{ form.email.errors.0 }}
+      </p>
       {% endif %}
     </div>
 
     <div class="mb-4">
       <label for="{{ form.message.id_for_label }}"
-        class="block text-gray-700 text-sm font-bold mb-2">Message</label>
+        class="block text-foreground text-sm font-bold mb-2">Message</label>
       {{ form.message }}
       {% if form.message.errors %}
-      <p class="text-red-500 text-xs italic mt-1">{{ form.message.errors.0 }}
+      <p class="text-destructive text-xs italic mt-1">
+        {{ form.message.errors.0 }}
       </p>
       {% endif %}
     </div>

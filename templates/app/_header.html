@@ -1,5 +1,46 @@
+{% load lucide %}
 <header>
-  <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 pt-4">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 pt-4 relative">
+    <div class="absolute right-4 top-4 sm:right-6 lg:right-8">
+      <div x-data="{ theme: getTheme()}"
+        class="flex items-center justify-center">
+        <c-dropdown-menu class="dropdown">
+          <c-dropdown-menu.trigger>
+            <span
+              x-show="theme === 'light'">{% lucide "sun" class="w-5 h-5" %}</span>
+            <span
+              x-show="theme === 'dark'">{% lucide "moon" class="w-5 h-5" %}</span>
+            <span
+              x-show="theme === 'system'">{% lucide "sun-moon" class="w-5 h-5" %}</span>
+          </c-dropdown-menu.trigger>
+          <c-dropdown-menu.content class="w-40 right-0">
+            <c-dropdown-menu.label>Select Theme</c-dropdown-menu.label>
+            <c-dropdown-menu.separator />
+            <c-dropdown-menu.item
+              @click="theme = 'light'; updateTheme(theme); $dispatch('close-dropdown'); open = false"
+              class="flex justify-between items-center">
+              <span>Light</span>
+              <span
+                x-show="theme === 'light'">{% lucide "check" class="w-4 h-4 ml-2" %}</span>
+            </c-dropdown-menu.item>
+            <c-dropdown-menu.item
+              @click="theme = 'dark'; updateTheme(theme); $dispatch('close-dropdown'); open = false"
+              class="flex justify-between items-center">
+              <span>Dark</span>
+              <span
+                x-show="theme === 'dark'">{% lucide "check" class="w-4 h-4 ml-2" %}</span>
+            </c-dropdown-menu.item>
+            <c-dropdown-menu.item
+              @click="theme = 'system'; updateTheme(theme); $dispatch('close-dropdown'); open = false"
+              class="flex justify-between items-center">
+              <span>System</span>
+              <span
+                x-show="theme === 'system'">{% lucide "check" class="w-4 h-4 ml-2" %}</span>
+            </c-dropdown-menu.item>
+          </c-dropdown-menu.content>
+        </c-dropdown-menu>
+      </div>
+    </div>
     <h1 class="text-5xl text-primary font-header font-light tracking-wide">
       &lt; {{ config.owner_name}} /&gt;
     </h1>

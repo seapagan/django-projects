@@ -11,12 +11,13 @@ fixed very shortly.
 - 💅 Modern UI with Tailwind CSS. We use `django-tailwind-cli` to make the
   integration easier
 - 🧩 Component-based templates using `django-cotton` and `django-shadcn`
-- 👤 Custom user authentication system
+- 👤 Custom Models and Admin pages to customize the settings and text
 - 📝 Contact form with Google reCAPTCHA v2 integration for spam protection and
   stored in the database as well as sent by email to the site owner
 - 🔒 Environment-based configuration with customization from the database
 - 🛠️ Modern development tools integration (`uv`, `pre-commit`, `ruff`, `mypy`)
 - 📱 Fully responsive design
+- 🌓 Light/Dark mode options, with a dropdown for user preference or system setting.
 - 🔄 Live browser reload during development
 
 ## Requirements
