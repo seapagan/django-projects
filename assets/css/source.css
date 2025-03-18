@@ -206,6 +206,9 @@
     font-family: Lato, ui-sans-serif, sans-serif;
     @apply border-border outline-ring/50;
   }
+  .font-header {
+    font-family: "Birthstone", sans-serif;
+  }
   html {
     overflow-y: scroll;
     scroll-behavior: smooth;
