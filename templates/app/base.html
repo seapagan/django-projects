@@ -16,16 +16,17 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-      href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Birthstone:wght@300;400;500;600;700&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
       rel="stylesheet">
     <script defer src="{% static 'js/projects.js' %}"></script>
     <script defer
       src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <title>Grant Ramsay</title>
+    <title>{{ config.owner_name }}</title>
   </head>
 
   <body class="bg-background">
-    <main class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-8">
+    {% include "app/_header.html" %}
+    <main class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 pb-4" id="main-content">
       {% if messages %}
       <div class="mb-8">
         {% for message in messages %}

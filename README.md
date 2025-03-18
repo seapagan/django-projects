@@ -123,6 +123,15 @@ To get your reCAPTCHA keys (required for the contact form functionality):
 
 The application provides additional configuration options through the Django admin interface at `/admin/app/siteconfiguration/`. These settings allow you to customize various aspects of your portfolio:
 
+- **Site Content**
+  - `owner_name`: The Owner of the site. This will be the page title and the
+    text in the header of the page content (default: "The Developer")
+  - `hero_title`: The main title displayed on your portfolio (default: "Full Stack Developer")
+  - `hero_info`: Primary text content for the hero section (up to 500
+    characters, no default)
+  - `hero_secondary`: Secondary text content for the hero section (up to 500
+    characters, no default)
+
 - **Social Media Links**
   - `github_username`: Your GitHub username
   - `twitter_username`: Your Twitter/X username
@@ -131,13 +140,6 @@ The application provides additional configuration options through the Django adm
   - `medium_username`: Your Medium username
 
   Any social media usernames left blank will not be displayed on your portfolio.
-
-- **Site Content**
-  - `site_title`: The main title displayed on your portfolio (default: "Full Stack Developer")
-  - `hero_info`: Primary text content for the hero section (up to 500
-    characters, no default)
-  - `hero_secondary`: Secondary text content for the hero section (up to 500
-    characters, no default)
 
 These settings can be modified at any time through the admin interface and changes will be reflected immediately on your portfolio.
 
