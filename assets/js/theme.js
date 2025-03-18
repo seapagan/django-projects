@@ -24,6 +24,13 @@ const updateTheme = (theme) => {
     document.documentElement.classList.remove("dark");
   }
   localStorage.theme = theme;
+
+  // Dispatch a custom event when theme changes
+  document.dispatchEvent(
+    new CustomEvent("themeChanged", {
+      detail: { theme: theme },
+    })
+  );
 };
 
 // Initialize theme
