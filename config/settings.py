@@ -76,8 +76,6 @@ if DJANGO_USE_CACHE:
         "django.middleware.cache.FetchFromCacheMiddleware",
     ]
 
-print(MIDDLEWARE)
-
 ROOT_URLCONF = "config.urls"
 
 TEMPLATES = [
@@ -193,7 +191,7 @@ CACHES = {
 
 # the below 3 settings are django defaults, you can modify as you prefer
 CACHE_MIDDLEWARE_ALIAS = "default"
-CACHE_MIDDLEWARE_SECONDS = 600
+CACHE_MIDDLEWARE_SECONDS = int(os.getenv("DJANGO_CACHE_TIMEOUT", "600"))
 CACHE_MIDDLEWARE_KEY_PREFIX = ""
 
 # set django-solo to use the cache too

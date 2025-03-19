@@ -1,10 +1,27 @@
-# Django Projects Portfolio
+# Django Projects Portfolio <!-- omit in toc -->
 
 A modern Django application for showcasing your development projects. Built with
 Django 5.1 and styled with Tailwind CSS, this application provides a clean and
 responsive interface to display your portfolio of projects.
 
 At this time it is not fully customizable, but this will be fixed very shortly.
+
+- [Features](#features)
+- [Requirements](#requirements)
+- [Installation](#installation)
+  - [Using uv (Recommended)](#using-uv-recommended)
+  - [Using Traditional pip/venv](#using-traditional-pipvenv)
+- [Configuration](#configuration)
+  - [Environment Variables](#environment-variables)
+- [Usage](#usage)
+- [Add your Projects, Personal Details and skills](#add-your-projects-personal-details-and-skills)
+  - [Adding Projects](#adding-projects)
+  - [In-App Settings](#in-app-settings)
+- [Caching](#caching)
+- [Project Structure](#project-structure)
+- [Contributing](#contributing)
+- [Development](#development)
+- [License](#license)
 
 ## Features
 
@@ -20,6 +37,7 @@ At this time it is not fully customizable, but this will be fixed very shortly.
 - 📱 Fully responsive design
 - 🌓 Light/Dark mode options, with a dropdown for user preference or system
   setting.
+- 💾 Optional caching using memcached for improved performance
 - 🔄 Live browser reload during development
 
 ## Requirements
@@ -77,6 +95,10 @@ The application uses environment variables for configuration. Key settings:
 
 - `DJANGO_SECRET_KEY`: Your Django secret key
 - `DJANGO_DEBUG`: Set to 1 for development, 0 for production
+- `DJANGO_USE_CACHE`: Set to 1 to enable caching for the whole application. This
+  uses `memcached` and that needs to be installed locally. Defaults to 0 (better
+  for development) See the [Caching](#caching) secton below.
+- `DJANGO_CACHE_TIMEOUT`: Cache expiry length, in seconds (Defaults to 600, 10 minutes)
 - `RECAPTCHA_SITE_KEY`: Your Google reCAPTCHA v2 site key
 - `RECAPTCHA_SECRET_KEY`: Your Google reCAPTCHA v2 secret key
 - `USE_LIVE_EMAIL`: Set to 1 to send actual emails, 0 or unset to output to
@@ -97,10 +119,12 @@ environment variables directly:
 ```env
 DJANGO_SECRET_KEY=your-secret-key
 DJANGO_DEBUG=1 # sets debug mode
+DJANGO_USE_CACHE=0 # set to 0 for development, 1 for production when the database rarely changes
+DJANGO_CACHE_TIMEOUT=3600 # defaults to 600 (10 minutes) if not set
 RECAPTCHA_SITE_KEY=your-recaptcha-site-key
 RECAPTCHA_SECRET_KEY=your-recaptcha-secret-key
 
-# Email settings (optional - if not set or USE_LIVE_EMAIL=0, emails will output to console)
+# Email settings (optional - if USE_LIVE_EMAIL=0, emails will output to console only)
 USE_LIVE_EMAIL=1
 EMAIL_HOST=smtp.example.com
 EMAIL_PORT=587
@@ -213,7 +237,52 @@ customize various aspects of your portfolio:
   will not be displayed.
 
 These settings can be modified at any time through the admin interface and
-changes will be reflected immediately on your portfolio.
+changes will be reflected immediately on your portfolio (though, see the note
+below on **Caching**)
+
+## Caching
+
+This Django application is set up for optional caching which is disabled by
+default. Generally it is not much use when you are setting up or customizing the
+database since any changes will take 10 minutes to actually be visible in the
+front-end. It is a bit overkill for this application but a good skill to learn.
+
+> [!NOTE]
+>
+> Probably best **not** to enable this until your database is set up to your
+> liking, as the default is a 10 minute cache time-out. See below how to change
+> this.
+
+I have chosen to use [memcached](https://www.memcached.org/) for this, though
+you can use **Redis**, **File Caching**, **Local Memory** or any other method that Django
+supports. See the [Django docs on
+Caching](https://docs.djangoproject.com/en/5.1/topics/cache/) for more info.
+
+You need to install [memcached](https://www.memcached.org/) for this to work. If
+this is not installed and the cache enabled your application will crash.
+
+See the link above for how to install for your server, under Debian/Ubuntu it is
+available as a package:
+
+```console
+sudo apt install memcached
+```
+
+Finally, to enable the caching, set the below variable in your `.env` file or
+environment:
+
+```ini
+DJANGO_USE_CACHE=1
+```
+
+If this variable is 0 or missing, caching will be disabled.
+
+You can change the length of time that the database is cached by setting the
+below variable:
+
+```ini
+DJANGO_CACHE_TIMEOUT=1200 # Default is 600 (10 Minutes)
+```
 
 ## Project Structure
 
