@@ -135,6 +135,11 @@ DEFAULT_FROM_EMAIL=your-email@example.com
 CONTACT_FORM_RECIPIENT=recipient@example.com
 ```
 
+> [!NOTE]
+>
+> There is an `.example.env` file in the project root you can rename and modify
+> to your own settings
+
 To get your reCAPTCHA keys (required for the contact form functionality):
 
 1. Visit the [Google reCAPTCHA Admin
