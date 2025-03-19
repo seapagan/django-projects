@@ -142,7 +142,24 @@ The application provides additional configuration options through the Django adm
 
   Any social media usernames left blank will not be displayed on your portfolio.
 
-These settings can be modified at any time through the admin interface and changes will be reflected immediately on your portfolio.
+- **Languages and Frameworks**
+
+  You can manage your programming languages and frameworks through the Django
+  admin interface by editing the `Site Configuration` database.
+
+  - **Languages** : Add programming languages you work with
+    - `name`: Name of the programming language (e.g., "Python", "JavaScript")
+
+  - **Frameworks** (`/admin/app/framework/`): Add frameworks and libraries you
+    work with
+    - `name`: Name of the framework (e.g., "Django", "React")
+
+  Both languages and frameworks will be displayed on your portfolio to showcase
+  your technical stack. If you have none added, the whole **My SKills** section
+  will not be displayed.
+
+These settings can be modified at any time through the admin interface and
+changes will be reflected immediately on your portfolio.
 
 ## Usage
 
