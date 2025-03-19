@@ -142,3 +142,29 @@ class SiteConfiguration(SingletonModel):
         """Configure the SiteConfiguration model."""
 
         verbose_name = "Site Configuration"
+
+
+class Language(models.Model):
+    """Model to contain the coding languages we can use."""
+
+    config = models.ForeignKey(
+        SiteConfiguration, related_name="languages", on_delete=models.CASCADE
+    )
+    name = models.CharField(max_length=100)
+
+    def __str__(self) -> str:
+        """Return string representation."""
+        return self.name
+
+
+class Framework(models.Model):
+    """Model to contain the frameworks we can use."""
+
+    config = models.ForeignKey(
+        SiteConfiguration, related_name="frameworks", on_delete=models.CASCADE
+    )
+    name = models.CharField(max_length=100)
+
+    def __str__(self) -> str:
+        """Return string representation."""
+        return self.name
