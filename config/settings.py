@@ -37,6 +37,8 @@ RECAPTCHA_PRIVATE_KEY = os.getenv("RECAPTCHA_SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(int(os.getenv("DJANGO_DEBUG", "0")))
 
+DJANGO_USE_CACHE = bool(int(os.getenv("DJANGO_USE_CACHE", "0")))
+
 ALLOWED_HOSTS: list[str] = ["127.0.0.1", "localhost"]
 
 # Application definition
@@ -48,8 +50,6 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "app",
-    # "tailwind",
-    # "theme",
     "django_tailwind_cli",
     "django_browser_reload",
     "django_cotton",
@@ -68,6 +68,15 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "django_browser_reload.middleware.BrowserReloadMiddleware",
 ]
+
+if DJANGO_USE_CACHE:
+    MIDDLEWARE = [
+        "django.middleware.cache.UpdateCacheMiddleware",
+        *MIDDLEWARE,
+        "django.middleware.cache.FetchFromCacheMiddleware",
+    ]
+
+print(MIDDLEWARE)
 
 ROOT_URLCONF = "config.urls"
 
@@ -171,9 +180,22 @@ CONTACT_FORM_RECIPIENT = os.getenv(
 # Cache configuration for GitHub stats
 CACHES = {
     "default": {
-        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
-        "LOCATION": "unique-snowflake",
+        "BACKEND": "django.core.cache.backends.memcached.PyMemcacheCache",
+        "LOCATION": "127.0.0.1:11211",
+        "OPTIONS": {
+            "no_delay": True,
+            "ignore_exc": True,
+            "max_pool_size": 4,
+            "use_pooling": True,
+        },
     }
 }
 
-# SOLO_CACHE = "default"  # noqa: ERA001
+# the below 3 settings are django defaults, you can modify as you prefer
+CACHE_MIDDLEWARE_ALIAS = "default"
+CACHE_MIDDLEWARE_SECONDS = 600
+CACHE_MIDDLEWARE_KEY_PREFIX = ""
+
+# set django-solo to use the cache too
+if DJANGO_USE_CACHE:
+    SOLO_CACHE = "default"
