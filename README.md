@@ -1,9 +1,10 @@
 # Django Projects Portfolio
 
-A modern Django application for showcasing your development projects. Built with Django 5.1 and styled with Tailwind CSS, this application provides a clean and responsive interface to display your portfolio of projects.
+A modern Django application for showcasing your development projects. Built with
+Django 5.1 and styled with Tailwind CSS, this application provides a clean and
+responsive interface to display your portfolio of projects.
 
-At this time it is not complete, and it is not easily customizable, this will be
-fixed very shortly.
+At this time it is not fully customizable, but this will be fixed very shortly.
 
 ## Features
 
@@ -17,7 +18,8 @@ fixed very shortly.
 - 🔒 Environment-based configuration with customization from the database
 - 🛠️ Modern development tools integration (`uv`, `pre-commit`, `ruff`, `mypy`)
 - 📱 Fully responsive design
-- 🌓 Light/Dark mode options, with a dropdown for user preference or system setting.
+- 🌓 Light/Dark mode options, with a dropdown for user preference or system
+  setting.
 - 🔄 Live browser reload during development
 
 ## Requirements
@@ -77,14 +79,17 @@ The application uses environment variables for configuration. Key settings:
 - `DJANGO_DEBUG`: Set to 1 for development, 0 for production
 - `RECAPTCHA_SITE_KEY`: Your Google reCAPTCHA v2 site key
 - `RECAPTCHA_SECRET_KEY`: Your Google reCAPTCHA v2 secret key
-- `USE_LIVE_EMAIL`: Set to 1 to send actual emails, 0 or unset to output to console
+- `USE_LIVE_EMAIL`: Set to 1 to send actual emails, 0 or unset to output to
+  console
 - `EMAIL_HOST`: SMTP server host (required if USE_LIVE_EMAIL=1)
 - `EMAIL_PORT`: SMTP server port (required if USE_LIVE_EMAIL=1)
 - `EMAIL_HOST_USER`: SMTP username (required if USE_LIVE_EMAIL=1)
 - `EMAIL_HOST_PASSWORD`: SMTP password (required if USE_LIVE_EMAIL=1)
 - `EMAIL_USE_TLS`: Set to 1 to use TLS for SMTP (optional, defaults to 1)
-- `DEFAULT_FROM_EMAIL`: Default sender email address (required if USE_LIVE_EMAIL=1)
-- `CONTACT_FORM_RECIPIENT`: Email address where contact form submissions will be sent (required if USE_LIVE_EMAIL=1)
+- `DEFAULT_FROM_EMAIL`: Default sender email address (required if
+  USE_LIVE_EMAIL=1)
+- `CONTACT_FORM_RECIPIENT`: Email address where contact form submissions will be
+  sent (required if USE_LIVE_EMAIL=1)
 
 Create an `.env` file in the project root with the following content, or set the
 environment variables directly:
@@ -108,26 +113,75 @@ CONTACT_FORM_RECIPIENT=recipient@example.com
 
 To get your reCAPTCHA keys (required for the contact form functionality):
 
-1. Visit the [Google reCAPTCHA Admin Console](https://www.google.com/recaptcha/admin)
+1. Visit the [Google reCAPTCHA Admin
+   Console](https://www.google.com/recaptcha/admin)
 2. Sign in with your Google account
 3. Click the "+" button to create a new site
 4. Choose "reCAPTCHA v2" and "I'm not a robot" Checkbox
 5. Add your domain(s) to the list (you can use '127.0.0.1' for local testing, be
    sure to add the correct domain when you deploy)
-6. Copy the "Site Key" to `RECAPTCHA_SITE_KEY` and "Secret Key" to `RECAPTCHA_SECRET_KEY`
+6. Copy the "Site Key" to `RECAPTCHA_SITE_KEY` and "Secret Key" to
+   `RECAPTCHA_SECRET_KEY`
 
 > [!NOTE]
 >
 > For a Production or User-Facing project, **ALWAYS set `DJANGO_DEBUG=0`**
 
+## Usage
+
+1. Apply database migrations:
+
+```console
+python manage.py migrate
+```
+
+2. Create a superuser:
+
+```console
+python manage.py createsuperuser
+```
+
+3. Run the development server:
+
+```console
+python manage.py tailwind runserver
+```
+
+4. Visit <http://localhost:8000/admin> to add your projects
+5. View your portfolio at <http://localhost:8000>
+
+## Add your Projects, Personal Details and skills
+
+You can customize the portfolio with your own skills and projects through the
+Django Admin interface at <http://localhost:8000/admin>
+
+### Adding Projects
+
+After logging in to the admin interface, you can add new projects by clicking on
+the "Projects" link. Each project has the following fields:
+
+- **Title**: The name of your project (maximum 100 characters)
+- **Details**: A detailed description of your project. This field supports
+  multiple paragraphs and can be left blank if needed
+- **Repository URL**: The URL to your project's source code repository
+  (optional)
+- **Website URL**: The URL to your project's live website or demo (optional)
+
+Projects will be displayed on your portfolio page in the order they were added,
+oldest to newest. Shortly we will add a priority order too so some projects can
+be bumped to the top.
+
 ### In-App Settings
 
-The application provides additional configuration options through the Django admin interface at `/admin/app/siteconfiguration/`. These settings allow you to customize various aspects of your portfolio:
+The application provides additional configuration options through the Django
+admin interface at `/admin/app/siteconfiguration/`. These settings allow you to
+customize various aspects of your portfolio:
 
 - **Site Content**
   - `owner_name`: The Owner of the site. This will be the page title and the
     text in the header of the page content (default: "The Developer")
-  - `hero_title`: The main title displayed on your portfolio (default: "Full Stack Developer")
+  - `hero_title`: The main title displayed on your portfolio (default: "Full
+    Stack Developer")
   - `hero_info`: Primary text content for the hero section (up to 500
     characters, no default)
   - `hero_secondary`: Secondary text content for the hero section (up to 500
@@ -161,53 +215,19 @@ The application provides additional configuration options through the Django adm
 These settings can be modified at any time through the admin interface and
 changes will be reflected immediately on your portfolio.
 
-## Usage
-
-1. Apply database migrations:
-
-```console
-python manage.py migrate
-```
-
-2. Create a superuser:
-
-```console
-python manage.py createsuperuser
-```
-
-3. Run the development server:
-
-```console
-python manage.py tailwind runserver
-```
-
-4. Visit <http://localhost:8000/admin> to add your projects
-5. View your portfolio at <http://localhost:8000>
-
-## Adding Projects via Admin Interface
-
-After logging in to the admin interface at <http://localhost:8000/admin>, you can add new projects by clicking on the "Projects" link. Each project has the following fields:
-
-- **Title**: The name of your project (maximum 100 characters)
-- **Details**: A detailed description of your project. This field supports multiple paragraphs and can be left blank if needed
-- **Repository URL**: The URL to your project's source code repository (optional)
-- **Website URL**: The URL to your project's live website or demo (optional)
-
-Projects will be displayed on your portfolio page in the order they were added,
-oldest to newest. Shortly we will add a priority order too so some projects can
-be bumped to the top.
-
 ## Project Structure
 
 ```
-├── app/                    # Main application code
-├── assets/                 # Static assets
-│   └── css/               # CSS files
-├── config/                # Project configuration
-├── templates/             # HTML templates
-│   ├── app/              # Application templates
-│   └── cotton/           # Component templates
-└── manage.py             # Django management script
+├── app/               # Main application code
+├── assets/            # Static assets
+│   └── css/           # CSS files
+│   └── js/            # JavaScript files
+│   └── favicon.ico    # Put your favicon here or use the existing one
+├── config/            # Project configuration
+├── templates/         # HTML templates
+│   ├── app/           # Application templates
+│   └── cotton/        # Component templates
+└── manage.py          # Django management script
 ```
 
 ## Contributing
