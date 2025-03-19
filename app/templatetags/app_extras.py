@@ -4,7 +4,30 @@ from typing import TypeVar
 
 from django import template
 
+from app.models import SiteConfiguration
+
 register = template.Library()
+
+
+@register.simple_tag
+def has_social_accounts() -> bool:
+    """Check if at least one social media username is configured.
+
+    Returns:
+        bool: True if at least 1 social account is configured, False otherwise.
+    """
+    config = SiteConfiguration.get_solo()
+
+    # Check if ANY of the username fields are not blank
+    return any(
+        [
+            config.github_username,
+            config.twitter_username,
+            config.linkedin_username,
+            config.youtube_username,
+            config.medium_username,
+        ]
+    )
 
 
 K = TypeVar("K")  # Key type

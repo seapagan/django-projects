@@ -1,5 +1,5 @@
 {% load lucide %}
-
+{% load app_extras %}
 
 <section class="flex flex-col justify-center w-full pb-8">
   <div class="space-y-6">
@@ -22,15 +22,15 @@
           Based in the beautiful Scottish Borders on an old Farm, I am fully
           setup for Remote work with a dedicated office space and Full-Fibre
           Gigabit Broadband. 20 minutes drive from Berwick-Upon-Tweed and Rail
-          links to the rest of the UK, 90 minutes drive from either Edinburgh
-          or Newcastle airports.
+          links to the rest of the UK, 90 minutes drive from either Edinburgh or
+          Newcastle airports.
         </p>
         <p class="text-lg">
           Professionally, I spent my life working Offshore on Seismic Research
           Ships in the Oil & Gas Industry. This has left me with a very strong
           work ethic and experience running teams in remote and time/safety
-          critical environments. I am very comfortable working in a team both
-          as a member and as a leader.
+          critical environments. I am very comfortable working in a team both as
+          a member and as a leader.
         </p>
         <p class="text-lg">
           When I'm not coding, you can find me exploring new technologies,
@@ -64,54 +64,55 @@
             </ul>
           </div>
           {% endif %}
-          <div class="col-span-2 mt-6">
-            <h3 class="text-xl font-semibold mb-2">Connect with Me</h3>
-            <div class="flex gap-4">
-              {% if config.github_username %}
-              <a href="https://github.com/{{ config.github_username}}"
-                target="_blank" rel="noopener noreferrer"
-                class="text-muted-foreground hover:text-foreground transition-colors has-tooltip"
-                data-tooltip="My GitHub Profile">
-                {% lucide "github" %}
-              </a>
-              {% endif %}
-              {% if config.twitter_username %}
-              <a href="https://x.com/{{ config.twitter_username }}"
-                target="_blank" rel="noopener noreferrer"
-                class="text-muted-foreground hover:text-foreground transition-colors has-tooltip"
-                data-tooltip="My Twitter Profile">
-                {% lucide "twitter" %}
-              </a>
-              {% endif %}
-              {% if config.linkedin_username %}
-              <a href="https://linkedin.com/in/{{ config.linkedin_username }}"
-                target="_blank" rel="noopener noreferrer"
-                class="text-muted-foreground hover:text-foreground transition-colors has-tooltip"
-                data-tooltip="My LinkedIn">
-                {% lucide "linkedin" %}
-              </a>
-              {% endif %}
-              {% if config.medium_username %}
-              <a href="https://medium.com/@{{ config.medium_username }}"
-                target="_blank" rel="noopener noreferrer"
-                class="text-muted-foreground hover:text-foreground transition-colors has-tooltip"
-                data-tooltip="My Medium">
-                {% lucide "book-open" %}
-              </a>
-              {% endif %}
-              {% if config.youtube_username %}
-              <a href="https://youtube.com/@{{ config.youtube_username }}"
-                target="_blank" rel="noopener noreferrer"
-                class="text-muted-foreground hover:text-foreground transition-colors has-tooltip"
-                data-tooltip="My YouTube">
-                {% lucide "youtube" %}
-              </a>
-              {% endif %}
-            </div>
-          </div>
         </div>
         {% endif %}
         {% endwith %}
+        {% has_social_accounts as has_socials %}
+        {% if has_socials %}
+        <h3 class="text-xl font-semibold mb-2">Connect with Me</h3>
+        <div class="flex gap-4">
+          {% if config.github_username %}
+          <a href="https://github.com/{{ config.github_username}}"
+            target="_blank" rel="noopener noreferrer"
+            class="text-muted-foreground hover:text-foreground transition-colors has-tooltip"
+            data-tooltip="My GitHub Profile">
+            {% lucide "github" %}
+          </a>
+          {% endif %}
+          {% if config.twitter_username %}
+          <a href="https://x.com/{{ config.twitter_username }}" target="_blank"
+            rel="noopener noreferrer"
+            class="text-muted-foreground hover:text-foreground transition-colors has-tooltip"
+            data-tooltip="My Twitter Profile">
+            {% lucide "twitter" %}
+          </a>
+          {% endif %}
+          {% if config.linkedin_username %}
+          <a href="https://linkedin.com/in/{{ config.linkedin_username }}"
+            target="_blank" rel="noopener noreferrer"
+            class="text-muted-foreground hover:text-foreground transition-colors has-tooltip"
+            data-tooltip="My LinkedIn">
+            {% lucide "linkedin" %}
+          </a>
+          {% endif %}
+          {% if config.medium_username %}
+          <a href="https://medium.com/@{{ config.medium_username }}"
+            target="_blank" rel="noopener noreferrer"
+            class="text-muted-foreground hover:text-foreground transition-colors has-tooltip"
+            data-tooltip="My Medium">
+            {% lucide "book-open" %}
+          </a>
+          {% endif %}
+          {% if config.youtube_username %}
+          <a href="https://youtube.com/@{{ config.youtube_username }}"
+            target="_blank" rel="noopener noreferrer"
+            class="text-muted-foreground hover:text-foreground transition-colors has-tooltip"
+            data-tooltip="My YouTube">
+            {% lucide "youtube" %}
+          </a>
+          {% endif %}
+        </div>
+        {% endif %}
       </div>
     </div>
   </div>
