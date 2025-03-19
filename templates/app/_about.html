@@ -1,10 +1,15 @@
 {% load lucide %}
+{% load app_extras %}
 
+{% with languages=config.languages.all frameworks=config.frameworks.all %}
+{% has_social_accounts as has_socials %}
+{% profile_check languages.count frameworks.count has_socials as any_profile_exists %}
 
 <section class="flex flex-col justify-center w-full pb-8">
   <div class="space-y-6">
     <h2 class="text-3xl font-bold mb-4">About Me</h2>
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <div
+      class="grid grid-cols-1 {% if any_profile_exists %}lg:grid-cols-2 gap-8{% endif %}">
       <div class="space-y-4 text-muted-foreground">
         <p class="text-lg">
           I'm a passionate developer with a strong focus on Python and modern
@@ -22,15 +27,15 @@
           Based in the beautiful Scottish Borders on an old Farm, I am fully
           setup for Remote work with a dedicated office space and Full-Fibre
           Gigabit Broadband. 20 minutes drive from Berwick-Upon-Tweed and Rail
-          links to the rest of the UK, 90 minutes drive from either Edinburgh
-          or Newcastle airports.
+          links to the rest of the UK, 90 minutes drive from either Edinburgh or
+          Newcastle airports.
         </p>
         <p class="text-lg">
           Professionally, I spent my life working Offshore on Seismic Research
           Ships in the Oil & Gas Industry. This has left me with a very strong
           work ethic and experience running teams in remote and time/safety
-          critical environments. I am very comfortable working in a team both
-          as a member and as a leader.
+          critical environments. I am very comfortable working in a team both as
+          a member and as a leader.
         </p>
         <p class="text-lg">
           When I'm not coding, you can find me exploring new technologies,
@@ -40,75 +45,79 @@
         </p>
       </div>
       <div class="space-y-4">
+        {% if languages.count or frameworks.count %}
         <h3 class="text-xl font-semibold">My Skills</h3>
         <div class="grid grid-cols-2 gap-4">
+          {% if languages.count %}
           <div>
             <h4 class="font-medium mb-2">Languages</h4>
             <ul class="list-disc list-inside space-y-1 text-muted-foreground">
-              <li>Python</li>
-              <li>JavaScript</li>
-              <li>HTML/CSS (Incl Tailwind)</li>
-              <li>Learning Rust!</li>
-              <li>Using AI as an aid, NOT a crutch</li>
+              {% for language in config.languages.all %}
+              <li>{{ language.name }}</li>
+              {% endfor %}
             </ul>
           </div>
+          {% endif %}
+          {% if frameworks.count %}
           <div>
             <h4 class="font-medium mb-2">Frameworks & Tools</h4>
             <ul class="list-disc list-inside space-y-1 text-muted-foreground">
-              <li>FastAPI & Django</li>
-              <li>React & Next.js</li>
-              <li>SQL & NoSQL Databases</li>
-              <li>Git & GitHub</li>
-              <li>Virtualization and Cloud Computing</li>
+              {% for framework in config.frameworks.all %}
+              <li>{{ framework.name }}</li>
+              {% endfor %}
             </ul>
           </div>
-          <div class="col-span-2 mt-6">
-            <h4 class="font-medium mb-2">Connect With Me</h4>
-            <div class="flex gap-4">
-              {% if config.github_username %}
-              <a href="https://github.com/{{ config.github_username}}"
-                target="_blank" rel="noopener noreferrer"
-                class="text-muted-foreground hover:text-foreground transition-colors has-tooltip"
-                data-tooltip="My GitHub Profile">
-                {% lucide "github" %}
-              </a>
-              {% endif %}
-              {% if config.twitter_username %}
-              <a href="https://x.com/{{ config.twitter_username }}"
-                target="_blank" rel="noopener noreferrer"
-                class="text-muted-foreground hover:text-foreground transition-colors has-tooltip"
-                data-tooltip="My Twitter Profile">
-                {% lucide "twitter" %}
-              </a>
-              {% endif %}
-              {% if config.linkedin_username %}
-              <a href="https://linkedin.com/in/{{ config.linkedin_username }}"
-                target="_blank" rel="noopener noreferrer"
-                class="text-muted-foreground hover:text-foreground transition-colors has-tooltip"
-                data-tooltip="My LinkedIn">
-                {% lucide "linkedin" %}
-              </a>
-              {% endif %}
-              {% if config.medium_username %}
-              <a href="https://medium.com/@{{ config.medium_username }}"
-                target="_blank" rel="noopener noreferrer"
-                class="text-muted-foreground hover:text-foreground transition-colors has-tooltip"
-                data-tooltip="My Medium">
-                {% lucide "book-open" %}
-              </a>
-              {% endif %}
-              {% if config.youtube_username %}
-              <a href="https://youtube.com/@{{ config.youtube_username }}"
-                target="_blank" rel="noopener noreferrer"
-                class="text-muted-foreground hover:text-foreground transition-colors has-tooltip"
-                data-tooltip="My YouTube">
-                {% lucide "youtube" %}
-              </a>
-              {% endif %}
-            </div>
-          </div>
+          {% endif %}
         </div>
+        {% endif %}
+        {% if has_socials %}
+        <h3 class="text-xl font-semibold mb-2">Connect with Me</h3>
+        <div class="flex gap-4">
+          {% if config.github_username %}
+          <a href="https://github.com/{{ config.github_username}}"
+            target="_blank" rel="noopener noreferrer"
+            class="text-muted-foreground hover:text-foreground transition-colors has-tooltip"
+            data-tooltip="My GitHub Profile">
+            {% lucide "github" %}
+          </a>
+          {% endif %}
+          {% if config.twitter_username %}
+          <a href="https://x.com/{{ config.twitter_username }}" target="_blank"
+            rel="noopener noreferrer"
+            class="text-muted-foreground hover:text-foreground transition-colors has-tooltip"
+            data-tooltip="My Twitter Profile">
+            {% lucide "twitter" %}
+          </a>
+          {% endif %}
+          {% if config.linkedin_username %}
+          <a href="https://linkedin.com/in/{{ config.linkedin_username }}"
+            target="_blank" rel="noopener noreferrer"
+            class="text-muted-foreground hover:text-foreground transition-colors has-tooltip"
+            data-tooltip="My LinkedIn">
+            {% lucide "linkedin" %}
+          </a>
+          {% endif %}
+          {% if config.medium_username %}
+          <a href="https://medium.com/@{{ config.medium_username }}"
+            target="_blank" rel="noopener noreferrer"
+            class="text-muted-foreground hover:text-foreground transition-colors has-tooltip"
+            data-tooltip="My Medium">
+            {% lucide "book-open" %}
+          </a>
+          {% endif %}
+          {% if config.youtube_username %}
+          <a href="https://youtube.com/@{{ config.youtube_username }}"
+            target="_blank" rel="noopener noreferrer"
+            class="text-muted-foreground hover:text-foreground transition-colors has-tooltip"
+            data-tooltip="My YouTube">
+            {% lucide "youtube" %}
+          </a>
+          {% endif %}
+        </div>
+        {% endif %}
       </div>
     </div>
   </div>
 </section>
+
+{% endwith %}

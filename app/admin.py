@@ -5,12 +5,15 @@ from typing import Any
 from django.apps import apps
 from django.contrib import admin
 from django.contrib.admin import AdminSite
+from django.db.models import Model
 from django.http import HttpRequest
 from solo.admin import SingletonModelAdmin
 
 from app.models import (
     ContactSubmission,
+    Framework,
     GitHubStats,
+    Language,
     Project,
     SiteConfiguration,
     Tag,
@@ -115,11 +118,31 @@ class GitHubStatsAdmin(admin.ModelAdmin[GitHubStats]):
         return False
 
 
+class LanguageInline(admin.TabularInline[Language, Model]):
+    """Inline edit the Languages."""
+
+    model = Language
+    extra = 1
+
+
+class FrameworkInline(admin.TabularInline[Framework, Model]):
+    """Inline edit the Frameworks."""
+
+    model = Framework
+    extra = 1
+
+
+class CustomSingletonModelAdmin(SingletonModelAdmin):
+    """Customize the Singleton Admin to add some inlines."""
+
+    inlines = [LanguageInline, FrameworkInline]  # noqa: RUF012
+
+
 admin_site = CustomAdminSite(name="custom_admin")
 
 admin_site.register(UserProfile)
 admin_site.register(Project, ProjectAdmin)
 admin_site.register(Tag, TagAdmin)
 admin_site.register(GitHubStats, GitHubStatsAdmin)
-admin_site.register(SiteConfiguration, SingletonModelAdmin)
+admin_site.register(SiteConfiguration, CustomSingletonModelAdmin)
 admin_site.register(ContactSubmission, ContactSubmissionAdmin)

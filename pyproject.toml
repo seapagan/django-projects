@@ -65,11 +65,11 @@ lint.sequence = ["format", "ruff", "mypy"]
 lint.help = "Run all linting checks"
 
 # populate data
-"fixture:load".cmd = "python manage.py loaddata apps"
+"fixture:load".cmd = "python manage.py loaddata seed"
 
 [tool.poe.tasks."fixture:dump"]
-cmd = "python manage.py dumpdata app.project"
-capture_stdout = "app/fixtures/apps.json"
+cmd = "python manage.py dumpdata app.siteconfiguration app.project app.tag app.language app.framework"
+capture_stdout = "app/fixtures/seed.json"
 
 [tool.mypy]
 plugins = ["mypy_django_plugin.main"]
