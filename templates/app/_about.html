@@ -1,10 +1,15 @@
 {% load lucide %}
 {% load app_extras %}
 
+{% with languages=config.languages.all frameworks=config.frameworks.all %}
+{% has_social_accounts as has_socials %}
+{% profile_check languages.count frameworks.count has_socials as any_profile_exists %}
+
 <section class="flex flex-col justify-center w-full pb-8">
   <div class="space-y-6">
     <h2 class="text-3xl font-bold mb-4">About Me</h2>
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <div
+      class="grid grid-cols-1 {% if any_profile_exists %}lg:grid-cols-2 gap-8{% endif %}">
       <div class="space-y-4 text-muted-foreground">
         <p class="text-lg">
           I'm a passionate developer with a strong focus on Python and modern
@@ -40,7 +45,6 @@
         </p>
       </div>
       <div class="space-y-4">
-        {% with languages=config.languages.all frameworks=config.frameworks.all %}
         {% if languages.count or frameworks.count %}
         <h3 class="text-xl font-semibold">My Skills</h3>
         <div class="grid grid-cols-2 gap-4">
@@ -66,8 +70,6 @@
           {% endif %}
         </div>
         {% endif %}
-        {% endwith %}
-        {% has_social_accounts as has_socials %}
         {% if has_socials %}
         <h3 class="text-xl font-semibold mb-2">Connect with Me</h3>
         <div class="flex gap-4">
@@ -117,3 +119,5 @@
     </div>
   </div>
 </section>
+
+{% endwith %}

@@ -10,6 +10,16 @@ register = template.Library()
 
 
 @register.simple_tag
+def profile_check(
+    languages_count: int,
+    frameworks_count: int,
+    has_socials: bool,  # noqa: FBT001
+) -> bool:
+    """Return true if any of the 3 profile items exist."""
+    return bool(languages_count or frameworks_count or has_socials)
+
+
+@register.simple_tag
 def has_social_accounts() -> bool:
     """Check if at least one social media username is configured.
 
