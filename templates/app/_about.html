@@ -40,8 +40,11 @@
         </p>
       </div>
       <div class="space-y-4">
+        {% with languages=config.languages.all frameworks=config.frameworks.all %}
+        {% if languages.count or frameworks.count %}
         <h3 class="text-xl font-semibold">My Skills</h3>
         <div class="grid grid-cols-2 gap-4">
+          {% if languages.count %}
           <div>
             <h4 class="font-medium mb-2">Languages</h4>
             <ul class="list-disc list-inside space-y-1 text-muted-foreground">
@@ -50,6 +53,8 @@
               {% endfor %}
             </ul>
           </div>
+          {% endif %}
+          {% if frameworks.count %}
           <div>
             <h4 class="font-medium mb-2">Frameworks & Tools</h4>
             <ul class="list-disc list-inside space-y-1 text-muted-foreground">
@@ -58,6 +63,7 @@
               {% endfor %}
             </ul>
           </div>
+          {% endif %}
           <div class="col-span-2 mt-6">
             <h4 class="font-medium mb-2">Connect With Me</h4>
             <div class="flex gap-4">
@@ -104,6 +110,8 @@
             </div>
           </div>
         </div>
+        {% endif %}
+        {% endwith %}
       </div>
     </div>
   </div>
