@@ -4,6 +4,8 @@
 from typing import Any
 
 from django.contrib import messages
+from django.db import models
+from django.db.models import Case, F, Value, When
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect
 from django.views.generic import ListView, TemplateView
@@ -20,6 +22,22 @@ class ProjectsListView(ListView[Project]):
     template_name = "app/home.html"
     model = Project
     context_object_name = "projects"
+
+    def get_queryset(self) -> models.QuerySet[Project]:
+        """Get queryset with custom ordering.
+
+        1. First, projects with priority field set, ordered by priority
+        2. Then, projects without priority, ordered by creation date
+        """
+        # Order by priority (nulls last), then by created_at
+        return Project.objects.order_by(
+            # This puts NULL priority values at the end
+            Case(
+                When(priority__isnull=True, then=Value(999999)),
+                default=F("priority"),
+            ),
+            "created_at",
+        )
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         """Get context data for the template.
