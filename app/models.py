@@ -76,6 +76,9 @@ class Project(models.Model):
     tags: models.ManyToManyField[Tag, Project] = models.ManyToManyField(
         "Tag", blank=True, related_name="projects"
     )
+    priority = models.IntegerField(
+        blank=True, null=True, help_text="Lower numbers appear first"
+    )
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

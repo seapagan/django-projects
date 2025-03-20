@@ -43,6 +43,7 @@ platformdirs==4.3.6
 poethepoet==0.33.0
 pre-commit==4.1.0
 pygments==2.19.1
+pymemcache==4.0.0
 python-dateutil==2.9.0.post0
 python-dotenv==1.0.1
 python-slugify==8.0.4

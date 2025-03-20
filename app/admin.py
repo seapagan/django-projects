@@ -52,12 +52,36 @@ class TagAdmin(admin.ModelAdmin[Tag]):
 class ProjectAdmin(admin.ModelAdmin[Project]):
     """Define the admin interface for the Projects."""
 
-    list_display = ("id", "title", "created_at", "updated_at", "tag_list")
+    list_display = (
+        "id",
+        "title",
+        "priority",
+        "created_at",
+        "updated_at",
+        "tag_list",
+    )
     date_hierarchy = "created_at"
     ordering = ("created_at",)
     search_fields = ("title", "details")
     filter_horizontal = ("tags",)
-    list_filter = ("tags",)
+    list_filter = ("tags", "priority")
+    list_editable = ("priority",)
+
+    fieldsets = (
+        (
+            None,
+            {
+                "fields": (
+                    "title",
+                    "details",
+                    "priority",
+                    "repo",
+                    "website",
+                    "tags",
+                ),
+            },
+        ),
+    )
 
     def tag_list(self, obj: Project) -> str:
         """Return a comma-separated list of tags."""

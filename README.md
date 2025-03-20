@@ -192,13 +192,20 @@ the "Projects" link. Each project has the following fields:
 - **Title**: The name of your project (maximum 100 characters)
 - **Details**: A detailed description of your project. This field supports
   multiple paragraphs and can be left blank if needed
+- **Priority**: An optional integer value that determines the display order (lower numbers appear first)
 - **Repository URL**: The URL to your project's source code repository
   (optional)
 - **Website URL**: The URL to your project's live website or demo (optional)
+- **Tags**: Associate relevant tags with your project to categorize it (optional)
 
-Projects will be displayed on your portfolio page in the order they were added,
-oldest to newest. Shortly we will add a priority order too so some projects can
-be bumped to the top.
+Projects are displayed on your portfolio page in the following order:
+
+1. Projects with a `priority` value are shown first, sorted by priority (lower
+   numbers appear first and duplicate priorities are sorted by their
+   `created_at` date.)
+2. Projects without a `priority` value are then displayed, sorted by creation date (oldest to newest)
+
+You can set a project's priority in the admin interface. This allows you to highlight your most important projects by giving them lower priority numbers.
 
 ### In-App Settings
 
