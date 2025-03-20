@@ -116,7 +116,7 @@ The application uses environment variables for configuration. Key settings:
 Create an `.env` file in the project root with the following content, or set the
 environment variables directly:
 
-```env
+```ini
 DJANGO_SECRET_KEY=your-secret-key
 DJANGO_DEBUG=1 # sets debug mode
 DJANGO_USE_CACHE=0 # set to 0 for development, 1 for production when the database rarely changes
