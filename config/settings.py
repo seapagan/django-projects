@@ -215,3 +215,18 @@ CACHE_MIDDLEWARE_KEY_PREFIX = ""
 # set django-solo to use the cache too
 if DJANGO_USE_CACHE:
     SOLO_CACHE = "default"
+
+
+# settings for PRODUCTION:
+if not DEBUG:
+    SECURE_HSTS_SECONDS = (
+        30  # Unit is seconds; *USE A SMALL VALUE FOR TESTING!*
+    )
+    SECURE_HSTS_PRELOAD = True
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
+    SECURE_REFERRER_POLICY = "strict-origin-when-cross-origin"
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
