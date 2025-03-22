@@ -62,10 +62,11 @@ INSTALLED_APPS = [
     "lucide",
     "django_recaptcha",
     "solo",
+    "django_tailwind_cli",
 ]
 
 if DEBUG:
-    INSTALLED_APPS += ["django_tailwind_cli", "django_browser_reload"]
+    INSTALLED_APPS += ["django_browser_reload"]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -220,7 +221,8 @@ if DJANGO_USE_CACHE:
 # settings for PRODUCTION:
 if not DEBUG:
     SECURE_HSTS_SECONDS = (
-        30  # Unit is seconds; *USE A SMALL VALUE FOR TESTING!*
+        #30  # Unit is seconds; *USE A SMALL VALUE FOR TESTING!*
+	    2592000
     )
     SECURE_HSTS_PRELOAD = True
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
@@ -230,3 +232,20 @@ if not DEBUG:
     SECURE_SSL_REDIRECT = True
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
+
+import logging
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'ERROR'),
+        },
+    },
+}
