@@ -231,12 +231,26 @@ wheels = [
 ]
 
 [[package]]
+name = "django-permissions-policy"
+version = "4.25.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "asgiref" },
+    { name = "django" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/2c/29/27252a33e78014c6d31d200c19269d5b5d49b6e0d9306f1adc85bfb5644c/django_permissions_policy-4.25.0.tar.gz", hash = "sha256:2757397fb6299e187ef146809a047b636584e7431527255615752db6dc2e94f7", size = 10074 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/ea/5a/9584102478089aa56f71f5b1f4fc973a37f8107f55b4a67a96d90f6819f3/django_permissions_policy-4.25.0-py3-none-any.whl", hash = "sha256:083a411c31964dd06c9aec4058147dda46bc1c3e04a799cbae7603578d979944", size = 6668 },
+]
+
+[[package]]
 name = "django-projects"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
     { name = "django" },
     { name = "django-cotton" },
+    { name = "django-permissions-policy" },
     { name = "django-recaptcha" },
     { name = "django-solo" },
     { name = "django-stubs-ext" },
@@ -264,6 +278,7 @@ dev = [
 requires-dist = [
     { name = "django", specifier = ">=5.1.7" },
     { name = "django-cotton", specifier = ">=2.0.0" },
+    { name = "django-permissions-policy", specifier = ">=4.25.0" },
     { name = "django-recaptcha", specifier = ">=4.0.0" },
     { name = "django-solo", specifier = ">=2.4.0" },
     { name = "django-stubs-ext", specifier = ">=5.1.3" },

@@ -70,6 +70,7 @@ if DEBUG:
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "django_permissions_policy.PermissionsPolicyMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -234,6 +235,24 @@ if not DEBUG:
     CSRF_COOKIE_SECURE = True
     CSRF_COOKIE_HTTPONLY = True
     CSRF_COOKIE_NAME = "__Secure-csrftoken"
+
+    PERMISSIONS_POLICY = {
+        "accelerometer": [],
+        "ambient-light-sensor": [],
+        "autoplay": [],
+        "camera": [],
+        "display-capture": [],
+        "encrypted-media": [],
+        "fullscreen": [],
+        "geolocation": [],
+        "gyroscope": [],
+        "interest-cohort": [],
+        "magnetometer": [],
+        "microphone": [],
+        "midi": [],
+        "payment": [],
+        "usb": [],
+    }
 
 import logging
 LOGGING = {

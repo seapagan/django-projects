@@ -7,6 +7,7 @@ requires-python = ">=3.10"
 dependencies = [
     "django>=5.1.7",
     "django-cotton>=2.0.0",
+    "django-permissions-policy>=4.25.0",
     "django-recaptcha>=4.0.0",
     "django-solo>=2.4.0",
     "django-stubs-ext>=5.1.3",
