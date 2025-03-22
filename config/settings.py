@@ -10,6 +10,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 # ruff: noqa: E501
+import json
 import os
 from pathlib import Path
 
@@ -31,15 +32,22 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 
-RECAPTCHA_PUBLIC_KEY = os.getenv("RECAPTCHA_SITE_KEY")
-RECAPTCHA_PRIVATE_KEY = os.getenv("RECAPTCHA_SECRET_KEY")
+RECAPTCHA_PUBLIC_KEY = os.getenv("RECAPTCHA_SITE_KEY", "")
+RECAPTCHA_PRIVATE_KEY = os.getenv("RECAPTCHA_SECRET_KEY", "")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(int(os.getenv("DJANGO_DEBUG", "0")))
 
+# get some other config settings from the `.env` or actual environment
 DJANGO_USE_CACHE = bool(int(os.getenv("DJANGO_USE_CACHE", "0")))
+DJANGO_CSRF_TRUSTED_ORIGINS = json.loads(
+    os.getenv("DJANGO_CSRF_TRUSTED_ORIGINS", "[]")
+)
+DJANGO_ALLOWED_HOSTS = json.loads(os.getenv("DJANGO_ALLOWED_HOSTS", "[]"))
+
 
 ALLOWED_HOSTS: list[str] = ["127.0.0.1", "localhost"]
+ALLOWED_HOSTS += DJANGO_ALLOWED_HOSTS
 
 # Application definition
 INSTALLED_APPS = [
@@ -50,13 +58,14 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "app",
-    "django_tailwind_cli",
-    "django_browser_reload",
     "django_cotton",
     "lucide",
     "django_recaptcha",
     "solo",
 ]
+
+if DEBUG:
+    INSTALLED_APPS += ["django_tailwind_cli", "django_browser_reload"]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -66,8 +75,10 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "django_browser_reload.middleware.BrowserReloadMiddleware",
 ]
+
+if DEBUG:
+    MIDDLEWARE += ["django_browser_reload.middleware.BrowserReloadMiddleware"]
 
 if DJANGO_USE_CACHE:
     MIDDLEWARE = [
@@ -148,6 +159,12 @@ USE_TZ = True
 STATIC_URL = "static/"
 STATICFILES_DIRS = [BASE_DIR / "assets"]
 
+STATIC_ROOT = (
+    os.getenv("DJANGO_STATIC_ROOT", "")
+    if not DEBUG
+    else str(BASE_DIR) + "/static"
+)
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
@@ -174,6 +191,7 @@ DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", "webmaster@localhost")
 CONTACT_FORM_RECIPIENT = os.getenv(
     "CONTACT_FORM_RECIPIENT", "admin@example.com"
 )
+EMAIL_TIMEOUT = 10
 
 # Cache configuration for GitHub stats
 CACHES = {
