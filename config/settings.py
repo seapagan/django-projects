@@ -10,8 +10,10 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 # ruff: noqa: E501
+import json
 import os
 from pathlib import Path
+from typing import Any
 
 import django_stubs_ext
 from dotenv import load_dotenv
@@ -31,15 +33,23 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 
-RECAPTCHA_PUBLIC_KEY = os.getenv("RECAPTCHA_SITE_KEY")
-RECAPTCHA_PRIVATE_KEY = os.getenv("RECAPTCHA_SECRET_KEY")
+RECAPTCHA_PUBLIC_KEY = os.getenv("RECAPTCHA_SITE_KEY", "")
+RECAPTCHA_PRIVATE_KEY = os.getenv("RECAPTCHA_SECRET_KEY", "")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(int(os.getenv("DJANGO_DEBUG", "0")))
+SECURE_MODE = bool(int(os.getenv("DJANGO_SECURE_MODE", "0")))
 
+# get some other config settings from the `.env` or actual environment
 DJANGO_USE_CACHE = bool(int(os.getenv("DJANGO_USE_CACHE", "0")))
+DJANGO_CSRF_TRUSTED_ORIGINS = json.loads(
+    os.getenv("DJANGO_CSRF_TRUSTED_ORIGINS", "[]")
+)
+DJANGO_ALLOWED_HOSTS = json.loads(os.getenv("DJANGO_ALLOWED_HOSTS", "[]"))
+
 
 ALLOWED_HOSTS: list[str] = ["127.0.0.1", "localhost"]
+ALLOWED_HOSTS += DJANGO_ALLOWED_HOSTS
 
 # Application definition
 INSTALLED_APPS = [
@@ -50,24 +60,29 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "app",
-    "django_tailwind_cli",
-    "django_browser_reload",
     "django_cotton",
     "lucide",
     "django_recaptcha",
     "solo",
+    "django_tailwind_cli",
 ]
+
+if DEBUG:
+    INSTALLED_APPS += ["django_browser_reload"]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "django_permissions_policy.PermissionsPolicyMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "django_browser_reload.middleware.BrowserReloadMiddleware",
 ]
+
+if DEBUG:
+    MIDDLEWARE += ["django_browser_reload.middleware.BrowserReloadMiddleware"]
 
 if DJANGO_USE_CACHE:
     MIDDLEWARE = [
@@ -148,6 +163,12 @@ USE_TZ = True
 STATIC_URL = "static/"
 STATICFILES_DIRS = [BASE_DIR / "assets"]
 
+STATIC_ROOT = (
+    os.getenv("DJANGO_STATIC_ROOT", "")
+    if not DEBUG
+    else str(BASE_DIR) + "/static"
+)
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
@@ -174,6 +195,7 @@ DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", "webmaster@localhost")
 CONTACT_FORM_RECIPIENT = os.getenv(
     "CONTACT_FORM_RECIPIENT", "admin@example.com"
 )
+EMAIL_TIMEOUT = 10
 
 # Cache configuration for GitHub stats
 CACHES = {
@@ -197,3 +219,38 @@ CACHE_MIDDLEWARE_KEY_PREFIX = ""
 # set django-solo to use the cache too
 if DJANGO_USE_CACHE:
     SOLO_CACHE = "default"
+
+# settings for PRODUCTION:
+if SECURE_MODE and not DEBUG:
+    SECURE_HSTS_SECONDS = (
+        30  # Unit is seconds; *USE A SMALL VALUE FOR TESTING!*
+        # 15552000 use this AFTER you are sure all is good! This is 180 days!
+    )
+    SECURE_HSTS_PRELOAD = True
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
+    SECURE_REFERRER_POLICY = "strict-origin-when-cross-origin"
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    CSRF_COOKIE_HTTPONLY = True
+    CSRF_COOKIE_NAME = "__Secure-csrftoken"
+
+    PERMISSIONS_POLICY: dict[str, list[Any]] = {
+        "accelerometer": [],
+        "ambient-light-sensor": [],
+        "autoplay": [],
+        "camera": [],
+        "display-capture": [],
+        "encrypted-media": [],
+        "fullscreen": [],
+        "geolocation": [],
+        "gyroscope": [],
+        "interest-cohort": [],
+        "magnetometer": [],
+        "microphone": [],
+        "midi": [],
+        "payment": [],
+        "usb": [],
+    }

@@ -18,6 +18,8 @@ At this time it is not fully customizable, but this will be fixed very shortly.
   - [Adding Projects](#adding-projects)
   - [In-App Settings](#in-app-settings)
 - [Caching](#caching)
+- [Production Deployment](#production-deployment)
+  - [Security Features](#security-features)
 - [Project Structure](#project-structure)
 - [Contributing](#contributing)
 - [Development](#development)
@@ -27,7 +29,8 @@ At this time it is not fully customizable, but this will be fixed very shortly.
 
 - 🚀 Built with Django 5.1
 - 💅 Modern UI with Tailwind CSS. We use `django-tailwind-cli` to make the
-  integration easier
+  integration easier. This uses the Tailwind CLI and does NOT require Node.js to
+  be installed
 - 🧩 Component-based templates using `django-cotton` and `django-shadcn`
 - 👤 Custom Models and Admin pages to customize the settings and text
 - 📝 Contact form with Google reCAPTCHA v2 integration for spam protection and
@@ -39,12 +42,13 @@ At this time it is not fully customizable, but this will be fixed very shortly.
   setting.
 - 💾 Optional caching using memcached for improved performance
 - 🔄 Live browser reload during development
+- 🔐 Enhanced security features for production deployment
+- 🚀 Production-ready with gunicorn integration
 
 ## Requirements
 
 - Python 3.10+
 - Django 5.1+
-- Node.js (for Tailwind CSS)
 
 ## Installation
 
@@ -95,6 +99,10 @@ The application uses environment variables for configuration. Key settings:
 
 - `DJANGO_SECRET_KEY`: Your Django secret key
 - `DJANGO_DEBUG`: Set to 1 for development, 0 for production
+- `DJANGO_SECURE_MODE`: Set to 1 to enable enhanced security features for production (see [Security Features](#security-features) section)
+- `DJANGO_CSRF_TRUSTED_ORIGINS`: JSON array of trusted origins for CSRF protection, e.g. `["https://www.myserver.com"]`
+- `DJANGO_ALLOWED_HOSTS`: JSON array of allowed hosts, e.g. `[".myserver.com"]`
+- `DJANGO_STATIC_ROOT`: Path where static files will be collected in production mode
 - `DJANGO_USE_CACHE`: Set to 1 to enable caching for the whole application. This
   uses `memcached` and that needs to be installed locally. Defaults to 0 (better
   for development) See the [Caching](#caching) secton below.
@@ -119,6 +127,13 @@ environment variables directly:
 ```ini
 DJANGO_SECRET_KEY=your-secret-key
 DJANGO_DEBUG=1 # sets debug mode
+DJANGO_SECURE_MODE=0 # set to 1 for production security features
+
+# Production settings (required when DJANGO_DEBUG=0)
+DJANGO_CSRF_TRUSTED_ORIGINS=["https://www.myserver.com"]
+DJANGO_ALLOWED_HOSTS=[".myserver.com"]
+DJANGO_STATIC_ROOT="/var/www/myproject/static/"
+
 DJANGO_USE_CACHE=0 # set to 0 for development, 1 for production when the database rarely changes
 DJANGO_CACHE_TIMEOUT=3600 # defaults to 600 (10 minutes) if not set
 RECAPTCHA_SITE_KEY=your-recaptcha-site-key
@@ -295,6 +310,60 @@ below variable:
 ```ini
 DJANGO_CACHE_TIMEOUT=1200 # Default is 600 (10 Minutes)
 ```
+
+## Production Deployment
+
+For production deployment, it's recommended to:
+
+1. Set `DJANGO_DEBUG=0` to disable debug mode
+2. Set `DJANGO_SECURE_MODE=1` to enable security features
+3. Configure the production-specific environment variables:
+   - `DJANGO_CSRF_TRUSTED_ORIGINS`: Your domain(s) as a JSON array
+   - `DJANGO_ALLOWED_HOSTS`: Your domain(s) as a JSON array
+   - `DJANGO_STATIC_ROOT`: The path where static files will be collected
+
+The application includes gunicorn for production deployment. A typical command
+to run the application in production would be:
+
+```console
+gunicorn config.wsgi:application --bind 0.0.0.0:8000
+```
+
+For a proper production setup, you should:
+
+1. Run gunicorn as a systemd service for automatic startup and monitoring
+2. Use Nginx as a reverse proxy in front of gunicorn to handle static files,
+   SSL, and more
+
+For a detailed guide on setting up Django with Nginx and Gunicorn in production,
+see: <https://realpython.com/django-nginx-gunicorn/>
+
+You should also collect static files before deployment:
+
+```console
+python manage.py collectstatic
+```
+
+### Security Features
+
+When `DJANGO_SECURE_MODE=1` (and `DJANGO_DEBUG=0`), the following security features are enabled:
+
+- HTTP Strict Transport Security (HSTS) - Initially set to 30 seconds for testing, with a commented option to increase to 15552000 seconds (180 days) once you've verified everything works correctly
+
+> [!CAUTION]
+>
+> Be very careful when setting the HSTS timeout to a longer value (like 180
+> days). Once set, it can be almost impossible to change later as browsers
+> will remember this setting for the specified duration. However, setting a
+> longer timeout is highly recommended once you've verified that HSTS is
+> working correctly for your site.
+
+- Secure cookies for CSRF and sessions
+- SSL redirection
+- Secure referrer policy
+- Permissions policy headers that restrict potentially dangerous browser features
+
+These features follow Django security best practices and help protect your application against common web vulnerabilities.
 
 ## Project Structure
 

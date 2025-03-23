@@ -15,6 +15,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
+from django.conf import settings
 from django.shortcuts import redirect
 from django.urls import include, path
 
@@ -23,8 +24,12 @@ from app.admin import admin_site
 urlpatterns = [
     path("admin/", admin_site.urls),
     path("", include("app.urls")),
-    path("__reload__/", include("django_browser_reload.urls")),
     path(
         "favicon.ico", lambda _: redirect("static/favicon.ico", permanent=True)
     ),
 ]
+
+if settings.DEBUG:
+    urlpatterns += [
+        path("__reload__/", include("django_browser_reload.urls")),
+    ]
