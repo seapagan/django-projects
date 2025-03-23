@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 import json
 import os
 from pathlib import Path
+from typing import Any
 
 import django_stubs_ext
 from dotenv import load_dotenv
@@ -37,6 +38,7 @@ RECAPTCHA_PRIVATE_KEY = os.getenv("RECAPTCHA_SECRET_KEY", "")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(int(os.getenv("DJANGO_DEBUG", "0")))
+SECURE_MODE = bool(int(os.getenv("DJANGO_SECURE_MODE", "0")))
 
 # get some other config settings from the `.env` or actual environment
 DJANGO_USE_CACHE = bool(int(os.getenv("DJANGO_USE_CACHE", "0")))
@@ -218,12 +220,11 @@ CACHE_MIDDLEWARE_KEY_PREFIX = ""
 if DJANGO_USE_CACHE:
     SOLO_CACHE = "default"
 
-
 # settings for PRODUCTION:
-if not DEBUG:
+if SECURE_MODE and not DEBUG:
     SECURE_HSTS_SECONDS = (
-        #30  # Unit is seconds; *USE A SMALL VALUE FOR TESTING!*
-	    2592000
+        30  # Unit is seconds; *USE A SMALL VALUE FOR TESTING!*
+        # 15552000 use this AFTER you are sure all is good! This is 180 days!
     )
     SECURE_HSTS_PRELOAD = True
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
@@ -236,7 +237,7 @@ if not DEBUG:
     CSRF_COOKIE_HTTPONLY = True
     CSRF_COOKIE_NAME = "__Secure-csrftoken"
 
-    PERMISSIONS_POLICY = {
+    PERMISSIONS_POLICY: dict[str, list[Any]] = {
         "accelerometer": [],
         "ambient-light-sensor": [],
         "autoplay": [],
@@ -253,20 +254,3 @@ if not DEBUG:
         "payment": [],
         "usb": [],
     }
-
-import logging
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-        },
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['console'],
-            'level': os.getenv('DJANGO_LOG_LEVEL', 'ERROR'),
-        },
-    },
-}
