@@ -157,6 +157,8 @@ have a default setting that will be used if not specified.
 > REMOVED. Should you still want the defaults, they need to be manually added to
 > the env var along with your custom addresses.
 
+- `DJANGO_SECURE_PROXY`: Set to 1 if you are using a secure reverse proxy (which
+  passes the `X_FORWARDED_FOR` header) to serve this app
 - `RECAPTCHA_SITE_KEY`: Your Google reCAPTCHA v2 site key
 - `RECAPTCHA_SECRET_KEY`: Your Google reCAPTCHA v2 secret key
 - `USE_LIVE_EMAIL`: Set to 1 to send actual emails, 0 or unset to output to
