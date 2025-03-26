@@ -113,6 +113,14 @@ By default, the application uses SQLite for the database. However, you can confi
 > For SQLite, the local database file will be created when the migrations are
 > run.
 
+> [!IMPORTANT]
+>
+> This project uses the binary version of `psycopg` which is not compatible with some older systems
+> (primarily older Macs or if using PyPy Python). If you encounter compatibility issues,
+> you should remove the `psycopg[binary]` package and use the plain `psycopg` package instead,
+> or compile it locally. For more information, see the
+> [psycopg documentation on supported systems](https://www.psycopg.org/psycopg3/docs/basic/install.html#supported-systems).
+
 ### Environment Variables
 
 The application uses environment variables for configuration. Key settings:
