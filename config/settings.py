@@ -51,6 +51,8 @@ DJANGO_PROTECT_ADMIN = bool(int(os.getenv("DJANGO_PROTECT_ADMIN", "0")))
 ALLOWED_HOSTS: list[str] = ["127.0.0.1", "localhost"]
 ALLOWED_HOSTS += DJANGO_ALLOWED_HOSTS
 
+SECURE_PROXY = bool(int(os.getenv("DJANGO_SECURE_PROXY", "0")))
+
 # Application definition
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -237,7 +239,9 @@ CACHE_MIDDLEWARE_KEY_PREFIX = ""
 if DJANGO_USE_CACHE:
     SOLO_CACHE = "default"
 
-# settings for PRODUCTION:
+# Settings for PRODUCTION.
+# IMPORTANT! These require your site to be served over https. DONT enable this
+# if it is not!!
 if SECURE_MODE and not DEBUG:
     SECURE_HSTS_SECONDS = (
         30  # Unit is seconds; *USE A SMALL VALUE FOR TESTING!*
@@ -245,7 +249,10 @@ if SECURE_MODE and not DEBUG:
     )
     SECURE_HSTS_PRELOAD = True
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
+    if SECURE_PROXY:
+        SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+        USE_X_FORWARDED_HOST = True
 
     SECURE_REFERRER_POLICY = "strict-origin-when-cross-origin"
     SECURE_SSL_REDIRECT = True
