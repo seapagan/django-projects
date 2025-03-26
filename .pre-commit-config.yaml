@@ -42,6 +42,7 @@ repos:
           - django-solo
           - httpx
           - http_response_codes
+          - psycopg
 
   - repo: https://github.com/astral-sh/uv-pre-commit
     # uv version.
