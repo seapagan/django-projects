@@ -12,6 +12,7 @@ At this time it is not fully customizable, but this will be fixed very shortly.
   - [Using uv (Recommended)](#using-uv-recommended)
   - [Using Traditional pip/venv](#using-traditional-pipvenv)
 - [Configuration](#configuration)
+  - [PostgreSQL Database (Optional)](#postgresql-database-optional)
   - [Environment Variables](#environment-variables)
 - [Usage](#usage)
 - [Add your Projects, Personal Details and skills](#add-your-projects-personal-details-and-skills)
@@ -93,6 +94,33 @@ pip install -r requirements.txt
 
 ## Configuration
 
+### PostgreSQL Database (Optional)
+
+By default, the application uses SQLite for the database. However, you can configure it to use PostgreSQL instead by setting the following environment variables:
+
+- `DJANGO_USE_POSTGRES`: Set to 1 to use PostgreSQL instead of SQLite
+- `DJANGO_POSTGRES_DB`: PostgreSQL database name
+- `DJANGO_POSTGRES_USER`: PostgreSQL username
+- `DJANGO_POSTGRES_PASSWORD`: PostgreSQL password
+- `DJANGO_POSTGRES_HOST`: PostgreSQL host (default: localhost)
+- `DJANGO_POSTGRES_PORT`: PostgreSQL port (default: 5432)
+
+> [!NOTE]
+>
+> The PostgreSQL user and database **must already exist**, and the user needs to
+> have **ownership** (or access) to that database.
+>
+> For SQLite, the local database file will be created when the migrations are
+> run.
+
+> [!IMPORTANT]
+>
+> This project uses the binary version of `psycopg` which is not compatible with some older systems
+> (primarily older Macs or if using PyPy Python). If you encounter compatibility issues,
+> you should remove the `psycopg[binary]` package and use the plain `psycopg` package instead,
+> or compile it locally. For more information, see the
+> [psycopg documentation on supported systems](https://www.psycopg.org/psycopg3/docs/basic/install.html#supported-systems).
+
 ### Environment Variables
 
 The application uses environment variables for configuration. Key settings:
@@ -128,6 +156,14 @@ environment variables directly:
 DJANGO_SECRET_KEY=your-secret-key
 DJANGO_DEBUG=1 # sets debug mode
 DJANGO_SECURE_MODE=0 # set to 1 for production security features
+
+# Database settings (optional - defaults to SQLite if not set)
+DJANGO_USE_POSTGRES=0 # set to 1 to use PostgreSQL
+DJANGO_POSTGRES_DB=mydatabase
+DJANGO_POSTGRES_USER=myuser
+DJANGO_POSTGRES_PASSWORD=your-postgres-password
+DJANGO_POSTGRES_HOST=localhost
+DJANGO_POSTGRES_PORT=5432
 
 # Production settings (required when DJANGO_DEBUG=0)
 DJANGO_CSRF_TRUSTED_ORIGINS=["https://www.myserver.com"]
@@ -317,7 +353,8 @@ For production deployment, it's recommended to:
 
 1. Set `DJANGO_DEBUG=0` to disable debug mode
 2. Set `DJANGO_SECURE_MODE=1` to enable security features
-3. Configure the production-specific environment variables:
+3. Use PostgreSQL instead of SQLite by setting `DJANGO_USE_POSTGRES=1` and configuring the related database settings
+4. Configure the production-specific environment variables:
    - `DJANGO_CSRF_TRUSTED_ORIGINS`: Your domain(s) as a JSON array
    - `DJANGO_ALLOWED_HOSTS`: Your domain(s) as a JSON array
    - `DJANGO_STATIC_ROOT`: The path where static files will be collected

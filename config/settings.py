@@ -115,12 +115,26 @@ WSGI_APPLICATION = "config.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-    "default": {
+# conditionally setup Postgres or SQLite depending on the .env setting.
+# if 'DJANGO_USE_POSTGRES' is '1' we use Postgres otherwise use SQlite.
+if bool(int(os.getenv("DJANGO_USE_POSTGRES", "0"))):
+    db_config: dict[str, str | Path | int] = {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": os.getenv("DJANGO_POSTGRES_DB", ""),
+        "USER": os.getenv("DJANGO_POSTGRES_USER", ""),
+        "PASSWORD": os.getenv("DJANGO_POSTGRES_PASSWORD", ""),
+        "HOST": os.getenv("DJANGO_POSTGRES_HOST", ""),
+        "PORT": os.getenv("DJANGO_POSTGRES_PORT", ""),
+        "CONN_MAX_AGE": 300,
+        "CONN_HEALTH_CHECKS": True,
+    }
+else:
+    db_config = {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": BASE_DIR / "db.sqlite3",
     }
-}
+
+DATABASES = {"default": db_config}
 
 
 # Customize user model
