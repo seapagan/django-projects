@@ -200,6 +200,9 @@ DJANGO_CACHE_TIMEOUT=3600 # defaults to 600 (10 minutes) if not set
 DJANGO_PROTECT_ADMIN=1 # set to 1 to enable IP-based admin access restriction
 DJANGO_ADMIN_IPS_ALLOWED=["127.0.0.1", "192.168.1.100"] # IP addresses allowed to access admin panel
 
+# enable secure proxy forwarding. This ALSO needs 'DJANGO_SECURE_MODE=1'
+DJANGO_SECURE_PROXY=0 # set to 1 if you are serving behind a secure proxy (ie nginx etc)
+
 # recaptcha settings
 RECAPTCHA_SITE_KEY=your-recaptcha-site-key
 RECAPTCHA_SECRET_KEY=your-recaptcha-secret-key
@@ -386,6 +389,15 @@ For production deployment, it's recommended to:
 
 1. Set `DJANGO_DEBUG=0` to disable debug mode
 2. Set `DJANGO_SECURE_MODE=1` to enable security features
+
+> [!Caution] Very Important
+>
+> The Secure Mode settings may need tweaking for your exact use-case. As it
+> stands, they work well for an application served behind an nginx reverse-proxy
+> (which is a GREAT way to serve your Django App) but may cause issues in other
+> cases. Checkout the `config/settings.py` file around the end to see what
+> settings are set and add/adjust any that you need for your specific setup.
+
 3. Use PostgreSQL instead of SQLite by setting `DJANGO_USE_POSTGRES=1` and
    configuring the related database settings
 4. Set `DJANGO_PROTECT_ADMIN=1` to enable IP-based admin access restriction and configure `DJANGO_ADMIN_IPS_ALLOWED` with trusted IP addresses
