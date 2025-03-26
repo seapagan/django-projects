@@ -392,7 +392,7 @@ For production deployment, it's recommended to:
 1. Set `DJANGO_DEBUG=0` to disable debug mode
 2. Set `DJANGO_SECURE_MODE=1` to enable security features
 
-> [!Caution] Very Important
+> [!CAUTION]
 >
 > The Secure Mode settings may need tweaking for your exact use-case. As it
 > stands, they work well for an application served behind an nginx reverse-proxy
