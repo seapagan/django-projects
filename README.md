@@ -146,9 +146,10 @@ have a default setting that will be used if not specified.
   for development) See the [Caching](#caching) secton below.
 - `DJANGO_CACHE_TIMEOUT`: Cache expiry length, in seconds (Defaults to 600, 10
   minutes)
+- `DJANGO_PROTECT_ADMIN`: Set to 1 to enable IP-based admin access restriction. If not set or set to 0, all IPs can access the admin panel
 - `DJANGO_ADMIN_IPS_ALLOWED`: JSON array of IP addresses allowed to access the
   admin panel, e.g. `["127.0.0.1", "192.168.1.100"]`. If not set, defaults to
-  `["127.0.0.1", "localhost"]`
+  `["127.0.0.1", "localhost"]`. Only used when `DJANGO_PROTECT_ADMIN` is set to 1
 
 > [!NOTE]
 >
@@ -193,6 +194,7 @@ DJANGO_STATIC_ROOT="/var/www/myproject/static/"
 
 DJANGO_USE_CACHE=0 # set to 0 for development, 1 for production when the database rarely changes
 DJANGO_CACHE_TIMEOUT=3600 # defaults to 600 (10 minutes) if not set
+DJANGO_PROTECT_ADMIN=1 # set to 1 to enable IP-based admin access restriction
 DJANGO_ADMIN_IPS_ALLOWED=["127.0.0.1", "192.168.1.100"] # IP addresses allowed to access admin panel
 
 RECAPTCHA_SITE_KEY=your-recaptcha-site-key
@@ -382,7 +384,8 @@ For production deployment, it's recommended to:
 2. Set `DJANGO_SECURE_MODE=1` to enable security features
 3. Use PostgreSQL instead of SQLite by setting `DJANGO_USE_POSTGRES=1` and
    configuring the related database settings
-4. Configure the production-specific environment variables:
+4. Set `DJANGO_PROTECT_ADMIN=1` to enable IP-based admin access restriction and configure `DJANGO_ADMIN_IPS_ALLOWED` with trusted IP addresses
+5. Configure the production-specific environment variables:
    - `DJANGO_CSRF_TRUSTED_ORIGINS`: Your domain(s) as a JSON array
    - `DJANGO_ALLOWED_HOSTS`: Your domain(s) as a JSON array
    - `DJANGO_STATIC_ROOT`: The path where static files will be collected
@@ -431,7 +434,7 @@ features are enabled:
 - Secure referrer policy
 - Permissions policy headers that restrict potentially dangerous browser
   features
-- IP-based admin access restriction - Only allows specified IP addresses to
+- IP-based admin access restriction - When `DJANGO_PROTECT_ADMIN=1`, only allows specified IP addresses to
   access the admin panel
 
 These features follow Django security best practices and help protect your
