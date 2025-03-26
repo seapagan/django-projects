@@ -96,7 +96,9 @@ pip install -r requirements.txt
 
 ### PostgreSQL Database (Optional)
 
-By default, the application uses SQLite for the database. However, you can configure it to use PostgreSQL instead by setting the following environment variables:
+By default, the application uses SQLite for the database. However, you can
+configure it to use PostgreSQL instead by setting the following environment
+variables:
 
 - `DJANGO_USE_POSTGRES`: Set to 1 to use PostgreSQL instead of SQLite
 - `DJANGO_POSTGRES_DB`: PostgreSQL database name
@@ -115,26 +117,45 @@ By default, the application uses SQLite for the database. However, you can confi
 
 > [!IMPORTANT]
 >
-> This project uses the binary version of `psycopg` which is not compatible with some older systems
-> (primarily older Macs or if using PyPy Python). If you encounter compatibility issues,
-> you should remove the `psycopg[binary]` package and use the plain `psycopg` package instead,
-> or compile it locally. For more information, see the
-> [psycopg documentation on supported systems](https://www.psycopg.org/psycopg3/docs/basic/install.html#supported-systems).
+> This project uses the binary version of `psycopg` which is not compatible with
+> some older systems (primarily older Macs or if using PyPy Python). If you
+> encounter compatibility issues, you should remove the `psycopg[binary]`
+> package and use the plain `psycopg` package instead, or compile it locally.
+> For more information, see the [psycopg documentation on supported
+> systems](https://www.psycopg.org/psycopg3/docs/basic/install.html#supported-systems).
 
 ### Environment Variables
 
-The application uses environment variables for configuration. Key settings:
+The application uses environment variables for configuration. Most of them do
+have a default setting that will be used if not specified.
 
-- `DJANGO_SECRET_KEY`: Your Django secret key
+ Key settings:
+
+- `DJANGO_SECRET_KEY`: Your Django secret key. This MUST be set to a secure
+  string.
 - `DJANGO_DEBUG`: Set to 1 for development, 0 for production
-- `DJANGO_SECURE_MODE`: Set to 1 to enable enhanced security features for production (see [Security Features](#security-features) section)
-- `DJANGO_CSRF_TRUSTED_ORIGINS`: JSON array of trusted origins for CSRF protection, e.g. `["https://www.myserver.com"]`
+- `DJANGO_SECURE_MODE`: Set to 1 to enable enhanced security features for
+  production (see [Security Features](#security-features) section)
+- `DJANGO_CSRF_TRUSTED_ORIGINS`: JSON array of trusted origins for CSRF
+  protection, e.g. `["https://www.myserver.com"]`
 - `DJANGO_ALLOWED_HOSTS`: JSON array of allowed hosts, e.g. `[".myserver.com"]`
-- `DJANGO_STATIC_ROOT`: Path where static files will be collected in production mode
+- `DJANGO_STATIC_ROOT`: Path where static files will be collected in production
+  mode
 - `DJANGO_USE_CACHE`: Set to 1 to enable caching for the whole application. This
   uses `memcached` and that needs to be installed locally. Defaults to 0 (better
   for development) See the [Caching](#caching) secton below.
-- `DJANGO_CACHE_TIMEOUT`: Cache expiry length, in seconds (Defaults to 600, 10 minutes)
+- `DJANGO_CACHE_TIMEOUT`: Cache expiry length, in seconds (Defaults to 600, 10
+  minutes)
+- `DJANGO_ADMIN_IPS_ALLOWED`: JSON array of IP addresses allowed to access the
+  admin panel, e.g. `["127.0.0.1", "192.168.1.100"]`. If not set, defaults to
+  `["127.0.0.1", "localhost"]`
+
+> [!NOTE]
+>
+> If you do specify a value of `DJANGO_ADMIN_IPS_ALLOWED`, the defaults are
+> REMOVED. Should you still want the defaults, they need to be manually added to
+> the env var along with your custom addresses.
+
 - `RECAPTCHA_SITE_KEY`: Your Google reCAPTCHA v2 site key
 - `RECAPTCHA_SECRET_KEY`: Your Google reCAPTCHA v2 secret key
 - `USE_LIVE_EMAIL`: Set to 1 to send actual emails, 0 or unset to output to
@@ -172,6 +193,8 @@ DJANGO_STATIC_ROOT="/var/www/myproject/static/"
 
 DJANGO_USE_CACHE=0 # set to 0 for development, 1 for production when the database rarely changes
 DJANGO_CACHE_TIMEOUT=3600 # defaults to 600 (10 minutes) if not set
+DJANGO_ADMIN_IPS_ALLOWED=["127.0.0.1", "192.168.1.100"] # IP addresses allowed to access admin panel
+
 RECAPTCHA_SITE_KEY=your-recaptcha-site-key
 RECAPTCHA_SECRET_KEY=your-recaptcha-secret-key
 
@@ -243,20 +266,24 @@ the "Projects" link. Each project has the following fields:
 - **Title**: The name of your project (maximum 100 characters)
 - **Details**: A detailed description of your project. This field supports
   multiple paragraphs and can be left blank if needed
-- **Priority**: An optional integer value that determines the display order (lower numbers appear first)
+- **Priority**: An optional integer value that determines the display order
+  (lower numbers appear first)
 - **Repository URL**: The URL to your project's source code repository
   (optional)
 - **Website URL**: The URL to your project's live website or demo (optional)
-- **Tags**: Associate relevant tags with your project to categorize it (optional)
+- **Tags**: Associate relevant tags with your project to categorize it
+  (optional)
 
 Projects are displayed on your portfolio page in the following order:
 
 1. Projects with a `priority` value are shown first, sorted by priority (lower
    numbers appear first and duplicate priorities are sorted by their
    `created_at` date.)
-2. Projects without a `priority` value are then displayed, sorted by creation date (oldest to newest)
+2. Projects without a `priority` value are then displayed, sorted by creation
+   date (oldest to newest)
 
-You can set a project's priority in the admin interface. This allows you to highlight your most important projects by giving them lower priority numbers.
+You can set a project's priority in the admin interface. This allows you to
+highlight your most important projects by giving them lower priority numbers.
 
 ### In-App Settings
 
@@ -317,8 +344,8 @@ front-end. It is a bit overkill for this application but a good skill to learn.
 > this.
 
 I have chosen to use [memcached](https://www.memcached.org/) for this, though
-you can use **Redis**, **File Caching**, **Local Memory** or any other method that Django
-supports. See the [Django docs on
+you can use **Redis**, **File Caching**, **Local Memory** or any other method
+that Django supports. See the [Django docs on
 Caching](https://docs.djangoproject.com/en/5.1/topics/cache/) for more info.
 
 You need to install [memcached](https://www.memcached.org/) for this to work. If
@@ -353,7 +380,8 @@ For production deployment, it's recommended to:
 
 1. Set `DJANGO_DEBUG=0` to disable debug mode
 2. Set `DJANGO_SECURE_MODE=1` to enable security features
-3. Use PostgreSQL instead of SQLite by setting `DJANGO_USE_POSTGRES=1` and configuring the related database settings
+3. Use PostgreSQL instead of SQLite by setting `DJANGO_USE_POSTGRES=1` and
+   configuring the related database settings
 4. Configure the production-specific environment variables:
    - `DJANGO_CSRF_TRUSTED_ORIGINS`: Your domain(s) as a JSON array
    - `DJANGO_ALLOWED_HOSTS`: Your domain(s) as a JSON array
@@ -383,9 +411,12 @@ python manage.py collectstatic
 
 ### Security Features
 
-When `DJANGO_SECURE_MODE=1` (and `DJANGO_DEBUG=0`), the following security features are enabled:
+When `DJANGO_SECURE_MODE=1` (and `DJANGO_DEBUG=0`), the following security
+features are enabled:
 
-- HTTP Strict Transport Security (HSTS) - Initially set to 30 seconds for testing, with a commented option to increase to 15552000 seconds (180 days) once you've verified everything works correctly
+- HTTP Strict Transport Security (HSTS) - Initially set to 30 seconds for
+  testing, with a commented option to increase to 15552000 seconds (180 days)
+  once you've verified everything works correctly
 
 > [!CAUTION]
 >
@@ -398,13 +429,17 @@ When `DJANGO_SECURE_MODE=1` (and `DJANGO_DEBUG=0`), the following security featu
 - Secure cookies for CSRF and sessions
 - SSL redirection
 - Secure referrer policy
-- Permissions policy headers that restrict potentially dangerous browser features
+- Permissions policy headers that restrict potentially dangerous browser
+  features
+- IP-based admin access restriction - Only allows specified IP addresses to
+  access the admin panel
 
-These features follow Django security best practices and help protect your application against common web vulnerabilities.
+These features follow Django security best practices and help protect your
+application against common web vulnerabilities.
 
 ## Project Structure
 
-```
+```pre
 ├── app/               # Main application code
 ├── assets/            # Static assets
 │   └── css/           # CSS files
@@ -453,4 +488,5 @@ pre-commit install
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License - see the LICENSE file for
+details.
