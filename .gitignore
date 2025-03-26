@@ -15,3 +15,4 @@ db.sqlite3
 app/fixtures
 github_stats_cache
 backup.sqlite3
+.changelog_generator.toml
