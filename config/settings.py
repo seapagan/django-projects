@@ -46,7 +46,7 @@ DJANGO_CSRF_TRUSTED_ORIGINS = json.loads(
     os.getenv("DJANGO_CSRF_TRUSTED_ORIGINS", "[]")
 )
 DJANGO_ALLOWED_HOSTS = json.loads(os.getenv("DJANGO_ALLOWED_HOSTS", "[]"))
-
+DJANGO_PROTECT_ADMIN = bool(int(os.getenv("DJANGO_PROTECT_ADMIN", "0")))
 
 ALLOWED_HOSTS: list[str] = ["127.0.0.1", "localhost"]
 ALLOWED_HOSTS += DJANGO_ALLOWED_HOSTS
@@ -75,12 +75,14 @@ MIDDLEWARE = [
     "django_permissions_policy.PermissionsPolicyMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
-    "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
-    "app.middleware.IPAdminRestrictMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
 ]
+
+if DJANGO_PROTECT_ADMIN:
+    MIDDLEWARE += ["app.middleware.IPAdminRestrictMiddleware"]
 
 if DEBUG:
     MIDDLEWARE += ["django_browser_reload.middleware.BrowserReloadMiddleware"]
@@ -271,6 +273,7 @@ if SECURE_MODE and not DEBUG:
     }
 
 # protect the admin route, only allow specific IP's to connect
+# Only used if `DJANGO_PROTECT_ADMIN=1` in the environment
 ADMIN_URL = "admin"
 ADMIN_IPS_ALLOWED = json.loads(
     os.getenv("DJANGO_ADMIN_IPS_ALLOWED", '["127.0.0.1","localhost"]')
