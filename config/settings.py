@@ -77,6 +77,7 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "app.middleware.IPAdminRestrictMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
@@ -268,3 +269,9 @@ if SECURE_MODE and not DEBUG:
         "payment": [],
         "usb": [],
     }
+
+# protect the admin route, only allow specific IP's to connect
+ADMIN_URL = "admin"
+ADMIN_IPS_ALLOWED = json.loads(
+    os.getenv("DJANGO_ADMIN_IPS_ALLOWED", '["127.0.0.1","localhost"]')
+)
