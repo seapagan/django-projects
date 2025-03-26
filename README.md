@@ -192,11 +192,15 @@ DJANGO_CSRF_TRUSTED_ORIGINS=["https://www.myserver.com"]
 DJANGO_ALLOWED_HOSTS=[".myserver.com"]
 DJANGO_STATIC_ROOT="/var/www/myproject/static/"
 
+# cache settings
 DJANGO_USE_CACHE=0 # set to 0 for development, 1 for production when the database rarely changes
 DJANGO_CACHE_TIMEOUT=3600 # defaults to 600 (10 minutes) if not set
+
+# admin IP whitelist
 DJANGO_PROTECT_ADMIN=1 # set to 1 to enable IP-based admin access restriction
 DJANGO_ADMIN_IPS_ALLOWED=["127.0.0.1", "192.168.1.100"] # IP addresses allowed to access admin panel
 
+# recaptcha settings
 RECAPTCHA_SITE_KEY=your-recaptcha-site-key
 RECAPTCHA_SECRET_KEY=your-recaptcha-secret-key
 
