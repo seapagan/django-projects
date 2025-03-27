@@ -1,6 +1,8 @@
-<button
+{% load lucide %}
+<c-button
   hx-get="{% url 'filter_projects' %}?page={{ current_page|add:1 }}{% for tag in selected_tags %}&tags={{ tag }}{% endfor %}"
   hx-target="#load-more-section" hx-swap="outerHTML"
-  class="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors text-sm">
+  class="flex items-center gap-x-2 cursor-pointer">
+  {% lucide "arrow-big-down-dash" %}
   Show More
-</button>
+</c-button>
