@@ -38,7 +38,7 @@ repos:
           - django_browser_reload
           - django-cotton
           - lucide
-          - django-recaptcha
+          - django-hcaptcha-field
           - django-solo
           - httpx
           - http_response_codes
