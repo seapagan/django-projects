@@ -33,8 +33,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 
-HCAPTCHA_SITEKEY = os.getenv("HCAPTCHA_SITEKEY", "")
-HCAPTCHA_SECRET = os.getenv("HCAPTCHA_SECRET", "")
+RECAPTCHA_PUBLIC_KEY = os.getenv("RECAPTCHA_SITE_KEY", "")
+RECAPTCHA_PRIVATE_KEY = os.getenv("RECAPTCHA_SECRET_KEY", "")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(int(os.getenv("DJANGO_DEBUG", "0")))
@@ -64,7 +64,7 @@ INSTALLED_APPS = [
     "app",
     "django_cotton",
     "lucide",
-    "hcaptcha_field",
+    "django_recaptcha",
     "solo",
     "django_tailwind_cli",
 ]
