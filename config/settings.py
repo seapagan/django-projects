@@ -245,7 +245,7 @@ if DJANGO_USE_CACHE:
 if SECURE_MODE and not DEBUG:
     SECURE_HSTS_SECONDS = (
         30  # Unit is seconds; *USE A SMALL VALUE FOR TESTING!*
-        # 15552000 use this AFTER you are sure all is good! This is 180 days!
+        # 15552000 # use this AFTER you are sure all is good! This is 180 days!
     )
     SECURE_HSTS_PRELOAD = True
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True

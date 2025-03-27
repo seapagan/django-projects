@@ -77,7 +77,9 @@
           <a href="https://github.com/{{ config.github_username}}"
             target="_blank" rel="noopener noreferrer"
             class="text-muted-foreground hover:text-foreground transition-colors has-tooltip"
-            data-tooltip="My GitHub Profile">
+            data-tooltip="My GitHub Profile"
+            aria-label="Visit my Github Profile">
+
             {% lucide "github" %}
           </a>
           {% endif %}
@@ -85,7 +87,8 @@
           <a href="https://x.com/{{ config.twitter_username }}" target="_blank"
             rel="noopener noreferrer"
             class="text-muted-foreground hover:text-foreground transition-colors has-tooltip"
-            data-tooltip="My Twitter Profile">
+            data-tooltip="My Twitter Profile"
+            aria-label="Visit my Twitter Profile">
             {% lucide "twitter" %}
           </a>
           {% endif %}
@@ -93,7 +96,7 @@
           <a href="https://linkedin.com/in/{{ config.linkedin_username }}"
             target="_blank" rel="noopener noreferrer"
             class="text-muted-foreground hover:text-foreground transition-colors has-tooltip"
-            data-tooltip="My LinkedIn">
+            data-tooltip="My LinkedIn" aria-label="Visit my LinkedIn Profile">
             {% lucide "linkedin" %}
           </a>
           {% endif %}
@@ -101,7 +104,7 @@
           <a href="https://medium.com/@{{ config.medium_username }}"
             target="_blank" rel="noopener noreferrer"
             class="text-muted-foreground hover:text-foreground transition-colors has-tooltip"
-            data-tooltip="My Medium">
+            data-tooltip="My Medium" aria-label="Read my Medium Stories">
             {% lucide "book-open" %}
           </a>
           {% endif %}
@@ -109,7 +112,7 @@
           <a href="https://youtube.com/@{{ config.youtube_username }}"
             target="_blank" rel="noopener noreferrer"
             class="text-muted-foreground hover:text-foreground transition-colors has-tooltip"
-            data-tooltip="My YouTube">
+            data-tooltip="My YouTube" aria-label="Visit my Youtube Page">
             {% lucide "youtube" %}
           </a>
           {% endif %}
