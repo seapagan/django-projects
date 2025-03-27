@@ -34,8 +34,8 @@ At this time it is not fully customizable, but this will be fixed very shortly.
   be installed
 - 🧩 Component-based templates using `django-cotton` and `django-shadcn`
 - 👤 Custom Models and Admin pages to customize the settings and text
-- 📝 Contact form with hCaptcha integration for spam protection, stored in the
-  database as well as sent by email to the site owner
+- 📝 Contact form with Google reCAPTCHA v2 integration for spam protection and
+  stored in the database as well as sent by email to the site owner
 - 🔒 Environment-based configuration with customization from the database
 - 🛠️ Modern development tools integration (`uv`, `pre-commit`, `ruff`, `mypy`)
 - 📱 Fully responsive design
@@ -162,8 +162,8 @@ have a default setting that will be used if not specified.
 
 - `DJANGO_SECURE_PROXY`: Set to 1 if you are using a secure reverse proxy (which
   passes the `X_FORWARDED_FOR` header) to serve this app
-- `HCAPTCHA_SITEKEY`: Your hCaptcha site key
-- `HCAPTCHA_SECRET`: Your hCaptcha secret key
+- `RECAPTCHA_SITE_KEY`: Your Google reCAPTCHA v2 site key
+- `RECAPTCHA_SECRET_KEY`: Your Google reCAPTCHA v2 secret key
 - `USE_LIVE_EMAIL`: Set to 1 to send actual emails, 0 or unset to output to
   console
 - `EMAIL_HOST`: SMTP server host (required if USE_LIVE_EMAIL=1)
@@ -208,9 +208,9 @@ DJANGO_ADMIN_IPS_ALLOWED=["127.0.0.1", "192.168.1.100"] # IP addresses allowed t
 # enable secure proxy forwarding. This ALSO needs 'DJANGO_SECURE_MODE=1'
 DJANGO_SECURE_PROXY=0 # set to 1 if you are serving behind a secure proxy (ie nginx etc)
 
-# hCaptcha settings
-HCAPTCHA_SITEKEY=your-hCaptcha-site-key
-HCAPTCHA_SECRET=your-hCaptcha-secret-key
+# recaptcha settings
+RECAPTCHA_SITE_KEY=your-recaptcha-site-key
+RECAPTCHA_SECRET_KEY=your-recaptcha-secret-key
 
 # Email settings (optional - if USE_LIVE_EMAIL=0, emails will output to console only)
 USE_LIVE_EMAIL=1
@@ -228,16 +228,17 @@ CONTACT_FORM_RECIPIENT=recipient@example.com
 > There is an `.example.env` file in the project root you can rename and modify
 > to your own settings
 
-To get your hCaptcha keys (required for the contact form functionality):
+To get your reCAPTCHA keys (required for the contact form functionality):
 
-1. Visit the [hCaptcha Website](https://www.hcaptcha.com/)
-2. Sign in (or Sign up if needed)
-3. Follow the instructions to get your **SECRET KEY** and then add a new site to
-   get your **SITE KEY**
-4. Add your domain(s) to the list (you can use '127.0.0.1' for local testing, be
+1. Visit the [Google reCAPTCHA Admin
+   Console](https://www.google.com/recaptcha/admin)
+2. Sign in with your Google account
+3. Click the "+" button to create a new site
+4. Choose "reCAPTCHA v2" and "I'm not a robot" Checkbox
+5. Add your domain(s) to the list (you can use '127.0.0.1' for local testing, be
    sure to add the correct domain when you deploy)
-5. Copy the "Site Key" to `HCAPTCHA_SITEKEY` and "Secret Key" to
-   `HCAPTCHA_SECRET`
+6. Copy the "Site Key" to `RECAPTCHA_SITE_KEY` and "Secret Key" to
+   `RECAPTCHA_SECRET_KEY`
 
 > [!NOTE]
 >

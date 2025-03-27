@@ -38,11 +38,14 @@ const updateTheme = (theme) => {
   localStorage.theme = theme;
 
   // Update reCAPTCHA theme
-  const hCaptchaIframes = document.querySelectorAll('iframe[src*="hcaptcha"]');
+  const recaptchaIframes = document.querySelectorAll(
+    'iframe[src*="recaptcha"]'
+  );
 
-  if (hCaptchaIframes.length > 0) {
+  if (recaptchaIframes.length > 0) {
     const captchaTheme = isDarkMode ? "dark" : "light";
-    hCaptchaIframes.forEach((iframe) => {
+
+    recaptchaIframes.forEach((iframe) => {
       let src = iframe.src;
 
       if (src.includes("&theme=")) {
@@ -51,12 +54,7 @@ const updateTheme = (theme) => {
         src = src + `&theme=${captchaTheme}`;
       }
 
-      // Completely remove and re-add the iframe. This seems to be the only way
-      // we can get it to update theme without reloading the whole page
-      const newIframe = iframe.cloneNode(true);
-      newIframe.src = src;
-
-      iframe.parentNode.replaceChild(newIframe, iframe);
+      iframe.src = src;
     });
   }
 };
