@@ -49,7 +49,9 @@ At this time it is not fully customizable, but this will be fixed very shortly.
 ## Requirements
 
 - Python 3.10+
-- Django 5.1+
+
+Other package requirements will be automatically installed with the
+dependencies.
 
 ## Installation
 
@@ -408,6 +410,14 @@ For production deployment, it's recommended to:
    - `DJANGO_ALLOWED_HOSTS`: Your domain(s) as a JSON array
    - `DJANGO_STATIC_ROOT`: The path where static files will be collected
 
+You should also build a production bundle of the Tailwind CSS and collect static
+files before deployment:
+
+```console
+python manage.py tailwind build
+python manage.py collectstatic
+```
+
 The application includes gunicorn for production deployment. A typical command
 to run the application in production would be:
 
@@ -423,12 +433,6 @@ For a proper production setup, you should:
 
 For a detailed guide on setting up Django with Nginx and Gunicorn in production,
 see: <https://realpython.com/django-nginx-gunicorn/>
-
-You should also collect static files before deployment:
-
-```console
-python manage.py collectstatic
-```
 
 ### Security Features
 
@@ -454,6 +458,8 @@ features are enabled:
   features
 - IP-based admin access restriction - When `DJANGO_PROTECT_ADMIN=1`, only allows specified IP addresses to
   access the admin panel
+- Secure Proxy forwarding - When `DJANGO_SECURE_PROXY=1`, your proxy needs to
+  support this.
 
 These features follow Django security best practices and help protect your
 application against common web vulnerabilities.
