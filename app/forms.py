@@ -31,6 +31,7 @@ class ContactForm(forms.ModelForm[ContactSubmission]):
                     "class": common_input_classes,
                     "required": True,
                     "placeholder": "Enter your Name",
+                    "autocomplete": "name",
                 }
             ),
             "email": forms.EmailInput(
@@ -38,6 +39,7 @@ class ContactForm(forms.ModelForm[ContactSubmission]):
                     "class": common_input_classes,
                     "required": True,
                     "placeholder": "Enter your Email",
+                    "autocomplete": "email",
                 }
             ),
             "message": forms.Textarea(
