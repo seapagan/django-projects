@@ -13,7 +13,10 @@
       {% if project.tags.all %}
       <div class="flex flex-wrap gap-2 mt-2">
         {% for tag in project.tags.all %}
-        <span class="inline-flex items-center tag" role="button">
+        <span class="inline-flex items-center tag" role="button"
+          hx-get="{% url 'filter_projects' %}" hx-include="[name='tags']"
+          hx-target="#projects-grid"
+          onclick="toggleTagInFilter('{{ tag.name }}')">
           {{ tag.name }}
         </span>
         {% endfor %}

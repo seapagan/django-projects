@@ -61,6 +61,21 @@ const updateTheme = (theme) => {
 
 // ===== Tag Filtering =====
 
+// Toggle a tag in the filter UI by name
+function toggleTagInFilter(tagName) {
+  // Find the matching filter button
+  const filterBtn = Array.from(document.querySelectorAll(".tag-filter")).find(
+    (btn) => btn.textContent.trim() === tagName
+  );
+
+  if (filterBtn) {
+    // Toggle the selected class
+    filterBtn.classList.toggle("selected");
+    // Update hidden form fields
+    updateSelectedTags();
+  }
+}
+
 // Update hidden form fields for selected tags
 function updateSelectedTags() {
   const selectedTags = Array.from(
