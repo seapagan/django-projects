@@ -81,10 +81,23 @@
     </c-card.content>
   </c-card>
   {% endfor %}
+
+  {% if has_more %}
+  <div class="col-span-full flex justify-center mt-8" id="load-more-section">
+    <button
+      hx-get="{% url 'filter_projects' %}?page={{ current_page|add:1 }}{% for tag in selected_tags %}&tags={{ tag }}{% endfor %}"
+      hx-target="#load-more-section" hx-swap="outerHTML"
+      class="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors">
+      Show More
+    </button>
+  </div>
+  {% endif %}
+
   {% else %}
   <div class="col-span-full p-8 text-center bg-secondary/50">
-    <p class="text-lg text-muted-foreground">No projects match your selected
-      filters</p>
+    <p class="text-lg text-muted-foreground">
+      No projects match your selected filters
+    </p>
   </div>
   {% endif %}
 </div>

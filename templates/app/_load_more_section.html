@@ -1,0 +1,94 @@
+{% load lucide %}
+{% load app_extras %}
+
+{% for project in projects %}
+<c-card
+  class="project-card h-full flex flex-col transition-all duration-200 hover:shadow-lg hover:bg-card-hover"
+  data-project-id="{{ project.id }}">
+  <c-card.header>
+    <c-card.title>{{ project.title }}</c-card.title>
+    <c-card.description>{{ project.details }}</c-card.description>
+    {% if project.tags.all %}
+    <div class="flex flex-wrap gap-2 mt-2">
+      {% for tag in project.tags.all %}
+      <span class="inline-flex items-center tag" role="button"
+        hx-get="{% url 'filter_projects' %}" hx-include="[name='tags']"
+        hx-target="#projects-grid"
+        onclick="toggleTagInFilter('{{ tag.name }}')">
+        {{ tag.name }}
+      </span>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </c-card.header>
+  <c-card.content class="flex-1 flex flex-col">
+    <div class="mt-auto">
+      {% if project.repo and github_stats|get_item:project.id %}
+      {% with stats=github_stats|get_item:project.id %}
+      <div class="github-stats mb-4">
+        <div class="flex gap-4 text-sm">
+          <a href="{{ project.repo }}/stargazers" target="_blank"
+            rel="noopener noreferrer" tabindex="0"
+            class="relative flex items-center gap-1 has-tooltip"
+            data-tooltip="Repository Stars">
+            {% lucide "star" class="w-4 h-4" %}
+            <span>{{ stats.stars }}</span>
+          </a>
+          <a href="{{ project.repo }}/network/members" target="_blank"
+            rel="noopener noreferrer" tabindex="0"
+            class="relative flex items-center gap-1 has-tooltip"
+            data-tooltip="Repository Forks">
+            {% lucide "git-fork" class="w-4 h-4" %}
+            <span>{{ stats.forks }}</span>
+          </a>
+          <a href="{{ project.repo }}/issues" target="_blank"
+            rel="noopener noreferrer" tabindex="0"
+            class="relative flex items-center gap-1 has-tooltip"
+            data-tooltip="Open Issues">
+            {% lucide "circle-dot" class="w-4 h-4" %}
+            <span>{{ stats.open_issues }}</span>
+          </a>
+          <a href="{{ project.repo }}/pulls" target="_blank"
+            rel="noopener noreferrer" tabindex="0"
+            class="relative flex items-center gap-1 has-tooltip"
+            data-tooltip="Open Pull Requests">
+            {% lucide "git-pull-request" class="w-4 h-4" %}
+            <span>{{ stats.open_prs }}</span>
+          </a>
+        </div>
+      </div>
+      {% endwith %}
+      {% endif %}
+      <div class="flex gap-2">
+        {% if project.repo %}
+        <c-button variant="outline">
+          <a href="{{ project.repo }}" target="_blank" rel="noopener noreferrer"
+            class="flex items-center gap-x-2">
+            {% lucide "github" %}
+            Code
+          </a>
+        </c-button>
+        {% endif %}
+        {% if project.website %}
+        <c-button>
+          <a href="{{ project.website }}" target="_blank"
+            rel="noopener noreferrer" class="flex items-center gap-x-2">
+            {% lucide "external-link" %}
+            Website
+          </a>
+        </c-button>
+        {% endif %}
+      </div>
+    </div>
+  </c-card.content>
+</c-card>
+{% endfor %} {% if has_more %}
+<div class="col-span-full flex justify-center mt-8" id="load-more-section">
+  <button
+    hx-get="{% url 'filter_projects' %}?page={{ current_page|add:1 }}{% for tag in selected_tags %}&tags={{ tag }}{% endfor %}"
+    hx-target="#load-more-section" hx-swap="outerHTML"
+    class="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors">
+    Show More
+  </button>
+</div>
+{% endif %}

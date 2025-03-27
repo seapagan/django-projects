@@ -57,14 +57,31 @@ class ProjectsListView(ListView[Project]):
         if "form" not in context:
             context["form"] = ContactForm()
 
+        # Get paginated projects
+        page = int(self.request.GET.get("page", 1))
+        page_size = 6
+        start = (page - 1) * page_size
+        end = page * page_size
+
+        # Get total count and paginated projects
+        projects = self.get_queryset()
+        total_count = projects.count()
+        paginated_projects = projects[start:end]
+        has_more = total_count > end
+
         # Get GitHub stats from database and trigger updates if needed
         github_service = GitHubAPIService()
         github_stats = github_service.get_stats_for_projects(
-            list(self.get_queryset())
+            list(paginated_projects)
         )
 
         # Add GitHub stats to context
         context["github_stats"] = github_stats
+
+        # Add pagination data to the context
+        context["projects"] = paginated_projects
+        context["has_more"] = has_more
+        context["current_page"] = page
 
         # Add all tags to context for the filter UI
         context["all_tags"] = Tag.objects.all().order_by("name")
@@ -136,7 +153,7 @@ class ContactSuccessView(TemplateView):
 
 
 def filter_projects(request: HttpRequest) -> HttpResponse:
-    """Filter projects by selected tags.
+    """Filter projects by selected tags and handle pagination.
 
     Args:
         request: The HTTP request containing tag filter parameters
@@ -145,10 +162,11 @@ def filter_projects(request: HttpRequest) -> HttpResponse:
         HTTP response with filtered projects
     """
     selected_tags = request.GET.getlist("tags")
+    page = int(request.GET.get("page", 1))
+    page_size = 6
 
     # Get projects with custom ordering
     projects = Project.objects.order_by(
-        # This puts NULL priority values at the end
         Case(
             When(priority__isnull=True, then=Value(999999)),
             default=F("priority"),
@@ -158,20 +176,48 @@ def filter_projects(request: HttpRequest) -> HttpResponse:
 
     # Filter by tags if any are selected
     if selected_tags:
-        # Use AND logic - projects must have ALL selected tags
         for tag in selected_tags:
             projects = projects.filter(tags__name=tag)
 
+    # Calculate pagination
+    start = (page - 1) * page_size
+    end = page * page_size
+
+    # Get total count and paginated projects
+    total_count = projects.count()
+    paginated_projects = projects[start:end]
+    has_more = total_count > end
+
     # Get GitHub stats
     github_service = GitHubAPIService()
-    github_stats = github_service.get_stats_for_projects(list(projects))
+    github_stats = github_service.get_stats_for_projects(
+        list(paginated_projects)
+    )
 
+    # For "Show More" requests, just return the new projects and button
+    if page > 1:
+        return render(
+            request,
+            "app/_load_more_section.html",
+            {
+                "projects": paginated_projects,
+                "github_stats": github_stats,
+                "selected_tags": selected_tags,
+                "current_page": page,
+                "has_more": has_more,
+            },
+        )
+
+    # For initial load or filtering, return the full grid
     return render(
         request,
         "app/_projects_grid.html",
         {
-            "projects": projects,
+            "projects": paginated_projects,
             "github_stats": github_stats,
             "all_tags": Tag.objects.all().order_by("name"),
+            "selected_tags": selected_tags,
+            "current_page": page,
+            "has_more": has_more,
         },
     )
