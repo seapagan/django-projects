@@ -7,11 +7,11 @@ from django.contrib import messages
 from django.db import models
 from django.db.models import Case, F, Value, When
 from django.http import HttpRequest, HttpResponse
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.views.generic import ListView, TemplateView
 
 from app.forms import ContactForm
-from app.models import Project
+from app.models import Project, Tag
 from app.services.email import EmailService
 from app.services.github import GitHubAPIService
 
@@ -65,6 +65,9 @@ class ProjectsListView(ListView[Project]):
 
         # Add GitHub stats to context
         context["github_stats"] = github_stats
+
+        # Add all tags to context for the filter UI
+        context["all_tags"] = Tag.objects.all().order_by("name")
 
         return context
 
@@ -130,3 +133,45 @@ class ContactSuccessView(TemplateView):
     """Display success page after contact form submission."""
 
     template_name = "app/contact_success.html"
+
+
+def filter_projects(request: HttpRequest) -> HttpResponse:
+    """Filter projects by selected tags.
+
+    Args:
+        request: The HTTP request containing tag filter parameters
+
+    Returns:
+        HTTP response with filtered projects
+    """
+    selected_tags = request.GET.getlist("tags")
+
+    # Get projects with custom ordering
+    projects = Project.objects.order_by(
+        # This puts NULL priority values at the end
+        Case(
+            When(priority__isnull=True, then=Value(999999)),
+            default=F("priority"),
+        ),
+        "created_at",
+    )
+
+    # Filter by tags if any are selected
+    if selected_tags:
+        # Use AND logic - projects must have ALL selected tags
+        for tag in selected_tags:
+            projects = projects.filter(tags__name=tag)
+
+    # Get GitHub stats
+    github_service = GitHubAPIService()
+    github_stats = github_service.get_stats_for_projects(list(projects))
+
+    return render(
+        request,
+        "app/_projects_grid.html",
+        {
+            "projects": projects,
+            "github_stats": github_stats,
+            "all_tags": Tag.objects.all().order_by("name"),
+        },
+    )
