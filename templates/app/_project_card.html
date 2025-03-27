@@ -1,7 +1,6 @@
 {% load lucide %}
 {% load app_extras %}
 
-{% for project in projects %}
 <c-card
   class="project-card h-full flex flex-col transition-all duration-200 hover:shadow-lg hover:bg-card-hover"
   data-project-id="{{ project.id }}">
@@ -23,8 +22,8 @@
   </c-card.header>
   <c-card.content class="flex-1 flex flex-col">
     <div class="mt-auto">
-      {% if project.repo and github_stats|get_item:project.id %} {% with
-      stats=github_stats|get_item:project.id %}
+      {% if project.repo and github_stats|get_item:project.id %}
+      {% with stats=github_stats|get_item:project.id %}
       <div class="github-stats mb-4">
         <div class="flex gap-4 text-sm">
           <a href="{{ project.repo }}/stargazers" target="_blank"
@@ -82,4 +81,3 @@
     </div>
   </c-card.content>
 </c-card>
-{% endfor %}
