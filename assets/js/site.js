@@ -62,7 +62,7 @@ const updateTheme = (theme) => {
 // ===== Tag Filtering =====
 
 // Toggle a tag in the filter UI by name
-function toggleTagInFilter(tagName) {
+const toggleTagInFilter = (tagName) => {
   // Find the matching filter button
   const filterBtn = Array.from(document.querySelectorAll(".tag-filter")).find(
     (btn) => btn.textContent.trim() === tagName
@@ -74,10 +74,10 @@ function toggleTagInFilter(tagName) {
     // Update hidden form fields
     updateSelectedTags();
   }
-}
+};
 
 // Update hidden form fields for selected tags
-function updateSelectedTags() {
+const updateSelectedTags = () => {
   const selectedTags = Array.from(
     document.querySelectorAll(".tag-filter.selected")
   ).map((btn) => btn.textContent.trim());
@@ -97,10 +97,10 @@ function updateSelectedTags() {
 
   // Update clear filters button state
   updateClearFiltersButton(selectedTags.length > 0);
-}
+};
 
 // Update clear filters button state
-function updateClearFiltersButton(hasSelectedTags) {
+const updateClearFiltersButton = (hasSelectedTags) => {
   const clearFiltersBtn = document.getElementById("clear-filters");
   if (clearFiltersBtn) {
     if (hasSelectedTags) {
@@ -113,12 +113,12 @@ function updateClearFiltersButton(hasSelectedTags) {
       clearFiltersBtn.disabled = true;
     }
   }
-}
+};
 
 // ===== Initialization =====
 
 // Initialize everything when DOM is loaded
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
   // Initialize theme
   const theme = getTheme();
   updateTheme(theme);
@@ -131,7 +131,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Handle clear filters button
   const clearFiltersBtn = document.getElementById("clear-filters");
   if (clearFiltersBtn) {
-    clearFiltersBtn.addEventListener("click", function () {
+    clearFiltersBtn.addEventListener("click", () => {
       // Remove selected class from all tag filters
       document.querySelectorAll(".tag-filter.selected").forEach((btn) => {
         btn.classList.remove("selected");
