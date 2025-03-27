@@ -1,0 +1,31 @@
+{% load app_extras %}
+
+<style>
+  @keyframes fadeInAnimation {
+    0% {
+      opacity: 0;
+      transform: translateY(5px);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .fade-in-card {
+    opacity: 0;
+    animation: fadeInAnimation 1s ease-out forwards;
+  }
+
+</style>
+
+{% for project in projects %}
+{% include "app/_project_card.html" with project=project class="fade-in-card" %}
+{% endfor %}
+
+{% if has_more %}
+<div class="col-span-full flex justify-center" id="load-more-section">
+  {% include "app/_show_more_button.html" %}
+</div>
+{% endif %}

@@ -45,6 +45,7 @@ At this time it is not fully customizable, but this will be fixed very shortly.
 - 🔄 Live browser reload during development
 - 🔐 Enhanced security features for production deployment
 - 🚀 Production-ready with gunicorn integration
+- 📄 Dynamic pagination of projects using HTMX for smooth, server-side loading
 
 ## Requirements
 

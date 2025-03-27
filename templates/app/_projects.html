@@ -4,10 +4,12 @@
 {% if projects %}
 <section id="projects">
   <h2 class="text-3xl font-bold mb-4">My Projects</h2>
-  <p class="mb-4 text-muted-foreground">Below you can find just a few of my
-    open source projects. Check out my <a href="https://github.com/seapagan"
-      class="link-default" target="_blank" rel="noopener noreferrer">GitHub
-      profile</a> for more.</p>
+  <p class="mb-4 text-muted-foreground">
+    Below you can find just a few of my open source projects. Check out my
+    <a href="https://github.com/seapagan" class="link-default" target="_blank"
+      rel="noopener noreferrer">GitHub profile</a>
+    for more.
+  </p>
 
   <!-- Tag filter UI -->
   <div class="mb-6">
@@ -35,9 +37,6 @@
   <div id="tag-form-fields"></div>
 
   <!-- Projects Grid -->
-  <div id="projects-grid">
-    {% include "app/_projects_grid.html" %}
-  </div>
-
+  <div id="projects-grid">{% include "app/_projects_grid.html" %}</div>
 </section>
 {% endif %}
