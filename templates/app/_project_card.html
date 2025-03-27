@@ -2,7 +2,7 @@
 {% load app_extras %}
 
 <c-card
-  class="project-card h-full flex flex-col transition-all duration-200 hover:shadow-lg hover:bg-card-hover"
+  class="project-card h-full flex flex-col transition-all duration-200 hover:shadow-lg hover:bg-card-hover {{ class|default:'' }}"
   data-project-id="{{ project.id }}">
   <c-card.header>
     <c-card.title>{{ project.title }}</c-card.title>
