@@ -46,6 +46,7 @@ At this time it is not fully customizable, but this will be fixed very shortly.
 - 🔐 Enhanced security features for production deployment
 - 🚀 Production-ready with gunicorn integration
 - 📄 Dynamic pagination of projects using HTMX for smooth, server-side loading
+- 🚫 Custom error pages (400, 403, 404, 500) for better user experience
 
 ## Requirements
 
