@@ -16,14 +16,14 @@
   <div class="flex gap-2 mt-6">
     {% if projects %}
     <c-button
-      @click="document.getElementById('projects').scrollIntoView({ behavior: 'smooth', block: 'start' })"
-      x-data class="cursor-pointer">
+      hx-on:click="document.getElementById('projects').scrollIntoView({ behavior: 'smooth', block: 'start' })"
+      class="cursor-pointer">
       View My Projects
     </c-button>
     {% endif %}
     <c-button variant="outline"
-      @click="document.getElementById('contact').scrollIntoView({ behavior: 'smooth', block: 'start' })"
-      x-data class="cursor-pointer">
+      hx-on:click="document.getElementById('contact').scrollIntoView({ behavior: 'smooth', block: 'start' })"
+      class="cursor-pointer">
       Contact Me
     </c-button>
   </div>
