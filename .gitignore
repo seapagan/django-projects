@@ -20,3 +20,4 @@ prd
 .cursor
 static
 assets/js/*.min.js
+assets/css/site.css
