@@ -3,6 +3,7 @@
 # ruff: noqa: ANN401
 from typing import Any
 
+from django.conf import settings
 from django.contrib import messages
 from django.db import models
 from django.db.models import Case, F, Value, When
@@ -85,6 +86,11 @@ class ProjectsListView(ListView[Project]):
 
         # Add all tags to context for the filter UI
         context["all_tags"] = Tag.objects.all().order_by("name")
+
+        # Add js file name based on debug mode
+        context["js_file"] = (
+            "js/site.js" if settings.DEBUG else "js/site.min.js"
+        )
 
         return context
 
