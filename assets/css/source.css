@@ -5,7 +5,7 @@
 }
 
 .dropdown {
-  @apply bg-background hover:border border-border hover:shadow-xs hover:bg-accent hover:text-accent-foreground p-1 rounded-2xl;
+  @apply bg-background border border-transparent hover:border-border hover:shadow-xs hover:bg-accent hover:text-accent-foreground p-1 rounded-2xl;
 }
 
 .link-default::after {
