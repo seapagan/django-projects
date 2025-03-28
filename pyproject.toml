@@ -19,6 +19,7 @@ dependencies = [
     "psycopg[binary]>=3.2.6",
     "pymemcache>=4.0.0",
     "python-dotenv>=1.0.1",
+    "whitenoise>=6.9.0",
 ]
 
 [dependency-groups]
