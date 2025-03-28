@@ -18,7 +18,7 @@ class CustomStaticFilesConfig(StaticFilesConfig):
     """
 
     def __init__(self, app_name: str, app_module: ModuleType | None) -> None:
-        """Override the class contructor."""
+        """Override the class constructor."""
         super().__init__(app_name, app_module)
 
         self.ignore_patterns = [
