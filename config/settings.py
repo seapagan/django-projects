@@ -70,10 +70,14 @@ INSTALLED_APPS = [
 ]
 
 if DEBUG:
+    INSTALLED_APPS.insert(
+        0, "whitenoise.runserver_nostatic"
+    )  # Prevent Django from handling static, whitenoise will do it
     INSTALLED_APPS += ["django_browser_reload"]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django_permissions_policy.PermissionsPolicyMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -87,7 +91,9 @@ if DJANGO_PROTECT_ADMIN:
     MIDDLEWARE += ["app.middleware.IPAdminRestrictMiddleware"]
 
 if DEBUG:
+    MIDDLEWARE.insert(1, "whitenoise.middleware.WhiteNoiseMiddleware")
     MIDDLEWARE += ["django_browser_reload.middleware.BrowserReloadMiddleware"]
+
 
 if DJANGO_USE_CACHE:
     MIDDLEWARE = [
@@ -95,6 +101,7 @@ if DJANGO_USE_CACHE:
         *MIDDLEWARE,
         "django.middleware.cache.FetchFromCacheMiddleware",
     ]
+
 
 ROOT_URLCONF = "config.urls"
 
