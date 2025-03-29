@@ -17,6 +17,13 @@ from typing import Any
 
 import django_stubs_ext
 from dotenv import load_dotenv
+from html_sanitizer.sanitizer import (  # type: ignore
+    bold_span_to_strong,
+    italic_span_to_em,
+    sanitize_href,
+    tag_replacer,
+    target_blank_noopener,
+)
 
 # get env vars from the `.env` file
 load_dotenv(override=True)
@@ -286,3 +293,46 @@ ADMIN_URL = "admin"
 ADMIN_IPS_ALLOWED = json.loads(
     os.getenv("DJANGO_ADMIN_IPS_ALLOWED", '["127.0.0.1","localhost"]')
 )
+
+# define the HTML sanitizers used for the 'about' sections. We customize this as
+# we don't want headers, and we DO want class in links.
+HTML_SANITIZERS = {
+    "default": {
+        "tags": {
+            "a",
+            "strong",
+            "em",
+            "p",
+            "ul",
+            "ol",
+            "li",
+            "br",
+            "sub",
+            "sup",
+            "hr",
+        },
+        "attributes": {
+            "a": ("href", "name", "target", "title", "id", "rel", "class")
+        },
+        "empty": {"hr", "a", "br"},
+        "separate": {"a", "p", "li"},
+        "whitespace": {"br"},
+        "keep_typographic_whitespace": False,
+        "add_nofollow": False,
+        "autolink": False,
+        "sanitize_href": sanitize_href,
+        "element_preprocessors": [
+            # convert span elements into em/strong if a matching style rule
+            # has been found. strong has precedence, strong & em at the same
+            # time is not supported
+            bold_span_to_strong,
+            italic_span_to_em,
+            tag_replacer("b", "strong"),
+            tag_replacer("i", "em"),
+            tag_replacer("form", "p"),
+            target_blank_noopener,
+        ],
+        "element_postprocessors": [],
+        "is_mergeable": lambda e1, e2: True,  # noqa: ARG005
+    }
+}

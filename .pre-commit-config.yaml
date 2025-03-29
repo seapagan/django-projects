@@ -43,6 +43,7 @@ repos:
           - httpx
           - http_response_codes
           - psycopg
+          - html-sanitizer
 
   - repo: https://github.com/astral-sh/uv-pre-commit
     # uv version.

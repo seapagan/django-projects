@@ -10,7 +10,7 @@ from django.db.models import Case, F, Value, When
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
 from django.views.generic import ListView, TemplateView
-from html_sanitizer.django import get_sanitizer
+from html_sanitizer.django import get_sanitizer  # type: ignore
 
 from app.forms import ContactForm
 from app.models import Project, SiteConfiguration, Tag
