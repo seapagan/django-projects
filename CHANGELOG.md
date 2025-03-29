@@ -8,6 +8,7 @@
 
 **Enhancements**
 
+- Make the 'about' section dynamic ([#33](https://github.com/seapagan/django-projects/pull/33)) by [seapagan](https://github.com/seapagan)
 - Adjust some dynamic features ([#32](https://github.com/seapagan/django-projects/pull/32)) by [seapagan](https://github.com/seapagan)
 - Customize the  'collectstatic' to build/compress our assets ([#31](https://github.com/seapagan/django-projects/pull/31)) by [seapagan](https://github.com/seapagan)
 - Add custom error pages ([#29](https://github.com/seapagan/django-projects/pull/29)) by [seapagan](https://github.com/seapagan)
@@ -36,6 +37,10 @@
 - Add a contact form ([#3](https://github.com/seapagan/django-projects/pull/3)) by [seapagan](https://github.com/seapagan)
 - Add tag functionality to projects ([#2](https://github.com/seapagan/django-projects/pull/2)) by [seapagan](https://github.com/seapagan)
 - Add GitHub stats for each project. ([#1](https://github.com/seapagan/django-projects/pull/1)) by [seapagan](https://github.com/seapagan)
+
+**Bug Fixes**
+
+- Ensure correct js file is added to context for all views ([#34](https://github.com/seapagan/django-projects/pull/34)) by [seapagan](https://github.com/seapagan)
 
 ---
 *This changelog was generated using [github-changelog-md](http://changelog.seapagan.net/) by [Seapagan](https://github.com/seapagan)*
