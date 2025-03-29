@@ -1,12 +1,23 @@
 # Changelog
 
-## [Unreleased](https://github.com/seapagan/django-projects/tree/HEAD)
+This is an auto-generated log of all the changes that have been made to the
+project since the first release, with the latest changes at the top.
+
+This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+
+## [1.0.0](https://github.com/seapagan/django-projects/releases/tag/1.0.0) (March 29, 2025)
+
+**Initial release.**
+
+This release is the first official release and is considered feature-complete
+at this time in that it contains everything I intended in the initial planning.
 
 **Merged Pull Requests**
 
 - Revert "Migrate to hCaptcha" ([#28](https://github.com/seapagan/django-projects/pull/28)) by [seapagan](https://github.com/seapagan)
 
-**Enhancements**
+**New Features**
 
 - Make the 'about' section dynamic ([#33](https://github.com/seapagan/django-projects/pull/33)) by [seapagan](https://github.com/seapagan)
 - Adjust some dynamic features ([#32](https://github.com/seapagan/django-projects/pull/32)) by [seapagan](https://github.com/seapagan)
