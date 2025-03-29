@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from datetime import timedelta
-from typing import Any
+from typing import Any, ClassVar
 
 from django.contrib.auth.models import AbstractUser
 from django.db import models
@@ -171,3 +171,33 @@ class Framework(models.Model):
     def __str__(self) -> str:
         """Return string representation."""
         return self.name
+
+
+class AboutSection(models.Model):
+    """Model to contain configurable about sections."""
+
+    config = models.ForeignKey(
+        SiteConfiguration,
+        related_name="about_sections",
+        on_delete=models.CASCADE,
+    )
+    content = models.TextField(
+        help_text=(
+            "Content can include HTML tags like: <a>, <strong>, <em>, "
+            "<p>, <ul>, <ol>, <li>, <h1-h3>, <br>, <hr>"
+        )
+    )
+    order = models.IntegerField(
+        default=0, help_text="Lower numbers appear first"
+    )
+
+    class Meta:
+        """Configure the AboutSection model."""
+
+        ordering: ClassVar[list[str]] = ["order"]
+        verbose_name = "About Section"
+        verbose_name_plural = "About Sections"
+
+    def __str__(self) -> str:
+        """Return string representation."""
+        return f"About Section {self.order}"

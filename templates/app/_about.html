@@ -11,38 +11,11 @@
     <div
       class="grid grid-cols-1 {% if any_profile_exists %}lg:grid-cols-2 gap-8{% endif %}">
       <div class="space-y-4 text-muted-foreground">
+        {% for section in about_sections %}
         <p class="text-lg">
-          I'm a passionate developer with a strong focus on Python and modern
-          web technologies. Having started coding at 10 years old on the (then
-          just released!)&nbsp;
-          <a href="https://en.wikipedia.org/wiki/ZX81" class="link-default"
-            target="_blank">
-            ZX81
-          </a>
-          with a stunning <b>1Kb of ram</b>, I still love coding over 40 years
-          later, enjoying solving complex problems and creating elegant,
-          efficient solutions.
+          {{ section.content|safe }}
         </p>
-        <p class="text-lg">
-          Based in the beautiful Scottish Borders on an old Farm, I am fully
-          setup for Remote work with a dedicated office space and Full-Fibre
-          Gigabit Broadband. 20 minutes drive from Berwick-Upon-Tweed and Rail
-          links to the rest of the UK, 90 minutes drive from either Edinburgh or
-          Newcastle airports.
-        </p>
-        <p class="text-lg">
-          Professionally, I spent my life working Offshore on Seismic Research
-          Ships in the Oil & Gas Industry. This has left me with a very strong
-          work ethic and experience running teams in remote and time/safety
-          critical environments. I am very comfortable working in a team both as
-          a member and as a leader.
-        </p>
-        <p class="text-lg">
-          When I'm not coding, you can find me exploring new technologies,
-          contributing to the developer community, working on my next project
-          idea or hanging out with my 2 dogs (A Border Terrier and a Border
-          Collie naturally!)
-        </p>
+        {% endfor %}
       </div>
       <div class="space-y-4">
         {% if languages.count or frameworks.count %}

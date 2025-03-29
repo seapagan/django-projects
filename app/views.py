@@ -10,9 +10,10 @@ from django.db.models import Case, F, Value, When
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
 from django.views.generic import ListView, TemplateView
+from html_sanitizer.django import get_sanitizer
 
 from app.forms import ContactForm
-from app.models import Project, Tag
+from app.models import Project, SiteConfiguration, Tag
 from app.services.email import EmailService
 from app.services.github import GitHubAPIService
 
@@ -86,6 +87,16 @@ class ProjectsListView(ListView[Project]):
 
         # Add all tags to context for the filter UI
         context["all_tags"] = Tag.objects.all().order_by("name")
+
+        # Get site configuration and sanitize about sections
+        config = SiteConfiguration.get_solo()
+        context["config"] = config
+
+        sanitizer = get_sanitizer()
+        about_sections = config.about_sections.all()
+        for section in about_sections:
+            section.content = sanitizer.sanitize(section.content)
+        context["about_sections"] = about_sections
 
         # Add js file name based on debug mode
         context["js_file"] = (
