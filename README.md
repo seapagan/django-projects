@@ -8,6 +8,8 @@ All the `About`, `Skills`, `Social links` and `Projects` are **fully dynamic
 from the database**, no code editing should be needed to get your profile up and
 running.
 
+There is a **live example of this portfolio app** at <https://www.gnramsay.com>
+
 - [Features](#features)
 - [Requirements](#requirements)
 - [Installation](#installation)
