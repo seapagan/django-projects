@@ -126,6 +126,23 @@ textarea:-webkit-autofill {
   transition: background-color 5000s ease-in-out 0s;
 }
 
+@keyframes fadeInAnimation {
+  0% {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-card {
+  opacity: 0;
+  animation: fadeInAnimation 1s ease-out forwards;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 :root {
