@@ -32,6 +32,9 @@ class CustomAdminSite(AdminSite):
         app_list = super().get_app_list(request, app_label)
         for app in app_list:
             for model in app["models"]:
+                # Site Configuration is a singleton, should not have a count
+                if model["name"] == "Site Configuration":
+                    continue
                 model_class = apps.get_model(
                     app["app_label"], model["object_name"]
                 )
