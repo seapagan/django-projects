@@ -33,6 +33,6 @@ if settings.DEBUG:
     urlpatterns += [
         path("__reload__/", include("django_browser_reload.urls")),
     ]
-    admin_site.site_header = "Django Administration - LOCAL 🚧"
+    admin_site.site_header = "Django Administration - DEBUG 🚧"
 else:
     admin_site.site_header = "🚨 Django Administration - PRODUCTION 🚨"
