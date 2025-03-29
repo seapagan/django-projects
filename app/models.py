@@ -171,3 +171,26 @@ class Framework(models.Model):
     def __str__(self) -> str:
         """Return string representation."""
         return self.name
+
+
+class AboutSection(models.Model):
+    """Model to contain configurable about sections."""
+
+    config = models.ForeignKey(
+        SiteConfiguration,
+        related_name="about_sections",
+        on_delete=models.CASCADE,
+    )
+    content = models.TextField(
+        help_text="Content can include limited HTML tags."
+    )
+
+    class Meta:
+        """Configure the AboutSection model."""
+
+        verbose_name = "About Section"
+        verbose_name_plural = "About Sections"
+
+    def __str__(self) -> str:
+        """Return string representation."""
+        return f"About Section {self.id}"

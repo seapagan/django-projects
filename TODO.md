@@ -5,4 +5,3 @@
   read-only on the project detail page too.
 - the custom error pages also need the js_file context otherwise wont mirror the
   chosen theme
-- the about sections should be configurable from the database too

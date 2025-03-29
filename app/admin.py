@@ -10,6 +10,7 @@ from django.http import HttpRequest
 from solo.admin import SingletonModelAdmin
 
 from app.models import (
+    AboutSection,
     ContactSubmission,
     Framework,
     GitHubStats,
@@ -156,10 +157,17 @@ class FrameworkInline(admin.TabularInline[Framework, Model]):
     extra = 1
 
 
+class AboutSectionInline(admin.TabularInline[AboutSection, Model]):
+    """Inline edit the About Sections."""
+
+    model = AboutSection
+    extra = 1
+
+
 class CustomSingletonModelAdmin(SingletonModelAdmin):
     """Customize the Singleton Admin to add some inlines."""
 
-    inlines = [LanguageInline, FrameworkInline]  # noqa: RUF012
+    inlines = [AboutSectionInline, LanguageInline, FrameworkInline]  # noqa: RUF012
 
 
 admin_site = CustomAdminSite(name="custom_admin")

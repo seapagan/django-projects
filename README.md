@@ -4,7 +4,9 @@ A modern Django application for showcasing your development projects. Built with
 Django 5.1 and styled with Tailwind CSS, this application provides a clean and
 responsive interface to display your portfolio of projects.
 
-At this time it is not fully customizable, but this will be fixed very shortly.
+All the `About`, `Skills`, `Social links` and `Projects` are **fully dynamic
+from the database**, no code editing should be needed to get your profile up and
+running.
 
 - [Features](#features)
 - [Requirements](#requirements)
@@ -12,12 +14,16 @@ At this time it is not fully customizable, but this will be fixed very shortly.
   - [Using uv (Recommended)](#using-uv-recommended)
   - [Using Traditional pip/venv](#using-traditional-pipvenv)
 - [Configuration](#configuration)
-  - [PostgreSQL Database (Optional)](#postgresql-database-optional)
   - [Environment Variables](#environment-variables)
+  - [PostgreSQL Database (Optional)](#postgresql-database-optional)
+  - [Email Settings (Optional)](#email-settings-optional)
+  - [`.env` File](#env-file)
 - [Usage](#usage)
 - [Add your Projects, Personal Details and skills](#add-your-projects-personal-details-and-skills)
+  - [Customizing the About Section](#customizing-the-about-section)
   - [Adding Projects](#adding-projects)
-  - [In-App Settings](#in-app-settings)
+  - [App Settings](#app-settings)
+- [Contact Form](#contact-form)
 - [Caching](#caching)
 - [Production Deployment](#production-deployment)
   - [Security Features](#security-features)
@@ -98,40 +104,11 @@ pip install -r requirements.txt
 
 ## Configuration
 
-### PostgreSQL Database (Optional)
-
-By default, the application uses SQLite for the database. However, you can
-configure it to use PostgreSQL instead by setting the following environment
-variables:
-
-- `DJANGO_USE_POSTGRES`: Set to 1 to use PostgreSQL instead of SQLite
-- `DJANGO_POSTGRES_DB`: PostgreSQL database name
-- `DJANGO_POSTGRES_USER`: PostgreSQL username
-- `DJANGO_POSTGRES_PASSWORD`: PostgreSQL password
-- `DJANGO_POSTGRES_HOST`: PostgreSQL host (default: localhost)
-- `DJANGO_POSTGRES_PORT`: PostgreSQL port (default: 5432)
-
-> [!NOTE]
->
-> The PostgreSQL user and database **must already exist**, and the user needs to
-> have **ownership** (or access) to that database.
->
-> For SQLite, the local database file will be created when the migrations are
-> run.
-
-> [!IMPORTANT]
->
-> This project uses the binary version of `psycopg` which is not compatible with
-> some older systems (primarily older Macs or if using PyPy Python). If you
-> encounter compatibility issues, you should remove the `psycopg[binary]`
-> package and use the plain `psycopg` package instead, or compile it locally.
-> For more information, see the [psycopg documentation on supported
-> systems](https://www.psycopg.org/psycopg3/docs/basic/install.html#supported-systems).
-
 ### Environment Variables
 
-The application uses environment variables for configuration. Most of them do
-have a default setting that will be used if not specified.
+The application uses further environment variables for configuration and
+security. Most of them **do** have a default setting that will be used if not
+specified.
 
  Key settings:
 
@@ -165,6 +142,42 @@ have a default setting that will be used if not specified.
   passes the `X_FORWARDED_FOR` header) to serve this app
 - `RECAPTCHA_SITE_KEY`: Your Google reCAPTCHA v2 site key
 - `RECAPTCHA_SECRET_KEY`: Your Google reCAPTCHA v2 secret key
+
+### PostgreSQL Database (Optional)
+
+By default, the application uses SQLite for the database. However, you can
+configure it to use PostgreSQL instead by setting the following environment
+variables:
+
+- `DJANGO_USE_POSTGRES`: Set to 1 to use PostgreSQL instead of SQLite
+- `DJANGO_POSTGRES_DB`: PostgreSQL database name
+- `DJANGO_POSTGRES_USER`: PostgreSQL username
+- `DJANGO_POSTGRES_PASSWORD`: PostgreSQL password
+- `DJANGO_POSTGRES_HOST`: PostgreSQL host (default: localhost)
+- `DJANGO_POSTGRES_PORT`: PostgreSQL port (default: 5432)
+
+> [!NOTE]
+>
+> The PostgreSQL user and database **must already exist**, and the user needs to
+> have **ownership** (or access) to that database.
+>
+> For SQLite, the local database file will be created when the migrations are
+> run.
+
+> [!IMPORTANT]
+>
+> This project uses the binary version of `psycopg` which is not compatible with
+> some older systems (primarily older Macs or if using PyPy Python). If you
+> encounter compatibility issues, you should remove the `psycopg[binary]`
+> package and use the plain `psycopg` package instead, or compile it locally.
+> For more information, see the [psycopg documentation on supported
+> systems](https://www.psycopg.org/psycopg3/docs/basic/install.html#supported-systems).
+
+### Email Settings (Optional)
+
+You can configure the email (SMTP) server to send contact emails using the below
+environment variables:
+
 - `USE_LIVE_EMAIL`: Set to 1 to send actual emails, 0 or unset to output to
   console
 - `EMAIL_HOST`: SMTP server host (required if USE_LIVE_EMAIL=1)
@@ -176,6 +189,8 @@ have a default setting that will be used if not specified.
   USE_LIVE_EMAIL=1)
 - `CONTACT_FORM_RECIPIENT`: Email address where contact form submissions will be
   sent (required if USE_LIVE_EMAIL=1)
+
+### `.env` File
 
 Create an `.env` file in the project root with the following content, or set the
 environment variables directly:
@@ -273,10 +288,26 @@ python manage.py tailwind runserver
 You can customize the portfolio with your own skills and projects through the
 Django Admin interface at <http://localhost:8000/admin>
 
+### Customizing the About Section
+
+You can add and manage about sections through the Django admin interface in the
+**Site Configuration** section. Each about section has the following field:
+
+- **Content**: The main text content for this section. This field supports
+  multiple paragraphs and can include limited HTML tags.
+
+About sections are linked to your site configuration and allow you to provide
+detailed information about yourself, your background, skills, and experience.
+Each `about` record will be in a separate paragraph - you can use **limited**
+HTML tags in this field (`a`,`strong`,`em`,`ul`,`ol`,`li`,`sub`,`sup` - all
+others will be stripped.)
+
+If you have no about sections added, the About area will not be displayed.
+
 ### Adding Projects
 
-After logging in to the admin interface, you can add new projects by clicking on
-the "Projects" link. Each project has the following fields:
+You can add projects by clicking on the **Projects** section in the admin pages.
+Each project has the following fields:
 
 - **Title**: The name of your project (maximum 100 characters)
 - **Details**: A detailed description of your project. This field supports
@@ -287,7 +318,8 @@ the "Projects" link. Each project has the following fields:
   (optional)
 - **Website URL**: The URL to your project's live website or demo (optional)
 - **Tags**: Associate relevant tags with your project to categorize it
-  (optional)
+  (optional). You first have to add the tags in the **Tags** section of the
+  Admin page.
 
 Projects are displayed on your portfolio page in the following order:
 
@@ -300,11 +332,11 @@ Projects are displayed on your portfolio page in the following order:
 You can set a project's priority in the admin interface. This allows you to
 highlight your most important projects by giving them lower priority numbers.
 
-### In-App Settings
+### App Settings
 
 The application provides additional configuration options through the Django
-admin interface at `/admin/app/siteconfiguration/`. These settings allow you to
-customize various aspects of your portfolio:
+admin interface at the **Site Configuration** section . These settings allow you
+to customize various aspects of your portfolio:
 
 - **Site Content**
   - `owner_name`: The Owner of the site. This will be the page title and the
@@ -325,6 +357,11 @@ customize various aspects of your portfolio:
 
   Any social media usernames left blank will not be displayed on your portfolio.
 
+- **About Section**
+
+  As mentioned [above](#customizing-the-about-section) you can add/edit your
+  'About' info here too.
+
 - **Languages and Frameworks**
 
   You can manage your programming languages and frameworks through the Django
@@ -344,6 +381,14 @@ customize various aspects of your portfolio:
 These settings can be modified at any time through the admin interface and
 changes will be reflected immediately on your portfolio (though, see the note
 below on **Caching**)
+
+## Contact Form
+
+The contact form will save each contact into the database and you can view these
+in the Admin pages in the **Contact Submissions** section.
+
+Optionally, if you have set up the email, each contact will also be emailed to
+you as it is submitted.
 
 ## Caching
 
