@@ -182,10 +182,7 @@ class AboutSection(models.Model):
         on_delete=models.CASCADE,
     )
     content = models.TextField(
-        help_text=(
-            "Content can include HTML tags like: <a>, <strong>, <em>, "
-            "<p>, <ul>, <ol>, <li>, <h1-h3>, <br>, <hr>"
-        )
+        help_text="Content can include limited HTML tags."
     )
 
     class Meta:
