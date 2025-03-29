@@ -459,13 +459,22 @@ For production deployment, it's recommended to:
    - `DJANGO_ALLOWED_HOSTS`: Your domain(s) as a JSON array
    - `DJANGO_STATIC_ROOT`: The path where static files will be collected
 
-You should also build a production bundle of the Tailwind CSS and collect static
-files before deployment:
+You should also run the collectstatic files before deployment:
 
 ```console
-python manage.py tailwind build
 python manage.py collectstatic
 ```
+
+> [!TIP]
+>
+> This is a **customized** `collectstatic` command which, as well as the usual
+> functionality will also:
+>
+> - **build** the Tailwind production file
+> - **minimize** any Javascript files in the `assets/js` folder.
+>
+> You no longer need to run the `python manage.py tailwind build` command
+> seperately.
 
 The application includes gunicorn for production deployment. A typical command
 to run the application in production would be:
