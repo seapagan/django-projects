@@ -7,9 +7,11 @@
 
 <section class="flex flex-col justify-center w-full pb-8">
   <div class="space-y-6">
+    {% if any_profile_exists or about_sections.count %}
     <h2 class="text-3xl font-bold mb-4">About Me</h2>
+    {% endif %}
     <div
-      class="grid grid-cols-1 {% if any_profile_exists %}lg:grid-cols-2 gap-8{% endif %}">
+      class="grid grid-cols-1 {% if any_profile_exists and about_sections.count %}lg:grid-cols-2 gap-8{% endif %}">
       <div class="space-y-4 text-muted-foreground">
         {% for section in about_sections %}
         <p class="text-lg">
