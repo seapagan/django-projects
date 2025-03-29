@@ -2,8 +2,20 @@
 
 ## [Unreleased](https://github.com/seapagan/django-projects/tree/HEAD)
 
+**Merged Pull Requests**
+
+- Revert "Migrate to hCaptcha" ([#28](https://github.com/seapagan/django-projects/pull/28)) by [seapagan](https://github.com/seapagan)
+
 **Enhancements**
 
+- Adjust some dynamic features ([#32](https://github.com/seapagan/django-projects/pull/32)) by [seapagan](https://github.com/seapagan)
+- Customize the  'collectstatic' to build/compress our assets ([#31](https://github.com/seapagan/django-projects/pull/31)) by [seapagan](https://github.com/seapagan)
+- Add custom error pages ([#29](https://github.com/seapagan/django-projects/pull/29)) by [seapagan](https://github.com/seapagan)
+- Migrate to hCaptcha ([#27](https://github.com/seapagan/django-projects/pull/27)) by [seapagan](https://github.com/seapagan)
+- Add pagination on demand to the project list ([#26](https://github.com/seapagan/django-projects/pull/26)) by [seapagan](https://github.com/seapagan)
+- Server side filtering of projects ([#25](https://github.com/seapagan/django-projects/pull/25)) by [seapagan](https://github.com/seapagan)
+- Hide projects button if no projects ([#24](https://github.com/seapagan/django-projects/pull/24)) by [seapagan](https://github.com/seapagan)
+- Add GitHub actions for linting and enable Renovate Bot ([#21](https://github.com/seapagan/django-projects/pull/21)) by [seapagan](https://github.com/seapagan)
 - Add optional secure proxy settings. ([#20](https://github.com/seapagan/django-projects/pull/20)) by [seapagan](https://github.com/seapagan)
 - Add a flag to enable/disable admin ip protection ([#19](https://github.com/seapagan/django-projects/pull/19)) by [seapagan](https://github.com/seapagan)
 - Add some security to the Admin pages ([#18](https://github.com/seapagan/django-projects/pull/18)) by [seapagan](https://github.com/seapagan)
