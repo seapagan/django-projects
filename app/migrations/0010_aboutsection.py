@@ -16,13 +16,11 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('content', models.TextField(help_text='Content can include HTML tags like: <a>, <strong>, <em>, <p>, <ul>, <ol>, <li>, <h1-h3>, <br>, <hr>')),
-                ('order', models.IntegerField(default=0, help_text='Lower numbers appear first')),
                 ('config', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='about_sections', to='app.siteconfiguration')),
             ],
             options={
                 'verbose_name': 'About Section',
                 'verbose_name_plural': 'About Sections',
-                'ordering': ['order'],
             },
         ),
     ]
