@@ -4,6 +4,11 @@
 
 - Nothing right now :D
 
+## Future Plans
+
+- add an optional built-in blog to the pages. This would be a separate django
+  application inside the main project.
+
 ## Possible Ideas
 
 - Migrate the 'GitHub stats' table to just be in the Projects table. There is
