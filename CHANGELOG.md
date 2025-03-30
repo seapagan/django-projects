@@ -6,6 +6,23 @@ project since the first release, with the latest changes at the top.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## [Unreleased](https://github.com/seapagan/django-projects/tree/HEAD)
+
+These are the changes that have been merged to the repository since the last
+release.
+
+Everything in this section will be included in the next official release.
+
+**New Features**
+
+- Add a noscript block and fix some issues with theme dropdown ([#35](https://github.com/seapagan/django-projects/pull/35)) by [seapagan](https://github.com/seapagan)
+
+**Refactoring**
+
+- Refactor the layout slightly to reuse templates between apps. ([#36](https://github.com/seapagan/django-projects/pull/36)) by [seapagan](https://github.com/seapagan)
+
+[`Full Changelog`](https://github.com/seapagan/django-projects/compare/1.0.0...HEAD) | [`Diff`](https://github.com/seapagan/django-projects/compare/1.0.0...HEAD.diff) | [`Patch`](https://github.com/seapagan/django-projects/compare/1.0.0...HEAD.patch)
+
 ## [1.0.0](https://github.com/seapagan/django-projects/releases/tag/1.0.0) (March 29, 2025)
 
 **Initial release.**
