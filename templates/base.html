@@ -1,0 +1,75 @@
+{% load tailwind_cli %}
+{% load static %}
+
+{% load solo_tags %}
+
+{% get_solo 'app.SiteConfiguration' as config %}
+
+<!DOCTYPE html>
+<html lang="en" class="no-js dark:bg-gray-900">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+      content="Programming showcase for {{ config.owner_name }}.">
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
+    {% tailwind_css %}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link media="screen"
+      href="https://fonts.googleapis.com/css2?family=Birthstone:wght@300;400;500;600;700&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+      rel="stylesheet">
+    <script>document.documentElement.classList.remove('no-js');</script>
+    <style>
+      #js-warning {
+        display: none;
+      }
+
+      html.no-js body #js-warning {
+        display: block;
+        padding: 1rem;
+        background-color: #ffdddd;
+        color: #d8000c;
+        text-align: center;
+        border-bottom: 1px solid #fcc;
+        position: sticky;
+        top: 0;
+        z-index: 50;
+      }
+
+    </style>
+    <script defer src="{% static js_file %}"></script>
+    <script defer src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <script defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <title>{{ config.owner_name }}</title>
+  </head>
+
+  <body class="bg-background text-gray-900 dark:bg-gray-900 dark:text-gray-100">
+    <div id="js-warning">
+      <strong>JavaScript is disabled or blocked.</strong> Some features of this
+      site may not work correctly.
+    </div>
+    {% include "_header.html" %}
+
+    <main class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 pb-4" id="main-content">
+      {% if messages %}
+      <div class="m-8">
+        {% for message in messages %}
+        <div
+          class="p-4 {% if message.tags == 'success' %}bg-green-100 text-green-700 border-green-400{% else %}bg-red-100 text-red-700 border-red-400{% endif %} border rounded">
+          {{ message }}
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      {% block content %}
+      {% endblock %}
+
+      {% include "_footer.html" %}
+    </main>
+  </body>
+
+</html>
