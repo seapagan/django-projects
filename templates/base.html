@@ -51,25 +51,27 @@
       <strong>JavaScript is disabled or blocked.</strong> Some features of this
       site may not work correctly.
     </div>
-    {% include "_header.html" %}
 
-    <main class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 pb-4" id="main-content">
-      {% if messages %}
-      <div class="m-8">
-        {% for message in messages %}
-        <div
-          class="p-4 {% if message.tags == 'success' %}bg-green-100 text-green-700 border-green-400{% else %}bg-red-100 text-red-700 border-red-400{% endif %} border rounded">
-          {{ message }}
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-4 relative">
+      {% include "_header.html" %}
+
+      <main id="main-content">
+        {% if messages %}
+        <div class="m-8">
+          {% for message in messages %}
+          <div
+            class="p-4 {% if message.tags == 'success' %}bg-green-100 text-green-700 border-green-400{% else %}bg-red-100 text-red-700 border-red-400{% endif %} border rounded">
+            {{ message }}
+          </div>
+          {% endfor %}
         </div>
-        {% endfor %}
-      </div>
-      {% endif %}
-
-      {% block content %}
-      {% endblock %}
+        {% endif %}
+        {% block content %}
+        {% endblock %}
+      </main>
 
       {% include "_footer.html" %}
-    </main>
+    </div>
   </body>
 
 </html>
