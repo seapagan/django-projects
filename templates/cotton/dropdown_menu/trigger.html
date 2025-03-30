@@ -1,4 +1,5 @@
-<div @click="open = !open"
+<div @click="open = !open" style="display: none;"
+    x-init="$el.style.display = ''"
     class="outline-hidden {% if class %}{{ class }}{% endif %}" {{ attrs }}>
     {{ slot }}
 </div>
