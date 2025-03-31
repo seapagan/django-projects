@@ -20,4 +20,6 @@ prd
 .cursor
 static
 assets/js/*.min.js
+!assets/js/htmx.min.js
+!assets/js/alpine.min.js
 assets/css/site.css
