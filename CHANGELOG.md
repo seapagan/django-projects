@@ -19,6 +19,7 @@ Everything in this section will be included in the next official release.
 
 **Refactoring**
 
+- Locally host HTMX and Alpine.js instead of using CDN ([#37](https://github.com/seapagan/django-projects/pull/37)) by [seapagan](https://github.com/seapagan)
 - Refactor the layout slightly to reuse templates between apps. ([#36](https://github.com/seapagan/django-projects/pull/36)) by [seapagan](https://github.com/seapagan)
 
 [`Full Changelog`](https://github.com/seapagan/django-projects/compare/1.0.0...HEAD) | [`Diff`](https://github.com/seapagan/django-projects/compare/1.0.0...HEAD.diff) | [`Patch`](https://github.com/seapagan/django-projects/compare/1.0.0...HEAD.patch)
