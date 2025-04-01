@@ -39,6 +39,7 @@ dev = [
     "pytest-cov>=6.0.0",
     "pytest-django>=4.10.0",
     "pytest-env>=1.1.5",
+    "pytest-mock>=3.14.0",
     "pytest-sugar>=1.0.0",
     "ruff>=0.10.0",
 ]
@@ -156,3 +157,18 @@ keep-runtime-typing = true
 DJANGO_SETTINGS_MODULE = "config.settings"
 python_files = "tests.py test_*.py *_tests.py"
 FAIL_INVALID_TEMPLATE_VARS = true
+addopts = [
+    "-m",
+    "not rewrite",  # mark tests 'rewrite' that need work, and they wont be run
+    "--cov",
+    "--cov-report",
+    "term-missing",
+    "--cov-report",
+    "html",
+]
+testpaths = ["tests"]
+mock_use_standalone_module = true
+
+[tool.coverage.run]
+source = ["app"]
+omit = ["*/tests/*", "*/migrations/*"]

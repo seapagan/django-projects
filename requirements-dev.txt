@@ -63,6 +63,7 @@ pytest==8.3.5
 pytest-cov==6.0.0
 pytest-django==4.10.0
 pytest-env==1.1.5
+pytest-mock==3.14.0
 pytest-sugar==1.0.0
 python-dateutil==2.9.0.post0
 python-dotenv==1.0.1
