@@ -1,11 +1,9 @@
 """Tests for the home view."""
 
-import pprint
 from typing import Any
 
 import pytest
 from django import forms
-from django.conf import settings
 from django.contrib.messages import get_messages
 from django.test import Client
 from django.urls import reverse
@@ -40,12 +38,6 @@ def test_home_view_get(client: Client) -> None:
     _about_section_safe = AboutSection.objects.create(
         config=config, content=safe_content_with_link
     )
-
-    # --- Debug template DIRS ---
-    print("\nDEBUG: settings.TEMPLATES:")
-    pprint.pprint(settings.TEMPLATES)
-    print("--- End Debug ---\n")
-    # --- End Debug ---
 
     url = reverse("projects")
     response = client.get(url)
