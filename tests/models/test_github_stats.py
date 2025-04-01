@@ -68,7 +68,7 @@ def test_github_stats_needs_update(mocker: MockerFixture) -> None:
     stats.save()
     assert stats.needs_update()
 
-    # Case 3: Exactly 30 minutes old - should not need update (uses >)
+    # Case 3: Exactly 30 minutes old - should not need update
     stats.last_updated = mock_now - timedelta(minutes=30)
     stats.save()
     assert not stats.needs_update()

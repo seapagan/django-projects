@@ -86,7 +86,7 @@ def test_load_more_projects_non_htmx(
     """
     # This test needs rethinking. The view handles both initial load (non-HTMX)
     # and 'load more' (HTMX). Let's test the initial load case.
-    url = reverse("filter_projects")  # Correct URL name
+    url = reverse("filter_projects")
     response = client.get(
         url
     )  # No HX-Request header, no page param (initial load)

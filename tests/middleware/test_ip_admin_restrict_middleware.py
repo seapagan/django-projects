@@ -29,7 +29,7 @@ def middleware(
 def request_factory() -> HttpRequest:
     """Fixture to create a basic HttpRequest object."""
     request = HttpRequest()
-    request.META = {"REMOTE_ADDR": "127.0.0.1"}  # Default IP
+    request.META = {"REMOTE_ADDR": "127.0.0.1"}
     return request
 
 
@@ -45,7 +45,8 @@ def test_non_admin_path_allowed(
     response = middleware(request_factory)
     assert response.status_code == 200
     assert response.content == b"OK"
-    mock_get_ip.assert_not_called()  # Should not check IP for non-admin paths
+    # Should not check IP for non-admin paths
+    mock_get_ip.assert_not_called()
 
 
 @override_settings(ADMIN_URL="secret-admin/", ADMIN_IPS_ALLOWED=["127.0.0.1"])

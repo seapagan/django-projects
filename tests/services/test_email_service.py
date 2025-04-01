@@ -45,7 +45,6 @@ def test_send_contact_email_success(mocker: MockerFixture) -> None:
 
 def test_send_contact_email_failure(mocker: MockerFixture) -> None:
     """Tests email sending failure due to SMTPException."""
-    # Arrange
     mock_send_mail = mocker.patch(
         "app.services.email.send_mail", side_effect=SMTPException
     )
@@ -55,9 +54,7 @@ def test_send_contact_email_failure(mocker: MockerFixture) -> None:
         message="This message should fail.",
     )
 
-    # Act
     result = EmailService.send_contact_email(submission)
 
-    # Assert
     assert result is False
     mock_send_mail.assert_called_once()

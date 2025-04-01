@@ -30,13 +30,10 @@ def test_collectstatic_override(
     - JavaScript files are minified.
     - The original collectstatic command is called.
     """
-    # --- Arrange ---
-    # Mock the call_command function
     mock_call_command = mocker.patch(
         "app.management.commands.collectstatic.call_command"
     )
 
-    # Mock the super().handle() call within the Command class
     mock_super_handle = mocker.patch(
         "django.contrib.staticfiles.management.commands.collectstatic.Command.handle"
     )
@@ -51,15 +48,14 @@ def test_collectstatic_override(
     min_js_file_path = js_dir / "already.min.js"
     fs.create_file(min_js_file_path, contents="var a=1;")
 
-    # Instantiate the command
     command = Command()
 
     command.handle()
 
-    # 1. Check if tailwind build was called
+    # Check if tailwind build was called
     mock_call_command.assert_called_once_with("tailwind", "build")
 
-    # 2. Check if JS minification happened
+    # Check if JS minification happened
     minified_js_path = js_dir / "test.min.js"
     assert minified_js_path.exists()
     minified_content = minified_js_path.read_text()
