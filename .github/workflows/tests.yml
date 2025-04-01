@@ -12,6 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       SKIP_COVERAGE_UPLOAD: true
+      DJANGO_SECRET_KEY: "dummy-key-for-ci-tests"
     strategy:
       fail-fast: false
       matrix:
