@@ -2,7 +2,7 @@
 
 import pytest
 
-from app.models import Project, Tag
+from app.models import GitHubStats, Project, Tag
 
 pytestmark = pytest.mark.django_db
 
@@ -16,9 +16,8 @@ def test_project_creation_and_str() -> None:
     project_title = "My Test Project"
     project = Project.objects.create(
         title=project_title,
-        details="A description",  # Changed from description
+        details="A description",
         priority=1,
-        # Removed start_date
     )
     assert project.title == project_title
     assert project.details == "A description"
@@ -58,23 +57,61 @@ def test_project_ordering() -> None:
     # This test verifies that ordering *can* be applied correctly via query.
     project1 = Project.objects.create(
         title="Low Priority",
-        details="desc",  # Changed from description
-        # Removed start_date
+        details="desc",
         priority=10,
     )
     project2 = Project.objects.create(
         title="High Priority",
-        details="desc",  # Changed from description
-        # Removed start_date
+        details="desc",
         priority=1,
     )
     project3 = Project.objects.create(
         title="Mid Priority",
-        details="desc",  # Changed from description
-        # Removed start_date
+        details="desc",
         priority=5,
     )
 
     # Explicitly order the query
     projects = Project.objects.order_by("priority")
     assert list(projects) == [project2, project3, project1]
+
+
+def test_get_or_create_stats_creates_new_stats() -> None:
+    """Test that get_or_create_stats creates stats if they don't exist."""
+    project = Project.objects.create(title="Test Project for Stats Creation")
+    # Verify no stats exist initially for this project
+    assert GitHubStats.objects.filter(project=project).count() == 0
+
+    stats = project.get_or_create_stats()
+
+    # Verify one stats object was created and linked
+    assert GitHubStats.objects.filter(project=project).count() == 1
+    assert stats.project == project
+    # Verify default values are set
+    assert stats.stars == 0
+    assert stats.forks == 0
+    assert stats.open_issues == 0
+    assert stats.open_prs == 0
+
+
+def test_get_or_create_stats_gets_existing_stats() -> None:
+    """Test that get_or_create_stats retrieves existing stats."""
+    project = Project.objects.create(title="Test Project for Stats Retrieval")
+    # Create stats beforehand
+    existing_stats = GitHubStats.objects.create(
+        project=project, stars=10, forks=5, open_issues=2, open_prs=1
+    )
+    # Verify one stats object exists
+    assert GitHubStats.objects.filter(project=project).count() == 1
+
+    stats = project.get_or_create_stats()
+
+    # Verify no new stats were created
+    assert GitHubStats.objects.filter(project=project).count() == 1
+    # Verify the existing object was returned
+    assert stats == existing_stats
+    # Verify the existing data is preserved
+    assert stats.stars == 10
+    assert stats.forks == 5
+    assert stats.open_issues == 2
+    assert stats.open_prs == 1
