@@ -1,0 +1,43 @@
+# Coding Guidelines
+
+## Project summary
+
+This is a Django-based personal portfolio website. Key features include:
+
+- Project showcase (integrated with GitHub via `app/services/github.py` to
+  display project stats).
+- Contact form functionality (handled by `app/views.py` and
+  `app/services/email.py`).
+- About section content management.
+- Site configuration options (`app/models.py::SiteConfiguration`).
+- Uses Django templates, with some custom components from shadcn-django
+  (`templates/cotton/`).
+- Static assets managed in `assets/`. Tailwind CSS is used (`source.css`).
+- Dependency management via `uv` (the requirements.txt and requirements-dev.txt
+  are AUTO GENERATED and should' never be modified).
+- Code quality enforced using `pre-commit` (`.pre-commit-config.yaml`).
+- The main application logic resides in the `app` directory.
+
+## Key Instructions
+
+- All code should be properly typed so as to pass `mypy` on strict mode. ONLY
+  use Python 3.10+ typing - ie `list` instead of `List` and so on.
+- Be focused! If you are told we will be using a PRD, it must be followed at all
+  times.
+- ONLY concentrate on the step in hand, do NOT work unprompted.
+- After each step in the PRD if used, check with the user if they are happy to
+  continue to the next. NEVER start a new section or task unprompted.
+- We are using Tailwind version 4. As such, there is NEVER a javascript
+  configuration file.
+- The user will run the dev server, never ask to run it yourself.
+- When you start each new SESSION, always respond with 'To infinity and
+  Beyond!!!' on the FIRST RESPONSE only, then carry on the requested task.
+
+  ## Testing
+
+If we are writing tests:
+
+- use Pytest only with `pytest-django` (already installed ) instead of the
+  default Django testing mechanism
+- we will also have `pytest-mock` installed, this should ALWAYS be used in
+  preference to the plain default mock if needed.
