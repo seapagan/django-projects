@@ -1,5 +1,9 @@
 # Django Projects Portfolio <!-- omit in toc -->
 
+[![Tests](https://github.com/seapagan/django-projects/actions/workflows/tests.yml/badge.svg)](https://github.com/seapagan/django-projects/actions/workflows/tests.yml)
+[![Linting](https://github.com/seapagan/django-projects/actions/workflows/ruff.yml/badge.svg)](https://github.com/seapagan/django-projects/actions/workflows/ruff.yml)
+[![Type Checking](https://github.com/seapagan/django-projects/actions/workflows/mypy.yml/badge.svg)](https://github.com/seapagan/django-projects/actions/workflows/mypy.yml)
+
 A modern Django application for showcasing your development projects. Built with
 Django 5.1 and styled with Tailwind CSS, this application provides a clean and
 responsive interface to display your portfolio of projects.
