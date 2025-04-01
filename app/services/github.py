@@ -11,7 +11,7 @@ import httpx
 from django.utils import timezone
 from response_codes import HTTP_200_OK
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no cover
     from app.models import GitHubStats, Project
 
 
