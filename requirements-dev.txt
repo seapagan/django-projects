@@ -14,7 +14,7 @@ colorama==0.4.6 ; sys_platform == 'win32'
 cookiecutter==2.6.0
 coverage==7.8.0
 distlib==0.3.9
-django==5.1.8
+django==5.1.7
 django-browser-reload==1.18.0
 django-cotton==2.0.0
 django-ipware==7.0.1
