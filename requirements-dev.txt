@@ -29,7 +29,7 @@ exceptiongroup==1.2.2 ; python_full_version < '3.11'
 faker==37.1.0
 filelock==3.18.0
 gunicorn==23.0.0
-h11==0.16.0
+h11==0.14.0
 html-sanitizer==2.5.0
 http-response-codes==0.2.0
 httpcore==1.0.7
