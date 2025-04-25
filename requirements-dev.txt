@@ -14,9 +14,9 @@ colorama==0.4.6 ; sys_platform == 'win32'
 cookiecutter==2.6.0
 coverage==7.8.0
 distlib==0.3.9
-django==5.1.7
+django==5.2
 django-browser-reload==1.18.0
-django-cotton==2.0.0
+django-cotton==2.0.3
 django-ipware==7.0.1
 django-permissions-policy==4.25.0
 django-recaptcha==4.0.0
@@ -29,10 +29,10 @@ exceptiongroup==1.2.2 ; python_full_version < '3.11'
 faker==37.1.0
 filelock==3.18.0
 gunicorn==23.0.0
-h11==0.14.0
+h11==0.16.0
 html-sanitizer==2.5.0
 http-response-codes==0.2.0
-httpcore==1.0.7
+httpcore==1.0.9
 httpx==0.28.1
 identify==2.6.9
 idna==3.10

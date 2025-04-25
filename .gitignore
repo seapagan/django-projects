@@ -25,3 +25,4 @@ assets/js/*.min.js
 assets/css/site.css
 .coverage
 htmlcov
+.clinerules
