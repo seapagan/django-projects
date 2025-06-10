@@ -33,7 +33,7 @@ psycopg-binary==3.2.9 ; implementation_name != 'pypy'
 pymemcache==4.0.0
 python-dotenv==1.1.0
 python-ipware==3.0.0
-requests==2.32.3
+requests==2.32.4
 rjsmin==1.2.4
 semver==3.0.4
 shellingham==1.5.4
