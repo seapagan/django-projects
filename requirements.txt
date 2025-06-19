@@ -43,4 +43,4 @@ sqlparse==0.5.3
 typer-slim==0.15.4
 typing-extensions==4.13.2
 tzdata==2025.2 ; sys_platform == 'win32'
-urllib3==2.4.0
+urllib3==2.5.0
