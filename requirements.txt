@@ -7,7 +7,7 @@ certifi==2025.4.26
 charset-normalizer==3.4.2
 click==8.1.8
 colorama==0.4.6 ; sys_platform == 'win32'
-django==5.2.1
+django==5.2.5
 django-cotton==2.1.2
 django-ipware==7.0.1
 django-permissions-policy==4.26.0
@@ -33,7 +33,7 @@ psycopg-binary==3.2.9 ; implementation_name != 'pypy'
 pymemcache==4.0.0
 python-dotenv==1.1.0
 python-ipware==3.0.0
-requests==2.32.3
+requests==2.32.4
 rjsmin==1.2.4
 semver==3.0.4
 shellingham==1.5.4
@@ -43,4 +43,4 @@ sqlparse==0.5.3
 typer-slim==0.15.4
 typing-extensions==4.13.2
 tzdata==2025.2 ; sys_platform == 'win32'
-urllib3==2.4.0
+urllib3==2.5.0
