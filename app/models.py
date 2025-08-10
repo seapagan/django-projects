@@ -8,6 +8,7 @@ from typing import Any
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils import timezone
+from django.utils.text import slugify
 from solo.models import SingletonModel
 
 
@@ -114,8 +115,6 @@ class Tag(models.Model):
 
     def save(self, *args: Any, **kwargs: Any) -> None:  # noqa: ANN401
         """Override save to automatically generate slug."""
-        from django.utils.text import slugify
-
         if not self.slug:
             self.slug = slugify(self.name)
         super().save(*args, **kwargs)

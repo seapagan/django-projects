@@ -1,6 +1,6 @@
 """Test the GitHub API service."""
 
-# ruff: noqa: SLF001, PLR2004
+# ruff: noqa: SLF001
 from __future__ import annotations
 
 import httpx
