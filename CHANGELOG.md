@@ -17,10 +17,30 @@ Everything in this section will be included in the next official release.
 
 - Add a noscript block and fix some issues with theme dropdown ([#35](https://github.com/seapagan/django-projects/pull/35)) by [seapagan](https://github.com/seapagan)
 
+**Testing**
+
+- Add tests to the application ([#40](https://github.com/seapagan/django-projects/pull/40)) by [seapagan](https://github.com/seapagan)
+
+**Security**
+
+- Update dependencies and pre-commit tool versions to clear some security issues ([#53](https://github.com/seapagan/django-projects/pull/53)) by [seapagan](https://github.com/seapagan)
+
+**Bug Fixes**
+
+- Fix custom error pages (bad base template path) ([#46](https://github.com/seapagan/django-projects/pull/46)) by [seapagan](https://github.com/seapagan)
+
 **Refactoring**
 
+- Improve header formatting and sizes ([#38](https://github.com/seapagan/django-projects/pull/38)) by [seapagan](https://github.com/seapagan)
 - Locally host HTMX and Alpine.js instead of using CDN ([#37](https://github.com/seapagan/django-projects/pull/37)) by [seapagan](https://github.com/seapagan)
 - Refactor the layout slightly to reuse templates between apps. ([#36](https://github.com/seapagan/django-projects/pull/36)) by [seapagan](https://github.com/seapagan)
+
+**Dependency Updates**
+
+- Bump django from 5.2 to 5.2.1 ([#48](https://github.com/seapagan/django-projects/pull/48)) by [dependabot[bot]](https://github.com/apps/dependabot)
+- Update astral-sh/setup-uv action to v6 ([#44](https://github.com/seapagan/django-projects/pull/44)) by [renovate[bot]](https://github.com/apps/renovate)
+- Bump h11 from 0.14.0 to 0.16.0 ([#43](https://github.com/seapagan/django-projects/pull/43)) by [dependabot[bot]](https://github.com/apps/dependabot)
+- Bump django from 5.1.7 to 5.1.8 ([#41](https://github.com/seapagan/django-projects/pull/41)) by [dependabot[bot]](https://github.com/apps/dependabot)
 
 [`Full Changelog`](https://github.com/seapagan/django-projects/compare/1.0.0...HEAD) | [`Diff`](https://github.com/seapagan/django-projects/compare/1.0.0...HEAD.diff) | [`Patch`](https://github.com/seapagan/django-projects/compare/1.0.0...HEAD.patch)
 
