@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import os
 import re
-from threading import Thread
+import threading
 from typing import TYPE_CHECKING
 from urllib.parse import urlparse
 
@@ -65,7 +65,7 @@ class GitHubAPIService:
                 if stats.needs_update():
                     print(f"Triggering update for {project.repo}")
 
-                    Thread(
+                    threading.Thread(
                         target=self._update_stats_sync,
                         args=(project,),
                         daemon=True,
