@@ -14,7 +14,7 @@ colorama==0.4.6 ; sys_platform == 'win32'
 cookiecutter==2.6.0
 coverage==7.8.2
 distlib==0.3.9
-django==5.2.5
+django==5.2.6
 django-browser-reload==1.18.0
 django-cotton==2.1.2
 django-ipware==7.0.1
@@ -52,7 +52,7 @@ packaging==25.0
 pastel==0.2.1
 platformdirs==4.3.8
 pluggy==1.6.0
-poethepoet==0.34.0
+poethepoet==0.37.0
 pre-commit==4.2.0
 psycopg==3.2.9
 psycopg-binary==3.2.9 ; implementation_name != 'pypy'
@@ -73,7 +73,7 @@ pyyaml==6.0.2
 requests==2.32.4
 rich==14.0.0
 rjsmin==1.2.4
-ruff==0.12.8
+ruff==0.12.12
 semver==3.0.4
 shellingham==1.5.4
 six==1.17.0
