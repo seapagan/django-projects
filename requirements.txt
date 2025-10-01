@@ -7,7 +7,7 @@ certifi==2025.4.26
 charset-normalizer==3.4.2
 click==8.1.8
 colorama==0.4.6 ; sys_platform == 'win32'
-django==5.2.6
+django==5.2.7
 django-cotton==2.1.2
 django-ipware==7.0.1
 django-permissions-policy==4.26.0
