@@ -90,4 +90,4 @@ types-pyyaml==6.0.12.20250822
 typing-extensions==4.15.0
 tzdata==2025.2
 urllib3==2.5.0
-virtualenv==20.34.0
+virtualenv==20.36.1
