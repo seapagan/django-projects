@@ -33,7 +33,7 @@ dev = [
     "mock>=5.2.0",
     "mypy>=1.15.0",
     "poethepoet>=0.33.0",
-    "pre-commit>=4.1.0",
+    "prek>=0.3.1",
     "pyfakefs>=5.8.0",
     "pytest>=8.3.5",
     "pytest-cov>=6.0.0",
@@ -46,8 +46,8 @@ dev = [
 
 [tool.poe.tasks]
 # setup PoeThePoet tasks
-pre.cmd = "pre-commit run --all-files"
-pre.help = "Run pre-commit checks"
+pre.cmd = "prek run --all-files"
+pre.help = "Run pre-commit checks with 'Prek'"
 mypy.cmd = "mypy . --strict"
 mypy.help = "Run mypy checks"
 format.help = "Format code with Ruff"
